@@ -104,7 +104,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
             } else if ([[NSFileManager defaultManager] fileExistsAtPath : pathFromWWW]) {
                 NSURL *pathURL = [NSURL fileURLWithPath : pathFromWWW];*/
 				NSURL *pathURL = [NSURL fileURLWithPath : assetPath];
-                CFURLRef        soundFileURLRef = (CFURLRef) CFBridgingRetain(pathURL);
+                //CFURLRef        soundFileURLRef = (CFURLRef) CFBridgingRetain(pathURL);
                 //SystemSoundID soundID;
                 //AudioServicesCreateSystemSoundID(soundFileURLRef, & soundID);
 				NativeAudioAsset* asset = [[NativeAudioAsset alloc] initWithPath:soundFileURLRef
