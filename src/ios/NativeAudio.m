@@ -173,8 +173,9 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 			
             if ([[NSFileManager defaultManager] fileExistsAtPath : path]) {*/
 			NSString* path = assetPath;
-			
-                NativeAudioAsset* asset = [[NativeAudioAsset alloc] initWithPath:path
+
+                //NativeAudioAsset* asset = [[NativeAudioAsset alloc] initWithPath:path
+				NativeAudioAsset* asset = [[NativeAudioAsset alloc] initWithURL:path
                                                                       withVoices:voices
                                                                       withVolume:volume
                                                                    withFadeDelay:delay];
