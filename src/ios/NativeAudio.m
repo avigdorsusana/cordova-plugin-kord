@@ -130,7 +130,9 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
     NSString *callbackId = command.callbackId;
     NSArray* arguments = command.arguments;
     NSString *audioID = [arguments objectAtIndex:0];
-    NSString *assetPath = [arguments objectAtIndex:1];
+    //NSString *assetPath = [arguments objectAtIndex:1];
+	//theUrl = [NSURL URLWithString:[[command.arguments objectAtIndex:1] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	NSURL *assetPath = [NSURL URLWithString:[[arguments objectAtIndex:1] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 
     NSNumber *volume = nil;
     if ( [arguments count] > 2 ) {
@@ -172,10 +174,9 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 			NSString* path = [NSString stringWithFormat:@"%@/%@", basePath, assetPath];
 			
             if ([[NSFileManager defaultManager] fileExistsAtPath : path]) {*/
-			NSString* path = assetPath;
 
                 //NativeAudioAsset* asset = [[NativeAudioAsset alloc] initWithPath:path
-				NativeAudioAsset* asset = [[NativeAudioAsset alloc] initWithURL:path
+				NativeAudioAsset* asset = [[NativeAudioAsset alloc] initWithURL:assetPath
                                                                       withVoices:voices
                                                                       withVolume:volume
                                                                    withFadeDelay:delay];
