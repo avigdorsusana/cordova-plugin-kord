@@ -103,18 +103,18 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
             } else if ([[NSFileManager defaultManager] fileExistsAtPath : pathFromWWW]) {
                 NSURL *pathURL = [NSURL fileURLWithPath : pathFromWWW];*/
-				NSURL *pathURL = [NSURL fileURLWithPath : assetPath];
+				//NSURL *pathURL = [NSURL fileURLWithPath : assetPath];
                 //CFURLRef        soundFileURLRef = (CFURLRef) CFBridgingRetain(pathURL);
                 //SystemSoundID soundID;
                 //AudioServicesCreateSystemSoundID(soundFileURLRef, & soundID);
-				/*NativeAudioAsset* asset = [[NativeAudioAsset alloc] initWithPath:pathURL
+				NativeAudioAsset* asset = [[NativeAudioAsset alloc] initWithPath:assetPath
                                                                       withVoices:1
                                                                       withVolume:1
-                                                                   withFadeDelay:0];*/
+                                                                   withFadeDelay:0];
 				
 
                 //audioMapping[audioID] = [NSNumber numberWithInt:soundID];
-				//audioMapping[audioID] = asset;
+				audioMapping[audioID] = asset;
 
                 NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, audioID];
                 [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
