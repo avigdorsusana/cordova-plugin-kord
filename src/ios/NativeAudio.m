@@ -132,7 +132,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
     NSString *audioID = [arguments objectAtIndex:0];
     //NSString *assetPath = [arguments objectAtIndex:1];
 	//theUrl = [NSURL URLWithString:[[command.arguments objectAtIndex:1] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-	NSURL *assetPath = [NSURL URLWithString:[[arguments objectAtIndex:1] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+	assetPath = [NSURL URLWithString:[[arguments objectAtIndex:1] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 
     NSNumber *volume = nil;
     if ( [arguments count] > 2 ) {
