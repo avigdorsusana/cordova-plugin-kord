@@ -1,0 +1,32 @@
+{
+  "name": "cordova-plugin-kord",
+  "version": "1.0.0",
+  "description": "KORD",
+  "cordova": {
+    "id": "cordova-plugin-kord",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/avigdorsusana/cordova-plugin-kord.git"
+  },
+  "bugs": {
+    "url": "https://github.com/avigdorsusana/cordova-plugin-kord.git/issues"
+  },
+  "keywords": [
+    "cordova",
+    "ecosystem:cordova"
+  ],
+  "author": {
+    "name": "Andrew Trice"
+  },
+  "contributors": [{
+	"name": "Avigdor Susana"
+  },{
+    "name": "Frank Mendez"
+  }],
+  "license": "MIT"
+}
