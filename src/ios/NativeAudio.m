@@ -84,12 +84,12 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
     [self.commandDelegate runInBackground:^{
         if (existingReference == nil) {
 
-            //NSString* basePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"www"];
-			NSString* basePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"media"];
+            NSString* basePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"www"];
+			//NSString* basePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"media"];
             NSString* path = [NSString stringWithFormat:@"%@", assetPath];
             NSString* pathFromWWW = [NSString stringWithFormat:@"%@/%@", basePath, assetPath];
 
-            if ([[NSFileManager defaultManager] fileExistsAtPath : path]) {
+            /*if ([[NSFileManager defaultManager] fileExistsAtPath : path]) {
 
 
                 NSURL *pathURL = [NSURL fileURLWithPath : path];
@@ -102,7 +102,8 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
                 [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
 
             } else if ([[NSFileManager defaultManager] fileExistsAtPath : pathFromWWW]) {
-                NSURL *pathURL = [NSURL fileURLWithPath : pathFromWWW];
+                NSURL *pathURL = [NSURL fileURLWithPath : pathFromWWW];*/
+				NSURL *pathURL = [NSURL fileURLWithPath : assetPath];
                 CFURLRef        soundFileURLRef = (CFURLRef) CFBridgingRetain(pathURL);
                 SystemSoundID soundID;
                 AudioServicesCreateSystemSoundID(soundFileURLRef, & soundID);
@@ -111,12 +112,12 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
                 NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, audioID];
                 [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
 
-            } else {
+            /*} else {
                 //NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_ASSETPATH_INCORRECT, assetPath];
-				//NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_ASSETPATH_INCORRECT, pathFromWWW]; //Err loading track: (NATIVE AUDIO) Asset not found. (/var/containers/Bundle/Application/5A8792DF-286E-4566-A603-57564E01CD5D/KORD.app/www/http://media.shopy.net/kord/albums/20205P229T4/404Fa4Mx4XP50E404XP50E49.mp3)
-				NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_ASSETPATH_INCORRECT, basePath]; //[Log] Err loading simple track: (NATIVE AUDIO) Asset not found. (/var/containers/Bundle/Application/8A92D663-A25C-42D0-8868-74DA8F19F052/KORD.app/www) (cordova.js, line 1509, x7)
+				NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_ASSETPATH_INCORRECT, pathFromWWW]; //Err loading track: (NATIVE AUDIO) Asset not found. (/var/containers/Bundle/Application/5A8792DF-286E-4566-A603-57564E01CD5D/KORD.app/www/http://media.shopy.net/kord/albums/20205P229T4/404Fa4Mx4XP50E404XP50E49.mp3)
+				//NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_ASSETPATH_INCORRECT, basePath]; //[Log] Err loading simple track: (NATIVE AUDIO) Asset not found. (/var/containers/Bundle/Application/8A92D663-A25C-42D0-8868-74DA8F19F052/KORD.app/www) (cordova.js, line 1509, x7)
                 [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
-            }
+            }*/
         } else {
 
             NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_EXISTS, audioID];
