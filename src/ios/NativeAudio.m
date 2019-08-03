@@ -107,7 +107,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
                 //CFURLRef        soundFileURLRef = (CFURLRef) CFBridgingRetain(pathURL);
                 //SystemSoundID soundID;
                 //AudioServicesCreateSystemSoundID(soundFileURLRef, & soundID);
-				NativeAudioAsset* asset = [[NativeAudioAsset alloc] initWithPath:soundFileURLRef
+				NativeAudioAsset* asset = [[NativeAudioAsset alloc] initWithPath:pathURL
                                                                       withVoices:1
                                                                       withVolume:1
                                                                    withFadeDelay:0];
