@@ -168,11 +168,12 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
     [self.commandDelegate runInBackground:^{
         if (existingReference == nil) {
-            //NSString* basePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"www"];
-			NSString* basePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"media"];
-            NSString* path = [NSString stringWithFormat:@"%@/%@", basePath, assetPath];
-
-            if ([[NSFileManager defaultManager] fileExistsAtPath : path]) {
+            /*NSString* basePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"www"];
+			NSString* path = [NSString stringWithFormat:@"%@/%@", basePath, assetPath];
+			
+            if ([[NSFileManager defaultManager] fileExistsAtPath : path]) {*/
+			NSString* path = assetPath;
+			
                 NativeAudioAsset* asset = [[NativeAudioAsset alloc] initWithPath:path
                                                                       withVoices:voices
                                                                       withVolume:volume
@@ -183,11 +184,11 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
                 NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, audioID];
                 [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
 
-            } else {
-                //NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_ASSETPATH_INCORRECT, assetPath];
-				NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_ASSETPATH_INCORRECT, basePath];
+            /*} else {
+                NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_ASSETPATH_INCORRECT, assetPath];
+				//NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_ASSETPATH_INCORRECT, basePath]; //[Log] Err laoding track: (NATIVE AUDIO) Asset not found. (/var/containers/Bundle/Application/B4167021-9F16-4AB9-ADBD-6F92611857AC/KORD.app/media) (cordova.js, line 1509, x7)
                 [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
-            }
+            }*/
         } else {
 
             NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_EXISTS, audioID];
