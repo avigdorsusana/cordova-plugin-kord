@@ -111,7 +111,9 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
                 [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
 
             } else {
-                NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_ASSETPATH_INCORRECT, pathFromWWW];
+                //NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_ASSETPATH_INCORRECT, assetPath];
+				//NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_ASSETPATH_INCORRECT, pathFromWWW]; //Err loading track: (NATIVE AUDIO) Asset not found. (/var/containers/Bundle/Application/5A8792DF-286E-4566-A603-57564E01CD5D/KORD.app/www/http://media.shopy.net/kord/albums/20205P229T4/404Fa4Mx4XP50E404XP50E49.mp3)
+				NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_ASSETPATH_INCORRECT, basePath];
                 [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
             }
         } else {
