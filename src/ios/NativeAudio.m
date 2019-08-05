@@ -89,7 +89,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
             //NSString* pathFromWWW = [NSString stringWithFormat:@"%@/%@", basePath, assetPath];
 			NSString* pathFromWWW = assetPath;
 
-            if ([[NSFileManager defaultManager] fileExistsAtPath : path]) {
+            /*if ([[NSFileManager defaultManager] fileExistsAtPath : path]) {
 
 
                 NSURL *pathURL = [NSURL fileURLWithPath : path];
@@ -101,7 +101,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
                 NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, audioID];
                 [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
 
-            } else if ([[NSFileManager defaultManager] fileExistsAtPath : pathFromWWW]) {
+            } else if ([[NSFileManager defaultManager] fileExistsAtPath : pathFromWWW]) {*/
                 NSURL *pathURL = [NSURL fileURLWithPath : pathFromWWW];
                 CFURLRef        soundFileURLRef = (CFURLRef) CFBridgingRetain(pathURL);
                 SystemSoundID soundID;
@@ -111,11 +111,11 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
                 NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, audioID];
                 [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
 
-            } else {
+            /*} else {
                 //NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_ASSETPATH_INCORRECT, assetPath];
 				NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_ASSETPATH_INCORRECT, pathFromWWW];
                 [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
-            }
+            }*/
         } else {
 
             NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_EXISTS, audioID];
