@@ -22,15 +22,15 @@ static const CGFloat FADE_DELAY = 0.08;
         //NSURL *pathURL = [NSURL fileURLWithPath : path];
 
 		//localisationName is a arbitrary string here
-		NSString* webName = [localisationName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]; 
+		/*NSString* webName = [localisationName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]; 
 		NSString* stringURL = [NSString stringWithFormat:path, webName];
 		NSString* webStringURL = [stringURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-		NSURL* pathURL = [NSURL URLWithString:webStringURL];
+		NSURL* pathURL = [NSURL URLWithString:webStringURL];*/
 
 		//NSURL *pathURL = [NSURL URLWithString : path];
         
         for (int x = 0; x < [numVoices intValue]; x++) {
-            AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:pathURL error: NULL];
+            AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:path error: NULL];
             player.volume = volume.floatValue;
             [player prepareToPlay];
             [voices addObject:player];
