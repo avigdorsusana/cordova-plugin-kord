@@ -172,8 +172,9 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
         if (existingReference == nil) {
             NSString* basePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"www"];
             NSString* path = [NSString stringWithFormat:@"%@/%@", basePath, assetPath];
+			NSString* pathFromWWW = assetPath;
 
-            if ([[NSFileManager defaultManager] fileExistsAtPath : path]) {
+            /*if ([[NSFileManager defaultManager] fileExistsAtPath : path]) {
                 NativeAudioAsset* asset = [[NativeAudioAsset alloc] initWithPath:path
                                                                       withVoices:voices
                                                                       withVolume:volume
@@ -187,7 +188,21 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
             } else {
                 NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_ASSETPATH_INCORRECT, assetPath];
                 [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
-            }
+            }*/
+			NSURL *pathURL = [NSURL fileURLWithPath : pathFromWWW];
+			CFURLRef        soundFileURLRef = (CFURLRef) CFBridgingRetain(pathURL);
+			
+			NativeAudioAsset* asset = [[NativeAudioAsset alloc] initWithPath:pathURL
+																	withVoices:voices
+																	withVolume:volume
+																withFadeDelay:delay];
+
+			audioMapping[audioID] = asset;
+
+			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, audioID];
+			[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
+			
+			
         } else {
 
             NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_EXISTS, audioID];
