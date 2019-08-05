@@ -27,10 +27,10 @@ static const CGFloat FADE_DELAY = 0.08;
 		NSString* webStringURL = [stringURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 		NSURL* pathURL = [NSURL URLWithString:webStringURL];*/
 
-		//NSURL *pathURL = [NSURL URLWithString : path];
+		NSURL *pathURL = [NSURL URLWithString : path];
         
         for (int x = 0; x < [numVoices intValue]; x++) {
-            AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:path error: NULL];
+            AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:pathURL error: NULL];
             player.volume = volume.floatValue;
             [player prepareToPlay];
             [voices addObject:player];
