@@ -86,7 +86,8 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
             NSString* basePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"www"];
             NSString* path = [NSString stringWithFormat:@"%@", assetPath];
-            NSString* pathFromWWW = [NSString stringWithFormat:@"%@/%@", basePath, assetPath];
+            //NSString* pathFromWWW = [NSString stringWithFormat:@"%@/%@", basePath, assetPath];
+			NSString* pathFromWWW = assetPath;
 
             if ([[NSFileManager defaultManager] fileExistsAtPath : path]) {
 
