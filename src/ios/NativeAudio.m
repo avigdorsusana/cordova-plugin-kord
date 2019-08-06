@@ -211,7 +211,8 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
     NSArray* arguments = command.arguments;
     NSString *audioID = [arguments objectAtIndex:0];
     NSString *assetPath = [arguments objectAtIndex:1];
-	NSString* filename = [assetPath lastPathComponent];
+	//NSString* filename = [assetPath lastPathComponent];
+	NSString* filename = [NSString stringWithFormat:@"%@.mp3",audioID];
 
     NSNumber *volume = nil;
     if ( [arguments count] > 2 ) {
