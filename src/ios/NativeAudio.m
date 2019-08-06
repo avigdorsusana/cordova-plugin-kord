@@ -201,9 +201,9 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
     [self.commandDelegate runInBackground:^{
         if (existingReference == nil) {
 			NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
-			/*NSString *documentsDirectory = [pathArray objectAtIndex:0];
+			NSString *documentsDirectory = [pathArray objectAtIndex:0];
 			NSString *path = [documentsDirectory stringByAppendingPathComponent:filename;
-
+			/*
 			if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
 			
                 NativeAudioAsset* asset = [[NativeAudioAsset alloc] initWithPath:path
