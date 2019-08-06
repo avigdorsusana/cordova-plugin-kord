@@ -139,7 +139,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
     [self.commandDelegate runInBackground:^{
 		BOOL success = NO;
 		NSError *error;
-		NSString *filePath;
+		//NSString *filePath;
 		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
 		NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
 		//NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"/Assets/"];
@@ -151,7 +151,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 			NSURL  *url = [NSURL fileURLWithPath:assetPath];
 			NSData *urlData = [NSData dataWithContentsOfURL:url];
 
-			filePath = [documentsDirectory stringByAppendingPathComponent:filename];
+			NSString *filePath = [documentsDirectory stringByAppendingPathComponent:filename];
 			BOOL success = [urlData writeToFile:filePath atomically:YES];
 		//}
 
