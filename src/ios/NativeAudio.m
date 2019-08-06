@@ -386,7 +386,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
 		if (audioMapping) {
 
-			time = [arguments objectAtIndex:0];
+			//time = [arguments objectAtIndex:0];
 
 			if([time isEqual:nil]) {
 
