@@ -140,7 +140,8 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 		BOOL success;
 		NSError *error;
 		NSString *filePath;
-		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
+		
+		/*NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
 		NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
 		NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"/Assets/"];
 
@@ -154,20 +155,17 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 			NSString *filePath = [dataPath stringByAppendingPathComponent:filename];
 			success = [urlData writeToFile:filePath atomically:YES];
 		}
-
+		*/
 		
-
-
-
-		//NSURL  *url = [NSURL fileURLWithPath:assetPath];
-		//NSData *urlData = [NSData dataWithContentsOfURL:url];
+		NSURL  *url = [NSURL fileURLWithPath:assetPath];
+		NSData *urlData = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
 		
-		//NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:filename];
+		NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:filename];
 
 
 
 		//[urlData writeToFile:filePath atomically:YES];
-		//success = [urlData writeToFile:filePath atomically:YES];
+		success = [urlData writeToFile:filePath atomically:YES];
 		
 		//BOOL success = [urlData writeToFile:filePath options:0 error:&error];
 		//BOOL success = [urlData writeToFile:filePath options:NSDataWritingAtomic error:&error];
