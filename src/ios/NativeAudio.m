@@ -145,7 +145,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 		NSString *documentsDirectory = [pathArray objectAtIndex:0];
 		NSString *soundPath = [documentsDirectory stringByAppendingPathComponent:filename];
 
-		NSURL *soundUrl;
+		/*NSURL *soundUrl;
 		if ([[NSFileManager defaultManager] fileExistsAtPath:soundPath])
 		{
 			soundUrl = [NSURL fileURLWithPath:soundPath isDirectory:NO];
@@ -154,7 +154,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 		// play audio file
 		audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
 		[audioPlayer prepareToPlay];
-		[audioPlayer play];
+		[audioPlayer play];*/
 
 		NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, assetPath];
 		[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
