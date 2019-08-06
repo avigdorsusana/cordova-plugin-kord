@@ -26,6 +26,7 @@
 - (void) preloadComplex:(CDVInvokedUrlCommand *)command;
 - (void) preloadComplexDownload:(CDVInvokedUrlCommand *)command;
 - (void) play:(CDVInvokedUrlCommand *)command;
+- (void) playAll:(CDVInvokedUrlCommand *)command;
 - (void) pause:(CDVInvokedUrlCommand *)command;
 - (void) stop:(CDVInvokedUrlCommand *)command;
 - (void) loop:(CDVInvokedUrlCommand *)command;

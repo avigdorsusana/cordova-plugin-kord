@@ -333,6 +333,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
                     [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
 
                 }
+
             } else {
 
                 NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_MISSING, audioID];
@@ -346,6 +347,31 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
         }
     }];
 }
+
+
+
+- (void) playAll:(CDVInvokedUrlCommand *)command
+{
+    NSString *callbackId = command.callbackId;
+    NSArray* arguments = command.arguments;
+    NSString *audioID = [arguments objectAtIndex:0];
+
+    [self.commandDelegate runInBackground:^{
+
+		if (audioMapping) {
+
+			for(id key in audioMapping) {
+				[(DeviceAudioServiceAudioItem *)[audioMapping valueForKey:key] play];
+			}
+
+		}
+    }];
+}
+
+
+
+
+
 
 - (void) stop:(CDVInvokedUrlCommand *)command
 {
