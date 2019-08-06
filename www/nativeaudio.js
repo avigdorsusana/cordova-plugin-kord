@@ -37,9 +37,9 @@ module.exports  = {
         return cordova.exec(successCallback, errorCallback, "NativeAudio", "preloadComplex", [id, assetPath, parseFloat(volume), voices, parseFloat(delay)]);
 	},
 	
-	preloadComplexDownload: function(assetPath, successCallback, errorCallback) {
+	preloadComplexDownload: function(id, assetPath, successCallback, errorCallback) {
 
-        return cordova.exec(successCallback, errorCallback, "NativeAudio", "preloadComplexDownload", [assetPath]);
+        return cordova.exec(successCallback, errorCallback, "NativeAudio", "preloadComplexDownload", [id, assetPath]);
     },
 
     play: function(id, successCallback, errorCallback, completeCallback) {
@@ -52,10 +52,14 @@ module.exports  = {
 
 	playAll: function(successCallback, errorCallback) {
         return cordova.exec(successCallback, errorCallback, "NativeAudio", "playAll", []);
-    },
+	},
 	
 	pause: function(id, successCallback, errorCallback) {
         return cordova.exec(successCallback, errorCallback, "NativeAudio", "pause", [id]);
+	},
+	
+	pauseAll: function(successCallback, errorCallback) {
+        return cordova.exec(successCallback, errorCallback, "NativeAudio", "playAll", []);
     },
 
     stop: function(id, successCallback, errorCallback) {

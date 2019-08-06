@@ -134,32 +134,13 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 {
     NSString *callbackId = command.callbackId;
     NSArray* arguments = command.arguments;
-    NSString *assetPath = [arguments objectAtIndex:0];
-	NSString* filename = [assetPath lastPathComponent];
+	NSString *audioID = [arguments objectAtIndex:0];
+    NSString *assetPath = [arguments objectAtIndex:1];
+	//NSString* filename = [assetPath lastPathComponent];
+	NSString* filename = [NSString stringWithFormat:@"%@.mp3",audioID];
 
     [self.commandDelegate runInBackground:^{
-		//BOOL success;
-		//NSError *error;
-		//NSString *filePath;
-		
-		/*NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
-		NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
-		NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"/Assets/"];
-
-		if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath])
-			[[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
-
-		if (error == nil) {
-			NSURL  *url = [NSURL fileURLWithPath:assetPath];
-			NSData *urlData = [NSData dataWithContentsOfURL:url];
-
-			NSString *filePath = [dataPath stringByAppendingPathComponent:filename];
-			success = [urlData writeToFile:filePath atomically:YES];
-		}
-		*/
-		
 		NSURL  *url = [NSURL URLWithString:assetPath];
-		//NSURL  *url = [NSURL fileURLWithPath:assetPath];
 		NSData *urlData = [NSData dataWithContentsOfURL:url];
 		
 		NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -363,6 +344,27 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 				 NSObject* asset = audioMapping[key];
 				 NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
 				 [_asset play];
+				//[(DeviceAudioServiceAudioItem *)[audioMapping valueForKey:key] play];
+			}
+
+		}
+    }];
+}
+
+
+- (void) pauseAll:(CDVInvokedUrlCommand *)command
+{
+    NSString *callbackId = command.callbackId;
+    NSArray* arguments = command.arguments;
+
+    [self.commandDelegate runInBackground:^{
+
+		if (audioMapping) {
+
+			for(id key in audioMapping) {
+				 NSObject* asset = audioMapping[key];
+				 NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
+				 [_asset pause];
 				//[(DeviceAudioServiceAudioItem *)[audioMapping valueForKey:key] play];
 			}
 
