@@ -143,8 +143,8 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 		NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
 		//NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"/Assets/"];
 
-		//if (![[NSFileManager defaultManager] fileExistsAtPath:documentsDirectory])
-		//	[[NSFileManager defaultManager] createDirectoryAtPath:documentsDirectory withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+		if (![[NSFileManager defaultManager] fileExistsAtPath:documentsDirectory])
+			[[NSFileManager defaultManager] createDirectoryAtPath:documentsDirectory withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
 /*
 		BOOL success = NO;
 		if (error == nil) {
