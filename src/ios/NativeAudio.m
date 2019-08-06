@@ -377,6 +377,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
 - (void) seekAll:(CDVInvokedUrlCommand *)command
 {
+	/*
     NSString *callbackId = command.callbackId;
     NSArray* arguments = command.arguments;
 	NSNumber *time = nil;
@@ -405,6 +406,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
 		}
     }];
+	*/
 }
 
 
