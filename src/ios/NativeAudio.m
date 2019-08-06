@@ -166,14 +166,16 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 		[audioPlayer prepareToPlay];
 		[audioPlayer play];*/
 
-		if(error == nil) {
+		if(error != nil) {
 		//if (success) {
-			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, filePath];
-			[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
-		
-		} else {
 			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_FAIL, error];
             [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
+			
+		
+		} else {
+			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, filePath];
+			[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
+			
 		}
 
     }];
