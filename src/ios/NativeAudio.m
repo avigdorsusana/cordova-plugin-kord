@@ -147,7 +147,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 		if (![[NSFileManager defaultManager] fileExistsAtPath:documentsDirectory])
 			[[NSFileManager defaultManager] createDirectoryAtPath:documentsDirectory withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
 
-		if (error == nil) {
+		if (error == NULL) {
 			NSURL  *url = [NSURL fileURLWithPath:assetPath];
 			NSData *urlData = [NSData dataWithContentsOfURL:url];
 
