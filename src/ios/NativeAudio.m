@@ -134,17 +134,17 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
     NSArray* arguments = command.arguments;
     NSString *assetPath = [arguments objectAtIndex:0];
 	NSString* filename = [assetPath lastPathComponent];
-/*
+
     [self.commandDelegate runInBackground:^{
 		NSURL  *url = [NSURL fileURLWithPath:assetPath];
 		NSData *urlData = [NSData dataWithContentsOfURL:url];
 		NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:filename];
 		[urlData writeToFile:filePath atomically:YES];
 
-		NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, audioID];
+		NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, assetPath];
 		[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
 
-    }];*/
+    }];
 }
 
 
