@@ -137,7 +137,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 	NSString* filename = [assetPath lastPathComponent];
 
     [self.commandDelegate runInBackground:^{
-        //if (existingReference == nil) {
+        if (existingReference == nil) {
 			/*NSURL  *url = [NSURL fileURLWithPath:assetPath];
 			NSData *urlData = [NSData dataWithContentsOfURL:url];
 			NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:filename];
@@ -148,9 +148,9 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
 		//} else {
 
-        //    NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_EXISTS, audioID];
-        //    [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
-        //}
+            NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_EXISTS, audioID];
+            [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
+        }
 
     }];
 }
