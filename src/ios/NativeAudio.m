@@ -386,21 +386,21 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
 		if (audioMapping) {
 
-			//time = [arguments objectAtIndex:0];
+			time = [arguments objectAtIndex:0];
 
 			if([time isEqual:nil]) {
 
-				NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_SEEK_NIL, time];
-           		[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
+				//NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_SEEK_NIL, time];
+           		//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
 
 			} else {
-				/*
+				
 				for(id key in audioMapping) {
 					NSObject* asset = audioMapping[key];
 					NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
 					[_asset seek:time];
 					//[(DeviceAudioServiceAudioItem *)[audioMapping valueForKey:key] play];
-				}*/
+				}
 
 			}
 
