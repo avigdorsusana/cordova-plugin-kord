@@ -85,6 +85,16 @@ static const CGFloat FADE_DELAY = 0.08;
     }
 }
 
+
+- (void) pause
+{
+    for (int x = 0; x < [voices count]; x++) {
+        AVAudioPlayer * player = [voices objectAtIndex:x];
+        [player pause];
+    }
+}
+
+
 - (void) stop
 {
     for (int x = 0; x < [voices count]; x++) {
