@@ -137,7 +137,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 	NSString* filename = [assetPath lastPathComponent];
 
     [self.commandDelegate runInBackground:^{
-		//BOOL success;
+		BOOL success;
 		//NSError *error;
 		//NSString *filePath;
 		
@@ -157,18 +157,30 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 		}
 		*/
 		
-		NSURL  *url = [NSURL fileURLWithPath:assetPath];
+		NSURL  *url = [NSURL URLWithString:assetPath];
+		//NSURL  *url = [NSURL fileURLWithPath:assetPath];
 		NSData *urlData = [NSData dataWithContentsOfURL:url];
 		
-		NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:filename];
-		
-		//[urlData writeToFile:filePath atomically:YES];
-		BOOL success = [urlData writeToFile:filePath atomically:YES];
-		//BOOL success = [urlData writeToFile:filePath options:0 error:&error];
-		//BOOL success = [urlData writeToFile:filePath options:NSDataWritingAtomic error:&error];
-		//BOOL success = [urlData writeToFile:filePath atomically:NO];
-		//BOOL success = [urlData writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
-		
+		if ( urlData ) {
+			//NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:filename];
+			
+			//[urlData writeToFile:filePath atomically:YES];
+			//BOOL success = [urlData writeToFile:filePath atomically:YES];
+			//BOOL success = [urlData writeToFile:filePath options:0 error:&error];
+			//BOOL success = [urlData writeToFile:filePath options:NSDataWritingAtomic error:&error];
+			//BOOL success = [urlData writeToFile:filePath atomically:NO];
+			//BOOL success = [urlData writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+
+
+			NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+			NSString  *documentsDirectory = [paths objectAtIndex:0];  
+
+			NSString  *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,filename];
+			BOOL success = [urlData writeToFile:filePath atomically:YES];
+			
+		} 
+
+
 		//BOOL success = [urlData writeToFile:filePath atomically:NO];
 		/*if (!success) {
 			NSLog(@"writeToFile failed with error %@", error);
