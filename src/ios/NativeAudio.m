@@ -160,13 +160,26 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 		NSURL  *url = [NSURL fileURLWithPath:assetPath];
 		NSData *urlData = [NSData dataWithContentsOfURL:url];
 		
-		NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:filename];
+		//NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:filename];
+		
+
+		/**
+		Returns the URL to the application's Documents directory.
+		*/
+		- (NSURL *)applicationDocumentsDirectory {
+			return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory 
+				inDomains:NSUserDomainMask] lastObject];
+		}
+
+		NSString *path = [[self applicationDocumentsDirectory].path 
+                       stringByAppendingPathComponent:filename];
+		[urlData writeToFile:path atomically:YES
+							encoding:NSUTF8StringEncoding error:nil];
 
 
 
 		//[urlData writeToFile:filePath atomically:YES];
-		BOOL success = [urlData writeToFile:filePath atomically:YES];
-		
+		//BOOL success = [urlData writeToFile:filePath atomically:YES];
 		//BOOL success = [urlData writeToFile:filePath options:0 error:&error];
 		//BOOL success = [urlData writeToFile:filePath options:NSDataWritingAtomic error:&error];
 		//BOOL success = [urlData writeToFile:filePath atomically:NO];

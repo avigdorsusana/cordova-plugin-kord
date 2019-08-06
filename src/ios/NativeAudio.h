@@ -34,4 +34,11 @@
 
 - (void) parseOptions:(NSDictionary*) options;
 
+
+- (NSURL *)applicationDocumentsDirectory {
+			return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory 
+				inDomains:NSUserDomainMask] lastObject];
+		}
+
+
 @end
