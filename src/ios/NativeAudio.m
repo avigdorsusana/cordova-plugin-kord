@@ -161,6 +161,10 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 		//NSURL  *url = [NSURL fileURLWithPath:assetPath];
 		NSData *urlData = [NSData dataWithContentsOfURL:url];
 		
+		NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+		NSString  *documentsDirectory = [paths objectAtIndex:0];  
+		NSString  *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,filename];
+		
 		if ( urlData ) {
 			//NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:filename];
 			
@@ -171,15 +175,18 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 			//BOOL success = [urlData writeToFile:filePath atomically:NO];
 			//BOOL success = [urlData writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
 
-
-			NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-			NSString  *documentsDirectory = [paths objectAtIndex:0];  
-
-			NSString  *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,filename];
 			//BOOL success = 
 			[urlData writeToFile:filePath atomically:YES];
 			
-		} 
+			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, filePath];
+			[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
+			
+		} else {
+			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_FAIL, filePath];
+            [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
+			
+
+		}
 
 
 		//BOOL success = [urlData writeToFile:filePath atomically:NO];
@@ -204,13 +211,11 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
 		//if(error != nil) {
 		/*if (!success) {
-			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_FAIL, urlData];
-            [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
+			
 			
 		
 		} else {*/
-			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, url];
-			[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
+			
 
 		//}
 
