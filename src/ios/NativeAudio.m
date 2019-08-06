@@ -132,25 +132,17 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 {
     NSString *callbackId = command.callbackId;
     NSArray* arguments = command.arguments;
-    NSString *audioID = [arguments objectAtIndex:0];
-    NSString *assetPath = [arguments objectAtIndex:1];
+    NSString *assetPath = [arguments objectAtIndex:0];
 	NSString* filename = [assetPath lastPathComponent];
 
     [self.commandDelegate runInBackground:^{
-        if (existingReference == nil) {
-			/*NSURL  *url = [NSURL fileURLWithPath:assetPath];
-			NSData *urlData = [NSData dataWithContentsOfURL:url];
-			NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:filename];
-			[urlData writeToFile:filePath atomically:YES];
+		NSURL  *url = [NSURL fileURLWithPath:assetPath];
+		NSData *urlData = [NSData dataWithContentsOfURL:url];
+		NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:filename];
+		[urlData writeToFile:filePath atomically:YES];
 
-			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, audioID];
-            [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];*/
-
-		//} else {
-
-            NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_EXISTS, audioID];
-            [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
-        }
+		NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, audioID];
+		[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
 
     }];
 }
