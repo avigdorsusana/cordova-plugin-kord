@@ -197,7 +197,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
     }
 
     NSNumber* existingReference = audioMapping[audioID];
-/*
+
     [self.commandDelegate runInBackground:^{
         if (existingReference == nil) {
 			NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
@@ -226,7 +226,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
             [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
         }
 
-    }];*/
+    }];
 }
 
 
