@@ -144,14 +144,16 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 		//success = [urlData writeToFile:filePath atomically:YES];
 		NSError *error;
 		//BOOL success = [urlData writeToFile:filePath options:0 error:&error];
-		BOOL success = [urlData writeToFile:filePath atomically:NO];
+		[urlData writeToFile:filePath options:NSDataWritingAtomic error:&error];
+		
+		//BOOL success = [urlData writeToFile:filePath atomically:NO];
 		/*if (!success) {
 			NSLog(@"writeToFile failed with error %@", error);
 		}*/
 
-		NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
+		/*NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
 		NSString *documentsDirectory = [pathArray objectAtIndex:0];
-		NSString *soundPath = [documentsDirectory stringByAppendingPathComponent:filename];
+		NSString *soundPath = [documentsDirectory stringByAppendingPathComponent:filename];*/
 
 		/*NSURL *soundUrl;
 		if ([[NSFileManager defaultManager] fileExistsAtPath:soundPath])
@@ -164,7 +166,8 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 		[audioPlayer prepareToPlay];
 		[audioPlayer play];*/
 
-		if (success) {
+		if(error == nil) {
+		//if (success) {
 			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, filePath];
 			[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
 		
