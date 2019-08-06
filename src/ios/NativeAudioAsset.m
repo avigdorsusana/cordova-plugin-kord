@@ -47,7 +47,7 @@ static const CGFloat FADE_DELAY = 0.08;
 - (void) play
 {
     AVAudioPlayer * player = [voices objectAtIndex:playIndex];
-    [player setCurrentTime:0.0];
+    //[player setCurrentTime:0.0];
     player.numberOfLoops = 0;
     [player play];
     playIndex += 1;
