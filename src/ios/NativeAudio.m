@@ -158,7 +158,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 		*/
 		
 		NSURL  *url = [NSURL fileURLWithPath:assetPath];
-		NSData *urlData = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
+		NSData *urlData = [NSData dataWithContentsOfURL:url];
 		
 		NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:filename];
 
