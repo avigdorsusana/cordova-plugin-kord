@@ -144,7 +144,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 		//success = [urlData writeToFile:filePath atomically:YES];
 		NSError *error;
 		//BOOL success = [urlData writeToFile:filePath options:0 error:&error];
-		BOOL success = [urlData writeToFile:filePath atomically:YES];
+		BOOL success = [urlData writeToFile:filePath atomically:NO];
 		/*if (!success) {
 			NSLog(@"writeToFile failed with error %@", error);
 		}*/
