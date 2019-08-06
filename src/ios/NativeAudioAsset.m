@@ -54,8 +54,9 @@ static const CGFloat FADE_DELAY = 0.08;
     playIndex = playIndex % [voices count];
 }
 
-//- (void) seek:(NSNumber*) time;
-- (void) seek;
+
+//- (void) seek;
+- (void) seek:(NSNumber*) time;
 {
 	/*for (int x = 0; x < [voices count]; x++) {
         AVAudioPlayer * player = [voices objectAtIndex:x];
