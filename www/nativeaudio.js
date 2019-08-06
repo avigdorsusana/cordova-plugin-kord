@@ -59,7 +59,7 @@ module.exports  = {
 	},
 	
 	pauseAll: function(successCallback, errorCallback) {
-        return cordova.exec(successCallback, errorCallback, "NativeAudio", "playAll", []);
+        return cordova.exec(successCallback, errorCallback, "NativeAudio", "pauseAll", []);
     },
 
     stop: function(id, successCallback, errorCallback) {
