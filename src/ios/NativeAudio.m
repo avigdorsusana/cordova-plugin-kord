@@ -141,7 +141,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 		NSError *error;
 		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
 		NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
-		NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"/Assets/"];
+		NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"/Assets"];
 
 		if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath])
 			[[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
