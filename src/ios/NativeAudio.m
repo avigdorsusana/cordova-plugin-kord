@@ -127,7 +127,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
 - (void) preloadComplexDownload:(CDVInvokedUrlCommand *)command
 {
-    NSString *callbackId = command.callbackId;
+    /*NSString *callbackId = command.callbackId;
     NSArray* arguments = command.arguments;
     NSString *audioID = [arguments objectAtIndex:0];
     NSString *assetPath = [arguments objectAtIndex:1];
@@ -135,38 +135,13 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
     [self.commandDelegate runInBackground:^{
         if (existingReference == nil) {
-			/*
-			NSURL  *url = [NSURL URLWithString:assetPath];
-			NSData *urlData = [NSData dataWithContentsOfURL:url];
-			if ( urlData ) {
-				NSArray   *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-				NSString  *documentsDirectory = [paths objectAtIndex:0];  
-
-				NSString  *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory, filename];
-				[urlData writeToFile:filePath atomically:YES];
-			}
-			*/
-
 			NSURL  *url = [NSURL fileURLWithPath:assetPath];
 			NSData *urlData = [NSData dataWithContentsOfURL:url];
 			NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:filename];
 			[urlData writeToFile:filePath atomically:YES];
 
-			// get the file from directory
-			/*NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
-			NSString *documentsDirectory = [pathArray objectAtIndex:0];
-			NSString *soundPath = [documentsDirectory stringByAppendingPathComponent:filename;
-
-			NSURL *soundUrl;
-			if ([[NSFileManager defaultManager] fileExistsAtPath:soundPath])
-			{
-				soundUrl = [NSURL fileURLWithPath:soundPath isDirectory:NO];
-			}*/
-
-			// play audio file
-			//audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
-			//[audioPlayer prepareToPlay];
-			//[audioPlayer play];
+			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, audioID];
+            [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
 
 		} else {
 
@@ -174,7 +149,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
             [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
         }
 
-    }];
+    }];*/
 }
 
 
@@ -222,31 +197,12 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
     [self.commandDelegate runInBackground:^{
         if (existingReference == nil) {
-			// get the file from directory
 			NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
 			NSString *documentsDirectory = [pathArray objectAtIndex:0];
 			NSString *path = [documentsDirectory stringByAppendingPathComponent:filename;
 
-			NSURL *soundUrl;
 			if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-				//soundUrl = [NSURL fileURLWithPath:path isDirectory:NO];
-			//}
-
-			// play audio file
-			//audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
-			//[audioPlayer prepareToPlay];
-			//[audioPlayer play];
-
-
-
-
 			
-
-
-            //NSString* basePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"www"];
-            //NSString* path = [NSString stringWithFormat:@"%@/%@", basePath, assetPath];
-
-            //if ([[NSFileManager defaultManager] fileExistsAtPath : path]) {
                 NativeAudioAsset* asset = [[NativeAudioAsset alloc] initWithPath:path
                                                                       withVoices:voices
                                                                       withVolume:volume
@@ -269,6 +225,9 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
     }];
 }
+
+
+
 
 - (void) play:(CDVInvokedUrlCommand *)command
 {
