@@ -58,15 +58,15 @@ static const CGFloat FADE_DELAY = 0.08;
 //- (void) seek:(NSNumber*) time;
 - (void) seek;
 {
-	 for (int x = 0; x < [voices count]; x++) {
+	/*for (int x = 0; x < [voices count]; x++) {
         AVAudioPlayer * player = [voices objectAtIndex:x];
         [player stop];
-    }
-   /* for (int x = 0; x < [voices count]; x++) {
+	}*/
+    for (int x = 0; x < [voices count]; x++) {
         AVAudioPlayer * player = [voices objectAtIndex:x];
 
         [player setCurrentTime:30.0];
-    }*/
+    }
 }
 
 
