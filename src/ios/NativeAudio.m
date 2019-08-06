@@ -139,21 +139,21 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
     [self.commandDelegate runInBackground:^{
 		BOOL success = NO;
 		NSError *error;
+		NSString *filePath;
 		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
 		NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
 		//NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"/Assets/"];
 
 		if (![[NSFileManager defaultManager] fileExistsAtPath:documentsDirectory])
 			[[NSFileManager defaultManager] createDirectoryAtPath:documentsDirectory withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
-/*
-		BOOL success = NO;
+
 		if (error == nil) {
 			NSURL  *url = [NSURL fileURLWithPath:assetPath];
 			NSData *urlData = [NSData dataWithContentsOfURL:url];
 
-			NSString *filePath = [dataPath stringByAppendingPathComponent:filename];
+			NSString *filePath = [documentsDirectory stringByAppendingPathComponent:filename];
 			BOOL success = [urlData writeToFile:filePath atomically:YES];
-		}*/
+		}
 
 		
 
@@ -194,7 +194,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 		[audioPlayer play];*/
 
 		//if(error != nil) {
-		/*if (!success) {
+		if (!success) {
 			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_FAIL, filePath];
             [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
 			
@@ -203,7 +203,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, filePath];
 			[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
 
-		}*/
+		}
 
     }];
 }
