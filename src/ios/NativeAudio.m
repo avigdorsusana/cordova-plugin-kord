@@ -138,8 +138,8 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
     [self.commandDelegate runInBackground:^{
         if (existingReference == nil) {
-			NSURL  *url = [NSURL fileURLWithPath:assetPath];
-			NSData *urlData = [NSData dataWithContentsOfURL:url];
+			//NSURL  *url = [NSURL fileURLWithPath:assetPath];
+			//NSData *urlData = [NSData dataWithContentsOfURL:url];
 			/*NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:filename];
 			[urlData writeToFile:filePath atomically:YES];
 
