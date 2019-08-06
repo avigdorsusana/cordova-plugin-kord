@@ -163,11 +163,11 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 		NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:filename];
 		
 		//[urlData writeToFile:filePath atomically:YES];
-		//BOOL success = [urlData writeToFile:filePath atomically:YES];
+		BOOL success = [urlData writeToFile:filePath atomically:YES];
 		//BOOL success = [urlData writeToFile:filePath options:0 error:&error];
 		//BOOL success = [urlData writeToFile:filePath options:NSDataWritingAtomic error:&error];
 		//BOOL success = [urlData writeToFile:filePath atomically:NO];
-		BOOL success = [urlData writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
+		//BOOL success = [urlData writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
 		
 		//BOOL success = [urlData writeToFile:filePath atomically:NO];
 		/*if (!success) {
