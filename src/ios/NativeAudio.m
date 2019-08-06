@@ -137,14 +137,40 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 	NSString* filename = [assetPath lastPathComponent];
 
     [self.commandDelegate runInBackground:^{
-		NSURL  *url = [NSURL fileURLWithPath:assetPath];
-		NSData *urlData = [NSData dataWithContentsOfURL:url];
-		NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:filename];
+		
+		NSError *error;
+		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
+		NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
+		NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"/Assets/"];
+
+		if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath])
+			[[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+
+		BOOL success = NO;
+		if (error == nil) {
+			NSURL  *url = [NSURL fileURLWithPath:assetPath];
+			NSData *urlData = [NSData dataWithContentsOfURL:url];
+
+			NSString *filePath = [dataPath stringByAppendingPathComponent:filename];
+			BOOL success = [urlData writeToFile:filePath atomically:YES];
+		}
+
+		
+
+
+
+		//NSURL  *url = [NSURL fileURLWithPath:assetPath];
+		//NSData *urlData = [NSData dataWithContentsOfURL:url];
+		
+		//NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:filename];
+
+
+
 		//[urlData writeToFile:filePath atomically:YES];
 		//success = [urlData writeToFile:filePath atomically:YES];
-		NSError *error;
+		
 		//BOOL success = [urlData writeToFile:filePath options:0 error:&error];
-		BOOL success = [urlData writeToFile:filePath options:NSDataWritingAtomic error:&error];
+		//BOOL success = [urlData writeToFile:filePath options:NSDataWritingAtomic error:&error];
 		//BOOL success = [urlData writeToFile:filePath atomically:NO];
 		
 		//BOOL success = [urlData writeToFile:filePath atomically:NO];
@@ -169,7 +195,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
 		//if(error != nil) {
 		if (!success) {
-			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_FAIL, error];
+			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_FAIL, filePath];
             [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
 			
 		
