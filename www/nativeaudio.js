@@ -68,6 +68,10 @@ module.exports  = {
 
     loop: function(id, successCallback, errorCallback) {
         return cordova.exec(successCallback, errorCallback, "NativeAudio", "loop", [id]);
+	},
+	
+	seekAll: function(time, successCallback, errorCallback) {
+        return cordova.exec(successCallback, errorCallback, "NativeAudio", "seekAll", [time]);
     },
 
     unload: function(id, successCallback, errorCallback) {

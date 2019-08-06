@@ -17,6 +17,7 @@ NSString* ERROR_REFERENCE_MISSING = @"(NATIVE AUDIO) Asset reference does not ex
 NSString* ERROR_REFERENCE_FAIL = @"(NATIVE AUDIO) Asset reference cant download.";
 NSString* ERROR_TYPE_RESTRICTED = @"(NATIVE AUDIO) Action restricted to assets loaded using preloadComplex().";
 NSString* ERROR_VOLUME_NIL = @"(NATIVE AUDIO) Volume cannot be empty.";
+NSString* ERROR_SEEK_NIL = @"(NATIVE AUDIO) Seek cannot be empty.";
 NSString* ERROR_VOLUME_FORMAT = @"(NATIVE AUDIO) Volume is declared as float between 0.0 - 1.0";
 
 NSString* INFO_ASSET_LOADED = @"(NATIVE AUDIO) Asset loaded.";
@@ -367,6 +368,39 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 				 NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
 				 [_asset pause];
 				//[(DeviceAudioServiceAudioItem *)[audioMapping valueForKey:key] play];
+			}
+
+		}
+    }];
+}
+
+
+- (void) seekAll:(CDVInvokedUrlCommand *)command
+{
+    NSString *callbackId = command.callbackId;
+    NSArray* arguments = command.arguments;
+	NSNumber *time = nil;
+
+    [self.commandDelegate runInBackground:^{
+
+		if (audioMapping) {
+
+			time = [arguments objectAtIndex:0];
+
+			if([time isEqual:nil]) {
+
+				NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_SEEK_NIL, time];
+           		[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
+
+			} else {
+
+				for(id key in audioMapping) {
+					NSObject* asset = audioMapping[key];
+					NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
+					[_asset seek:time];
+					//[(DeviceAudioServiceAudioItem *)[audioMapping valueForKey:key] play];
+				}
+
 			}
 
 		}
