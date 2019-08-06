@@ -165,7 +165,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
 
 		//[urlData writeToFile:filePath atomically:YES];
-		success = [urlData writeToFile:filePath atomically:YES];
+		BOOL success = [urlData writeToFile:filePath atomically:YES];
 		
 		//BOOL success = [urlData writeToFile:filePath options:0 error:&error];
 		//BOOL success = [urlData writeToFile:filePath options:NSDataWritingAtomic error:&error];
@@ -193,12 +193,12 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
 		//if(error != nil) {
 		if (!success) {
-			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_FAIL, error];
+			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_FAIL, filePath];
             [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
 			
 		
 		} else {
-			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, error];
+			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, filePath];
 			[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
 
 		}
