@@ -380,20 +380,18 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 	
     NSString *callbackId = command.callbackId;
     NSArray* arguments = command.arguments;
-	NSNumber *time = nil;
+	NSNumber *time = [arguments objectAtIndex:0];
 
     [self.commandDelegate runInBackground:^{
 
 		if (audioMapping) {
 
-			//time = [arguments objectAtIndex:0];
-
-			if([time isEqual:nil]) {
+			//if([time isEqual:nil]) {
 
 				//NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_SEEK_NIL, time];
            		//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
 
-			} else {
+			//} else {
 				
 				for(id key in audioMapping) {
 					NSObject* asset = audioMapping[key];
@@ -402,7 +400,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 					[_asset seek];
 				}
 
-			}
+			//}
 
 		}
     }];
