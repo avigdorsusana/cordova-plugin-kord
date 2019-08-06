@@ -142,16 +142,16 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 		NSString *filePath;
 		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
 		NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
-		//NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"/Assets/"];
+		NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:@"/Assets/"];
 
-		if (![[NSFileManager defaultManager] fileExistsAtPath:documentsDirectory])
-			[[NSFileManager defaultManager] createDirectoryAtPath:documentsDirectory withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+		if (![[NSFileManager defaultManager] fileExistsAtPath:dataPath])
+			[[NSFileManager defaultManager] createDirectoryAtPath:dataPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
 
-		if (error == NULL) {
+		if (error == nil) {
 			NSURL  *url = [NSURL fileURLWithPath:assetPath];
 			NSData *urlData = [NSData dataWithContentsOfURL:url];
 
-			NSString *filePath = [documentsDirectory stringByAppendingPathComponent:filename];
+			NSString *filePath = [dataPath stringByAppendingPathComponent:filename];
 			success = [urlData writeToFile:filePath atomically:YES];
 		}
 
