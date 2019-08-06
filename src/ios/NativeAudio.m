@@ -67,6 +67,9 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
     [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:command.callbackId];
 }
 
+
+
+
 - (void) preloadSimple:(CDVInvokedUrlCommand *)command
 {
 
@@ -155,12 +158,12 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
 - (void) preloadComplex:(CDVInvokedUrlCommand *)command
 {
-    /*NSString *callbackId = command.callbackId;
+    NSString *callbackId = command.callbackId;
     NSArray* arguments = command.arguments;
     NSString *audioID = [arguments objectAtIndex:0];
     NSString *assetPath = [arguments objectAtIndex:1];
 	NSString *filename = [[assetPath path] lastPathComponent];
-
+/*
     NSNumber *volume = nil;
     if ( [arguments count] > 2 ) {
         volume = [arguments objectAtIndex:2];
