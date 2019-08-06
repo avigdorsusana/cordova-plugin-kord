@@ -396,8 +396,8 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 				for(id key in audioMapping) {
 					NSObject* asset = audioMapping[key];
 					NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
-					[_asset seek:time];
-					//[_asset seek];
+					//[_asset seek:time];
+					[_asset seek];
 				}
 
 			//}
