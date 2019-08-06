@@ -359,8 +359,8 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 
 		if (audioMapping) {
 
-			for(id _asset in audioMapping) {
-				[[audioMapping valueForKey:_asset] play];
+			for(id key in audioMapping) {
+				//[(DeviceAudioServiceAudioItem *)[audioMapping valueForKey:key] play];
 			}
 
 		}
