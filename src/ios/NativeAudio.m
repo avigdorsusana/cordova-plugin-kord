@@ -381,7 +381,7 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
     NSString *callbackId = command.callbackId;
     NSArray* arguments = command.arguments;
 	NSNumber *time = nil;
-/*
+
     [self.commandDelegate runInBackground:^{
 
 		if (audioMapping) {
@@ -398,15 +398,15 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 				for(id key in audioMapping) {
 					NSObject* asset = audioMapping[key];
 					NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
-					[_asset seek:time];
-					//[(DeviceAudioServiceAudioItem *)[audioMapping valueForKey:key] play];
+					//[_asset seek:time];
+					[_asset seek];
 				}
 
 			}
 
 		}
     }];
-	*/
+	
 }
 
 
