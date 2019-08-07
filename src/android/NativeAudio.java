@@ -75,7 +75,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 				String assetPath = data.getString(1);
 
 
-				String filename = audioId + ".mp3";
+				String filename = audioID + ".mp3";
 				// File directory = getFilesDir();
 				// String filepath = directory.getPath() + "/" + filename;
 
