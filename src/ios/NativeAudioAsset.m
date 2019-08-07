@@ -116,7 +116,7 @@ static const CGFloat FADE_DELAY = 0.08;
         [player stop];
 		double time = 0;
     }
-	//return(time);
+	return(time);
 }
 
 - (void) currentTime
