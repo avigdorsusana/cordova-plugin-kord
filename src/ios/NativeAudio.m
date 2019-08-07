@@ -299,8 +299,8 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
 			dispatch_time_t offset_time = delay * NSEC_PER_SEC;
 			dispatch_time_t fire_time = dispatch_time(DISPATCH_TIME_NOW, offset_time);
 			
-			int x = 0;
-			double curtime = 0;
+			//int x = 0;
+			//double curtime = 0;
 			
 			/*for(id key in registeredAudioElements) {
 				
