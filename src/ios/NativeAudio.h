@@ -30,7 +30,7 @@
 
 - (void) parseOptions:(NSDictionary*) options;
 
-- (double) duration:(CDVInvokedUrlCommand *)command;
-- (double) currentTime:(CDVInvokedUrlCommand *)command;
+- (void) duration:(CDVInvokedUrlCommand *)command;
+- (void) currentTime:(CDVInvokedUrlCommand *)command;
 
 @end
