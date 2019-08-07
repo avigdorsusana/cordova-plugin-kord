@@ -123,8 +123,8 @@ static const CGFloat FADE_DELAY = 0.08;
 
 - (double) setCurrentTime:(NSNumber*) time;
 {
-	AVAudioPlayer * player = [voices objectAtIndex:playIndex];
-	[player setCurrentTime:time];
+	//AVAudioPlayer * player = [voices objectAtIndex:playIndex];
+	//[player setCurrentTime:time.floatValue];
 }
 
 - (double) currentTime
