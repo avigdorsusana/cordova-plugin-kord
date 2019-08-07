@@ -8,13 +8,15 @@
 package com.rjfun.cordova.plugin.nativeaudio;
 
 import java.io.IOException;
+import java.net.URLConnection;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
 import java.net.URL;
 import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
+// import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 
