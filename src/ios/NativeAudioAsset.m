@@ -110,10 +110,11 @@ static const CGFloat FADE_DELAY = 0.08;
 
 - (void) duration
 {
-	//double time = 0;
+	double time = 0;
     for (int x = 0; x < [voices count]; x++) {
         AVAudioPlayer * player = [voices objectAtIndex:x];
         [player stop];
+		double time = 0;
     }
 	//return(time);
 }
