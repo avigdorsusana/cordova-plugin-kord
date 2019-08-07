@@ -79,7 +79,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 				String filepath = directory.getAbsolutePath();
 				// if (!direct.exists()) direct.mkdirs();
 
-				DownloadManager mgr = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+				DownloadManager mgr = (DownloadManager) this.cordova.getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
 				Uri downloadUri = Uri.parse(assetPath);
 				DownloadManager.Request request = new DownloadManager.Request(downloadUri);
 
