@@ -475,7 +475,7 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
 }
 
 
-- (void) duration:(CDVInvokedUrlCommand *)command
+- (double) duration:(CDVInvokedUrlCommand *)command
 {
     NSString *callbackId = command.callbackId;
     NSArray* arguments = command.arguments;
