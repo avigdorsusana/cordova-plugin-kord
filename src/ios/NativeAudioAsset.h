@@ -17,7 +17,7 @@ typedef void (^CompleteCallback)(NSString*);
 - (void) playWithFade;
 - (void) pause;
 - (void) stop;
-- (void) seek:(NSNumber*) time;
+- (void) seek:(double) time;
 //- (void) seek;
 - (void) stopWithFade;
 - (void) setCurrentTime:(NSNumber*) time;
