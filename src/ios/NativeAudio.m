@@ -302,7 +302,7 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
 			int x = 0;
 			double curtime = 0;
 			
-			for(id key in registeredAudioElements) {
+			/*for(id key in registeredAudioElements) {
 				
 				NSObject* asset = audioMapping[key];
 				NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
@@ -310,7 +310,7 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
 				[_asset setCurrentTime:curtime];
 				
 				x++;
-			}
+			}*/
 
 			for(id key in registeredAudioElements) {
 				dispatch_after(fire_time, dispatch_get_main_queue(), ^{
