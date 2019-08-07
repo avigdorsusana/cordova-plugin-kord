@@ -295,12 +295,38 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
 
 		if (audioMapping) {
 
+			double delay = 0.50;
+			dispatch_time_t offset_time = delay * NSEC_PER_SEC;
+			dispatch_time_t fire_time = dispatch_time(DISPATCH_TIME_NOW, offset_time);
+			
+			int x = 0;
+			double curtime = 0;
+			
+			for(id key in registeredAudioElements) {
+				
+				NSObject* asset = audioMapping[key];
+				NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
+				if (x == 0) curtime = [_asset duration];
+				[_asset setCurrentTime:curtime];
+				
+				x++;
+			}
+
+			for(id key in registeredAudioElements) {
+				dispatch_after(fire_time, dispatch_get_main_queue(), ^{
+					NSObject* asset = audioMapping[key];
+					NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
+					[_asset play];
+				});
+			}
+
+			/*
 			for(id key in audioMapping) {
 				 NSObject* asset = audioMapping[key];
 				 NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
 				 [_asset play];
 				//[(DeviceAudioServiceAudioItem *)[audioMapping valueForKey:key] play];
-			}
+			}*/
 
 		}
     }];
