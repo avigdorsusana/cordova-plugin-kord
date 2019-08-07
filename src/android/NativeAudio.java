@@ -7,27 +7,23 @@
 
 package com.rjfun.cordova.plugin.nativeaudio;
 
-// import java.io.IOException;
-import java.net.URLConnection;
-// import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
-import java.net.URL;
-import java.io.*;
-// import java.io.File;
-// import java.io.FileOutputStream;
-// import java.io.InputStream;
-import java.net.MalformedURLException;
+import java.io.File;
+import java.io.IOException;
+
 
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -79,48 +75,20 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 
 				String filename = audioID + ".mp3";
-				// File directory = getFilesDir();
-				// String filepath = directory.getPath() + "/" + filename;
+				File directory = new File(Environment.getExternalStorageDirectory() + "/" + filename);
+				String filepath = directory.getAbsolutePath();
+				// if (!direct.exists()) direct.mkdirs();
 
-				URL url = new URL(assetPath);
-                URLConnection conection = url.openConnection();
-				conection.connect();
-				
+				DownloadManager mgr = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+				Uri downloadUri = Uri.parse(assetPath);
+				DownloadManager.Request request = new DownloadManager.Request(downloadUri);
 
-                // download the file
-                InputStream input = new BufferedInputStream(url.openStream(),
-                        8192);
+				request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
+						.setAllowedOverRoaming(false).setTitle("Demo")
+						.setDescription("Something useful. No, really.")
+						.setDestinationInExternalPublicDir("/assets", filename);
 
-                // Output stream
-                OutputStream output = new FileOutputStream(Environment
-                        .getDataDirectory().toString()
-                        + filename);
-
-				byte byteArray[] = new byte[1024];
-				
-				// int lengthOfFile = conection.getContentLength();
-				long total = 0;
-				int count;
-
-				while ((count = input.read(byteArray)) != -1) {
-                    total += count;
-                    // publishing the progress....
-                    // After this onProgressUpdate will be called
-                    // publishProgress("" + (int) ((total * 100) / lengthOfFile));
-
-                    // writing data to file
-                    output.write(byteArray, 0, count);
-                }
-
-                // flushing output
-                output.flush();
-
-                // closing streams
-                output.close();
-                input.close();
-
-
-
+				mgr.enqueue(request);
 
 				Log.d(LOGTAG, "preloadComplex - " + audioID + ": " + assetPath);
 				
