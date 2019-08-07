@@ -1,11 +1,3 @@
-//
-// 
-//  NativeAudioAsset.m
-//  NativeAudioAsset
-//
-//  Created by Sidney Bofah on 2014-06-26.
-//
-
 #import "NativeAudioAsset.h"
 
 @implementation NativeAudioAsset
@@ -49,6 +41,7 @@ static const CGFloat FADE_DELAY = 0.08;
     AVAudioPlayer * player = [voices objectAtIndex:playIndex];
     //[player setCurrentTime:0.0];
     player.numberOfLoops = 0;
+	[player prepareToPlay];
     [player play];
     playIndex += 1;
     playIndex = playIndex % [voices count];
@@ -58,11 +51,7 @@ static const CGFloat FADE_DELAY = 0.08;
 //- (void) seek;
 - (void) seek:(NSNumber*) time;
 {
-	/*for (int x = 0; x < [voices count]; x++) {
-        AVAudioPlayer * player = [voices objectAtIndex:x];
-        [player stop];
-	}*/
-    for (int x = 0; x < [voices count]; x++) {
+	for (int x = 0; x < [voices count]; x++) {
         AVAudioPlayer * player = [voices objectAtIndex:x];
 
         [player setCurrentTime:time.floatValue];

@@ -1,11 +1,3 @@
-//
-// 
-//  NativeAudio.h
-//  NativeAudio
-//
-//  Created by Sidney Bofah on 2014-06-26.
-//
-
 #import <Foundation/Foundation.h>
 #import <Cordova/CDVPlugin.h>
 #import <AVFoundation/AVAudioPlayer.h>
@@ -37,5 +29,8 @@
 - (void) addCompleteListener:(CDVInvokedUrlCommand *)command;
 
 - (void) parseOptions:(NSDictionary*) options;
+
+- (void) duration:(CDVInvokedUrlCommand *)command;
+- (void) currentTime:(CDVInvokedUrlCommand *)command;
 
 @end

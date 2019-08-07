@@ -1,11 +1,3 @@
-//
-//
-//  NativeAudioAsset.h
-//  NativeAudioAsset
-//
-//  Created by Sidney Bofah on 2014-06-26.
-//
-
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVAudioPlayer.h>
 
