@@ -11,6 +11,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
+import java.net.URL;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,11 +73,9 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 				String assetPath = data.getString(1);
 
 
-
-
 				String filename = audioId + ".mp3";
 				File directory = getFilesDir();
-				String filepath = direcory.getPath() + "/" + filename;
+				String filepath = directory.getPath() + "/" + filename;
 
 				URL url = new URL(assetPath);
                 URLConnection conection = url.openConnection();
@@ -88,13 +91,17 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
                         .getDataDirectory().toString()
                         + filename);
 
-                byte byteArray[] = new byte[1024];
+				byte byteArray[] = new byte[1024];
+				
+				// int lengthOfFile = conection.getContentLength();
+				long total = 0;
+				int count;
 
 				while ((count = input.read(byteArray)) != -1) {
                     total += count;
                     // publishing the progress....
                     // After this onProgressUpdate will be called
-                    publishProgress("" + (int) ((total * 100) / lenghtOfFile));
+                    // publishProgress("" + (int) ((total * 100) / lengthOfFile));
 
                     // writing data to file
                     output.write(byteArray, 0, count);
