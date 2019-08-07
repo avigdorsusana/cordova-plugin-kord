@@ -19,6 +19,9 @@ NSString* INFO_PLAYBACK_STOP = @"(NATIVE AUDIO) Stop";
 NSString* INFO_PLAYBACK_PAUSE = @"(NATIVE AUDIO) Pause";
 NSString* INFO_PLAYBACK_LOOP = @"(NATIVE AUDIO) Loop.";
 NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
+NSString* INFO_PLAYBACK_DURATION = @"(NATIVE AUDIO) Duration.";
+NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
+
 
 - (void)pluginInitialize
 {
@@ -456,9 +459,9 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
         if (asset != nil){
 
             NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
-			[_asset stop];
+			double time = [_asset duration];
 			
-			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_PLAYBACK_STOP, audioID];
+			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_PLAYBACK_DURATION, time];
 			[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
 
         } else {
@@ -483,9 +486,9 @@ NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
         if (asset != nil){
 
             NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
-			[_asset stop];
+			double time = [_asset stop];
 			
-			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_PLAYBACK_STOP, audioID];
+			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_VOLUME_CURRENTTIME, time];
 			[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
 
         } else {
