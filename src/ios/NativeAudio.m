@@ -333,8 +333,8 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
 		}
     }];
 
-	NSString *RESULT = [NSString stringWithFormat:@"%@ |%f|", INFO_PLAYBACK_PLAY, curtime];
-    [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
+	//NSString *RESULT = [NSString stringWithFormat:@"%@ |%f|", INFO_PLAYBACK_PLAY, curtime];
+    //[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
 
 }
 
