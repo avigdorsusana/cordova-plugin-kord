@@ -304,7 +304,7 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
 				NSObject* asset = audioMapping[key];
 				NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
 				if (x == 0) curtime = [_asset duration];
-				//[_asset setCurrentTime:curtime];
+				[_asset setCurrentTime:curtime];
 				
 				x++;
 			}
