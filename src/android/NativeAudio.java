@@ -15,6 +15,8 @@ import java.net.URL;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 
 
 import org.json.JSONArray;
@@ -74,7 +76,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 
 				String filename = audioId + ".mp3";
-				File directory = getFilesDir();
+				// File directory = getFilesDir();
 				String filepath = directory.getPath() + "/" + filename;
 
 				URL url = new URL(assetPath);
