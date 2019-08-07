@@ -20,6 +20,7 @@ typedef void (^CompleteCallback)(NSString*);
 - (void) seek:(NSNumber*) time;
 //- (void) seek;
 - (void) stopWithFade;
+- (void) setCurrentTime:(double) time;
 - (void) loop;
 - (void) unload;
 - (double) duration;
