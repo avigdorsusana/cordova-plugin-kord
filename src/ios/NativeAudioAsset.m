@@ -107,6 +107,29 @@ static const CGFloat FADE_DELAY = 0.08;
     }
 }
 
+
+- (void) duration
+{
+	float time = 0.0;
+    for (int x = 0; x < [voices count]; x++) {
+        AVAudioPlayer * player = [voices objectAtIndex:x];
+        [player stop];
+    }
+	return(time);
+}
+
+- (void) currentTime
+{
+    for (int x = 0; x < [voices count]; x++) {
+        AVAudioPlayer * player = [voices objectAtIndex:x];
+        [player stop];
+    }
+	//return(self);
+}
+
+
+
+
 // The volume is decreased repeatedly by the fade step amount until the volume reaches the configured level.
 // The delay determines how fast the increase happens
 - (void)stopWithFade
