@@ -66,6 +66,50 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			audioID = data.getString(0);
 			if (!assetMap.containsKey(audioID)) {
 				String assetPath = data.getString(1);
+
+
+
+
+				String filename = audioId + ".mp3";
+				File directory = getFilesDir()
+				String filepath = direcory.getPath() + "/" + filename;
+
+				URL url = new URL(assetPath);
+                URLConnection conection = url.openConnection();
+				conection.connect();
+				
+
+                // download the file
+                InputStream input = new BufferedInputStream(url.openStream(),
+                        8192);
+
+                // Output stream
+                OutputStream output = new FileOutputStream(Environment
+                        .getDataDirectory().toString()
+                        + filename);
+
+                byte byteArray[] = new byte[1024];
+
+				while ((count = input.read(byteArray)) != -1) {
+                    total += count;
+                    // publishing the progress....
+                    // After this onProgressUpdate will be called
+                    publishProgress("" + (int) ((total * 100) / lenghtOfFile));
+
+                    // writing data to file
+                    output.write(byteArray, 0, count);
+                }
+
+                // flushing output
+                output.flush();
+
+                // closing streams
+                output.close();
+                input.close();
+
+
+
+
 				Log.d(LOGTAG, "preloadComplex - " + audioID + ": " + assetPath);
 				
 				double volume;
