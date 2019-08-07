@@ -488,7 +488,6 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
 
             NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
 			double time = [_asset duration];
-			//double time = 0;
 			
 			NSString *RESULT = [NSString stringWithFormat:@"%@ (%d)", INFO_PLAYBACK_DURATION, time];
 			[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
@@ -517,7 +516,7 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
             NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
 			double time = [_asset duration];
 			
-			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_VOLUME_CURRENTTIME, time];
+			NSString *RESULT = [NSString stringWithFormat:@"%@ (%d)", INFO_VOLUME_CURRENTTIME, time];
 			[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
 
         } else {
