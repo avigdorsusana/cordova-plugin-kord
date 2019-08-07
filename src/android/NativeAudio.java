@@ -7,18 +7,24 @@
 
 package com.rjfun.cordova.plugin.nativeaudio;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
+import java.io.File;
+import java.io.IOException;
+
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.media.AudioManager;
+import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
 import android.view.KeyEvent;
 
@@ -66,6 +72,24 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			audioID = data.getString(0);
 			if (!assetMap.containsKey(audioID)) {
 				String assetPath = data.getString(1);
+
+
+				String filename = audioID + ".mp3";
+				File directory = new File(Environment.getExternalStorageDirectory() + "/" + filename);
+				String filepath = directory.getAbsolutePath();
+				// if (!direct.exists()) direct.mkdirs();
+
+				DownloadManager mgr = (DownloadManager) this.cordova.getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+				Uri downloadUri = Uri.parse(assetPath);
+				DownloadManager.Request request = new DownloadManager.Request(downloadUri);
+
+				request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
+						.setAllowedOverRoaming(false).setTitle("Demo")
+						.setDescription("Something useful. No, really.")
+						.setDestinationInExternalPublicDir("/assets", filename);
+
+				mgr.enqueue(request);
+
 				Log.d(LOGTAG, "preloadComplex - " + audioID + ": " + assetPath);
 				
 				double volume;
