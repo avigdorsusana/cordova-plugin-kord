@@ -294,11 +294,12 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
     [self.commandDelegate runInBackground:^{
 
 		if (audioMapping) {
-
+			
+			//== sync all tracks with first one
 			int x = 0;
 			double curtime = 0;
 			
-			for(id key in audioMapping) {
+			/*for(id key in audioMapping) {
 				
 				NSObject* asset = audioMapping[key];
 				NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
@@ -306,8 +307,9 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
 				[_asset setCurrentTime:curtime];
 				
 				x++;
-			}
+			}*/
 
+			//== let system trigger a play to all tracks at the same time
 			double delay = 0.50;
 			dispatch_time_t offset_time = delay * NSEC_PER_SEC;
 			dispatch_time_t fire_time = dispatch_time(DISPATCH_TIME_NOW, offset_time);
