@@ -125,28 +125,28 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 	private PluginResult executePlayAll(JSONArray data){
 		// final String audioID;
-		for (Callable key : assetMap) {
+		assetMap.forEach(key, value) -> {
 			try {
 				// audioID = data.getString(0);
 				//Log.d( LOGTAG, "play - " + audioID );
 				if (assetMap.containsKey(key)) {
 					NativeAudioAsset asset = assetMap.get(key);
-					if (LOOP.equals(action))
-						asset.loop();
-					else
-						asset.play(new Callable<Void>() {
-							public Void call() throws Exception {
-								if (completeCallbacks != null) {
-									CallbackContext callbackContext = completeCallbacks.get(key);
-									if (callbackContext != null) {
-									JSONObject done = new JSONObject();
-									done.put("id", key);
-									// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
-									}
+					// if (LOOP.equals(action))
+					// 	asset.loop();
+					// else
+					asset.play(new Callable<Void>() {
+						public Void call() throws Exception {
+							if (completeCallbacks != null) {
+								CallbackContext callbackContext = completeCallbacks.get(key);
+								if (callbackContext != null) {
+								JSONObject done = new JSONObject();
+								done.put("id", key);
+								// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
 								}
-								return null;
 							}
-						});
+							return null;
+						}
+					});
 				} else {
 					return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
 				}
