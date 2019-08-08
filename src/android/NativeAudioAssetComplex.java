@@ -10,11 +10,13 @@ package com.rjfun.cordova.plugin.nativeaudio;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 
+import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
+import android.net.Uri;
 
 public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletionListener {
 
