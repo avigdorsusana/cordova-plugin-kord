@@ -390,15 +390,15 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
             InputStream istream = null;
             OutputStream ostream = null;
             HttpURLConnection connection = null;
-            String assetDirectory = appContext.getApplicationInfo().dataDir + "/Files/Assets";
-            File _manager = new File(assetDirectory);
+            String assetDirectory = appContext.getApplicationInfo().dataDir;
+            // File _manager = new File(assetDirectory);
             Log.d("~~DOWNLOAD", "Download Directory is " + assetDirectory);
 
             try {
-                if (!_manager.exists()){
-                    Log.d("~~DOWNLOAD", "Assets folder doesn't exist. Creating.");
-                    _manager.mkdir();
-                }
+                // if (!_manager.exists()){
+                //     Log.d("~~DOWNLOAD", "Assets folder doesn't exist. Creating.");
+                //     _manager.mkdir();
+                // }
 
                 Log.d("~~DOWNLOAD", "File: " + fileToDownload[0]);
                 remoteFile = new URL(fileToDownload[0]);
