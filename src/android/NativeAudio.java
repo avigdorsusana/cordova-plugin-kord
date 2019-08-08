@@ -80,7 +80,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		try {
 			audioID = data.getString(0);
 			if (!assetMap.containsKey(audioID)) {
-				//String assetPath = data.getString(1);
+				String assetPath = data.getString(1);
 
 				Log.d(LOGTAG, "preloadComplex - " + audioID + ": " + assetPath);
 				
@@ -221,7 +221,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		try {
 			if(data != null && data.length() > 0){
 				downloadTask.execute(data.getString(0), data.getString(1));
-				return newPluginResult(Status.OK);
+				return new PluginResult(Status.OK);
 			}
 		}
 		catch (Exception e){
@@ -265,9 +265,11 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		        });				
 				
 			} else if (PRELOAD_COMPLEX_DOWNLOAD.equals(action)) {
-                JSONObject options = data.optJSONObject(0);
-                this.setOptions(options);
-                callbackContext.sendPluginResult( new PluginResult(Status.OK) );
+                cordova.getThreadPool().execute(new Runnable() {
+		            public void run() {
+		            	callbackContext.sendPluginResult( executePreloadDownload(data) );
+		            }
+		        });	
 
 			} else if (PRELOAD_COMPLEX.equals(action)) {
 				cordova.getThreadPool().execute(new Runnable() {
