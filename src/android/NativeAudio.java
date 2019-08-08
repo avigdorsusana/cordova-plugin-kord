@@ -63,7 +63,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	public static final String SET_VOLUME_FOR_COMPLEX_ASSET="setVolumeForComplexAsset";
 
 	private static final String LOGTAG = "NativeAudio";
-	private static String _dir = "1";
+	private static String _dir = "";
 	
 	private static HashMap<String, NativeAudioAsset> assetMap;
     private static ArrayList<NativeAudioAsset> resumeList;
@@ -390,7 +390,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
             InputStream istream = null;
             OutputStream ostream = null;
             HttpURLConnection connection = null;
-            String assetDirectory = appContext.getApplicationInfo().dataDir + "/Documents";
+            String assetDirectory = appContext.getApplicationInfo().dataDir + "/Documents/kkj";
             File _manager = new File(assetDirectory);
             Log.d("~~DOWNLOAD", "Download Directory is " + assetDirectory);
 
@@ -451,9 +451,10 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
                 }
 
                 if (connection != null)
-                    connection.disconnect();
+					connection.disconnect();
+					
+				this._getDownloadFolderPath_AsyncDebug(assetDirectory);
 			}
-			_getDownloadFolderPath_AsyncDebug(assetDirectory);
             return null;
         }
     }
