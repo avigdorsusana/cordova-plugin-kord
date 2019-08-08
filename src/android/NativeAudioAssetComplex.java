@@ -49,8 +49,8 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	{
 		state = INVALID;
 		mp = new MediaPlayer();
-		appContext = this.cordova.getActivity().getApplicationContext();
-		fileUri = new Uri(file);
+		appContext = getApplicationContext();
+		fileUri = Uri.parse(file);
         mp.setOnCompletionListener(this);
         mp.setOnPreparedListener(this);
 		mp.setDataSource(appContext, fileUri);
