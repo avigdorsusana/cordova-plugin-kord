@@ -15,6 +15,7 @@ import java.io.BufferedInputStream;
 import java.io.OutputStream;
 import java.io.InputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -24,6 +25,7 @@ import java.net.URL;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.os.AsyncTask;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
@@ -75,11 +77,9 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 	private PluginResult executePreload(JSONArray data) {
 		String audioID;
-		String filename = audioID + ".mp3";
 		try {
 			audioID = data.getString(0);
 			if (!assetMap.containsKey(audioID)) {
-				this.downloadFile(filename, data.getString[1]);
 				//String assetPath = data.getString(1);
 
 				Log.d(LOGTAG, "preloadComplex - " + audioID + ": " + assetPath);
@@ -218,8 +218,8 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 	private PluginResult preloadComplexDownload(JSONArray data){
 		final DownloadActivity downloadTask = new DownloadActivity(this.cordova.getActivity().getApplicationContext());
-		if(data != null && data.length > 0)
-			downloadTask.execute(data[0], data[1]);
+		if(data != null && data.length() > 0)
+			downloadTask.execute(data.getString(0), data.getString(1));
 	}
 
 	@Override
