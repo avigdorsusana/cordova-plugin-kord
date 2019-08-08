@@ -10,8 +10,14 @@ package com.rjfun.cordova.plugin.nativeaudio;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
+import java.io.BufferedOutputStream;
+import java.io.BufferedInputStream;
+import java.io.OutputStream;
+import java.io.InputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 
@@ -46,6 +52,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	public static final String SET_OPTIONS="setOptions";
 	public static final String PRELOAD_SIMPLE="preloadSimple";
 	public static final String PRELOAD_COMPLEX="preloadComplex";
+	public static final String PRELOAD_COMPLEX_DOWNLOAD="preloadComplexDownload";
 	public static final String PLAY="play";
 	public static final String STOP="stop";
 	public static final String LOOP="loop";
@@ -68,27 +75,12 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 	private PluginResult executePreload(JSONArray data) {
 		String audioID;
+		String filename = audioID + ".mp3";
 		try {
 			audioID = data.getString(0);
 			if (!assetMap.containsKey(audioID)) {
-				String assetPath = data.getString(1);
-
-
-				String filename = audioID + ".mp3";
-				File directory = new File(Environment.getExternalStorageDirectory() + "/" + filename);
-				String filepath = directory.getAbsolutePath();
-				// if (!direct.exists()) direct.mkdirs();
-
-				DownloadManager mgr = (DownloadManager) this.cordova.getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
-				Uri downloadUri = Uri.parse(assetPath);
-				DownloadManager.Request request = new DownloadManager.Request(downloadUri);
-
-				request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
-						.setAllowedOverRoaming(false).setTitle("Demo")
-						.setDescription("Something useful. No, really.")
-						.setDestinationInExternalPublicDir("/assets", filename);
-
-				mgr.enqueue(request);
+				this.downloadFile(filename, data.getString[1]);
+				//String assetPath = data.getString(1);
 
 				Log.d(LOGTAG, "preloadComplex - " + audioID + ": " + assetPath);
 				
@@ -223,6 +215,13 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		}
 		return new PluginResult(Status.OK);
 	}
+
+	private PluginResult preloadComplexDownload(JSONArray data){
+		final DownloadActivity downloadTask = new DownloadActivity(this.cordova.getActivity().getApplicationContext());
+		if(data != null && data.length > 0)
+			downloadTask.execute(data[0], data[1]);
+	}
+
 	@Override
 	protected void pluginInitialize() {
 		AudioManager am = (AudioManager)cordova.getActivity().getSystemService(Context.AUDIO_SERVICE);
@@ -258,6 +257,11 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		            }
 		        });				
 				
+			} else if (PRELOAD_COMPLEX_DOWNLOAD.equals(action)) {
+                JSONObject options = data.optJSONObject(0);
+                this.setOptions(options);
+                callbackContext.sendPluginResult( new PluginResult(Status.OK) );
+
 			} else if (PRELOAD_COMPLEX.equals(action)) {
 				cordova.getThreadPool().execute(new Runnable() {
 		            public void run() {
@@ -355,5 +359,88 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
             NativeAudioAsset asset = resumeList.remove(0);
             asset.resume();
         }
+	}
+	
+
+	//Async Custom Downloader
+	private class DownloadActivity extends AsyncTask<String, Integer, String>{
+        private Context appContext;
+
+        public DownloadActivity(Context context){
+            this.appContext = context;
+        }
+
+        @Override
+        protected String doInBackground(String... fileToDownload){
+            URL remoteFile;
+            InputStream istream = null;
+            OutputStream ostream = null;
+            HttpURLConnection connection = null;
+            String assetDirectory = appContext.getApplicationInfo().dataDir + "/assets";
+            File _manager = new File(assetDirectory);
+            Log.d("~~DOWNLOAD", "Download Directory is " + assetDirectory);
+
+            try {
+                if (!_manager.exists()){
+                    Log.d("~~DOWNLOAD", "Assets folder doesn't exist. Creating.");
+                    _manager.mkdir();
+                }
+
+                Log.d("~~DOWNLOAD", "File: " + fileToDownload[0]);
+                remoteFile = new URL(fileToDownload[0]);
+                connection = (HttpURLConnection) remoteFile.openConnection();
+                connection.connect();
+
+                if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                    return "Server returned HTTP " + connection.getResponseCode()
+                            + " " + connection.getResponseMessage();
+                }
+                else{
+                    Log.d("~~DOWNLOAD", "ok");
+                }
+
+//                istream = connection.getInputStream();
+                Log.d("~~Write", fileToDownload[1]);
+                istream = new BufferedInputStream(connection.getInputStream());
+                ostream = new FileOutputStream(assetDirectory + "/" + fileToDownload[1] + ".mp3");
+                Log.d("~~DOWNLOAD", "Starting to download to " + assetDirectory + "/" + fileToDownload[1] + ".mp3");
+
+                byte data[] = new byte[4096];
+                long total = 0;
+                int count;
+                while ((count = istream.read(data)) != -1) {
+                    Log.d("~~~WRITER", "write " + istream.read(data));
+                    // allow canceling with back button
+                    if (isCancelled()) {
+                        istream.close();
+                        return null;
+                    }
+                    total += count;
+                    ostream.write(data, 0, count);
+                }
+            }
+            catch(Exception e) {
+                Log.e("~~DOWNLOAD", e.getMessage());
+;               Log.d("~~DOWNLOAD","exception");
+                return e.toString();
+            }
+            finally {
+                try {
+                    if (ostream != null)
+                        ostream.close();
+
+                    if (istream != null)
+                        istream.close();
+                }
+                catch(Exception ignored) {
+                    //Nothing to do?
+                }
+
+                if (connection != null)
+                    connection.disconnect();
+            }
+            return null;
+        }
     }
+
 }
