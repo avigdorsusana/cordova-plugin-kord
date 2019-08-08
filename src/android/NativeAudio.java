@@ -401,8 +401,8 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
                 //     _manager.mkdir();
                 // }
 
-                Log.d("~~DOWNLOAD", "File: " + fileToDownload[0]);
-                remoteFile = new URL(fileToDownload[0]);
+                Log.d("~~DOWNLOAD", "File: " + fileToDownload[1]);
+                remoteFile = new URL(fileToDownload[1]);
                 connection = (HttpURLConnection) remoteFile.openConnection();
                 connection.connect();
 
@@ -417,8 +417,8 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 //                istream = connection.getInputStream();
                 Log.d("~~Write", fileToDownload[1]);
                 istream = new BufferedInputStream(connection.getInputStream());
-                ostream = new FileOutputStream(assetDirectory + "/" + fileToDownload[1] + ".mp3");
-				Log.d("~~DOWNLOAD", "Starting to download to " + assetDirectory + "/" + fileToDownload[1] + ".mp3");
+                ostream = new FileOutputStream(assetDirectory + "/" + fileToDownload[0] + ".mp3");
+				Log.d("~~DOWNLOAD", "Starting to download to " + assetDirectory + "/" + fileToDownload[0] + ".mp3");
 				filepath += assetDirectory + "/" + fileToDownload[1] + ".mp3";
 
                 byte data[] = new byte[4096];
