@@ -40,6 +40,18 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		mp.setVolume(volume, volume);
 		mp.prepare();
 	}
+
+	public NativeAudioAssetComplex( String file, float volume)  throws IOException
+	{
+		state = INVALID;
+		mp = new MediaPlayer();
+        mp.setOnCompletionListener(this);
+        mp.setOnPreparedListener(this);
+		mp.setDataSource(file);
+		mp.setAudioStreamType(AudioManager.STREAM_MUSIC); 
+		mp.setVolume(volume, volume);
+		mp.prepare();
+	}
 	
 	public void play(Callable<Void> completeCb) throws IOException
 	{
