@@ -18,6 +18,9 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaPlugin;
+
 public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletionListener {
 
 	private static final int INVALID = 0;
@@ -49,7 +52,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	{
 		state = INVALID;
 		mp = new MediaPlayer();
-		appContext = getApplicationContext();
+		appContext = this.cordova.getActivity().getApplicationContext();
 		fileUri = Uri.parse(file);
         mp.setOnCompletionListener(this);
         mp.setOnPreparedListener(this);
