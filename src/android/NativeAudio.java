@@ -125,7 +125,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 	private PluginResult executePlayAll(JSONArray data){
 		// final String audioID;
-		for (Callable key : assetMap.keySet()) {
+		for (String key : assetMap.keySet()) {
 			try {
 				// audioID = data.getString(0);
 				//Log.d( LOGTAG, "play - " + audioID );
