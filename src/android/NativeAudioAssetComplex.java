@@ -26,6 +26,8 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	private static final int LOOPING = 5;
 	
 	private MediaPlayer mp;
+	private Context appContext;
+	private Uri fileUri;
 	private int state;
     Callable<Void> completeCallback;
 
@@ -45,9 +47,11 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	{
 		state = INVALID;
 		mp = new MediaPlayer();
+		appContext = this.cordova.getActivity().getApplicationContext();
+		fileUri = new Uri(file);
         mp.setOnCompletionListener(this);
         mp.setOnPreparedListener(this);
-		mp.setDataSource(file);
+		mp.setDataSource(appContext, fileUri);
 		mp.setAudioStreamType(AudioManager.STREAM_MUSIC); 
 		mp.setVolume(volume, volume);
 		mp.prepare();
