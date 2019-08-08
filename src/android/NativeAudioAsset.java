@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
+import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 
 public class NativeAudioAsset
@@ -33,7 +34,7 @@ public class NativeAudioAsset
 		}
 	}
 
-	public NativeAudioAsset(String file, int numVoices, float volume) throws IOException
+	public NativeAudioAsset(String file, int numVoices, float volume, Context context) throws IOException
 	{
 		voices = new ArrayList<NativeAudioAssetComplex>();
 		
@@ -42,7 +43,7 @@ public class NativeAudioAsset
 		
 		for ( int x=0; x<numVoices; x++) 
 		{
-			NativeAudioAssetComplex voice = new NativeAudioAssetComplex(file, volume);
+			NativeAudioAssetComplex voice = new NativeAudioAssetComplex(file, volume, context);
 			voices.add( voice );
 		}
 	}
