@@ -63,6 +63,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	public static final String SET_VOLUME_FOR_COMPLEX_ASSET="setVolumeForComplexAsset";
 
 	private static final String LOGTAG = "NativeAudio";
+	private static String _dir = "";
 	
 	private static HashMap<String, NativeAudioAsset> assetMap;
     private static ArrayList<NativeAudioAsset> resumeList;
@@ -228,6 +229,10 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			return new PluginResult(Status.ERROR, e.toString());
 		}
 		return new PluginResult(Status.OK, path);
+	}
+
+	private String _getDownloadFolderPath_AsyncDebug(String path){
+		this._dir = path;
 	}
 
 	@Override
@@ -448,8 +453,9 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
                 if (connection != null)
                     connection.disconnect();
-            }
-            return assetDirectory;
+			}
+			_getDownloadFolderPath_AsyncDebug(assetDirectory);
+            return null;
         }
     }
 
