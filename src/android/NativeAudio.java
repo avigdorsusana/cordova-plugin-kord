@@ -218,8 +218,15 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 	private PluginResult preloadComplexDownload(JSONArray data){
 		final DownloadActivity downloadTask = new DownloadActivity(this.cordova.getActivity().getApplicationContext());
-		if(data != null && data.length() > 0)
-			downloadTask.execute(data.getString(0), data.getString(1));
+		try {
+			if(data != null && data.length() > 0){
+				downloadTask.execute(data.getString(0), data.getString(1));
+				return newPluginResult(Status.OK);
+			}
+		}
+		catch (Exception e){
+			return new PluginResult(Status.ERROR, e.toString());
+		}	
 	}
 
 	@Override
@@ -376,7 +383,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
             InputStream istream = null;
             OutputStream ostream = null;
             HttpURLConnection connection = null;
-            String assetDirectory = appContext.getApplicationInfo().dataDir + "/assets";
+            String assetDirectory = appContext.getApplicationInfo().dataDir + "/Documents";
             File _manager = new File(assetDirectory);
             Log.d("~~DOWNLOAD", "Download Directory is " + assetDirectory);
 
