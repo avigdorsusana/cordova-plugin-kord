@@ -221,12 +221,12 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		try {
 			if(data != null && data.length() > 0){
 				downloadTask.execute(data.getString(0), data.getString(1));
-				return new PluginResult(Status.OK);
 			}
 		}
 		catch (Exception e){
 			return new PluginResult(Status.ERROR, e.toString());
-		}	
+		}
+		return new PluginResult(Status.OK);
 	}
 
 	@Override
