@@ -453,7 +453,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
                 if (connection != null)
 					connection.disconnect();
 					
-				this._getDownloadFolderPath_AsyncDebug(assetDirectory);
+				_getDownloadFolderPath_AsyncDebug(assetDirectory);
 			}
             return null;
         }
