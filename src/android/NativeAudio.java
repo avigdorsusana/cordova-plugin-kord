@@ -390,7 +390,8 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
             InputStream istream = null;
             OutputStream ostream = null;
             HttpURLConnection connection = null;
-            String assetDirectory = appContext.getApplicationInfo().dataDir;
+			String assetDirectory = appContext.getFilesDir().getAbsolutePath();
+			String filepath;
             // File _manager = new File(assetDirectory);
             Log.d("~~DOWNLOAD", "Download Directory is " + assetDirectory);
 
@@ -417,7 +418,8 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
                 Log.d("~~Write", fileToDownload[1]);
                 istream = new BufferedInputStream(connection.getInputStream());
                 ostream = new FileOutputStream(assetDirectory + "/" + fileToDownload[1] + ".mp3");
-                Log.d("~~DOWNLOAD", "Starting to download to " + assetDirectory + "/" + fileToDownload[1] + ".mp3");
+				Log.d("~~DOWNLOAD", "Starting to download to " + assetDirectory + "/" + fileToDownload[1] + ".mp3");
+				filepath += assetDirectory + "/" + fileToDownload[1] + ".mp3";
 
                 byte data[] = new byte[4096];
                 long total = 0;
@@ -455,7 +457,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 					connection.disconnect();
 				
 				if(_dir == "")
-					_getDownloadFolderPath_AsyncDebug(assetDirectory);
+					_getDownloadFolderPath_AsyncDebug(filepath);
 			}
             return null;
         }
