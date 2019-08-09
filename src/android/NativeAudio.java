@@ -282,8 +282,8 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 				connection.connect();
 
 				if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-					return "Server returned HTTP " + connection.getResponseCode()
-							+ " " + connection.getResponseMessage();
+					return new PluginResult(Status.ERROR ,"Server returned HTTP " + connection.getResponseCode()
+							+ " " + connection.getResponseMessage());
 				}
 				else{
 					Log.d("~~DOWNLOAD", "ok");
@@ -296,18 +296,18 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 				Log.d("~~DOWNLOAD", "Starting to download to " + assetDirectory + "/" + data.getString(0) + ".mp3");
 				filepath += assetDirectory + "/" +  data.getString(1) + ".mp3";
 
-				byte data[] = new byte[4096];
+				byte fileData[] = new byte[4096];
 				long total = 0;
 				int count;
-				while ((count = istream.read(data)) != -1) {
-					Log.d("~~~WRITER", "write " + istream.read(data));
+				while ((count = istream.read(fileData)) != -1) {
+					Log.d("~~~WRITER", "write " + istream.read(fileData));
 					// allow canceling with back button
 					// if (isCancelled()) {
 					// 	istream.close();
 					// 	return null;
 					// }
 					total += count;
-					ostream.write(data, 0, count);
+					ostream.write(fileData, 0, count);
 				}
 
 				try {
