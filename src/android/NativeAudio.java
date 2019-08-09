@@ -257,7 +257,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		return new PluginResult(Status.OK);
 	}
 
-	private PluginResult executePreloadDownload(JSONArray data){
+	private void executePreloadDownload(JSONArray data){
 		Context appContext = this.cordova.getActivity().getApplicationContext();
 		
 		if(data != null && data.length() > 0){
@@ -330,13 +330,13 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 					_getDownloadFolderPath_AsyncDebug(filepath);
 			}
 			catch (Exception e){
-				return callbackContext.sendPluginResult( new PluginResult(Status.ERROR, e.toString()) );
+				callbackContext.sendPluginResult( new PluginResult(Status.ERROR, e.toString()) );
 			}
 
-			return callbackContext.sendPluginResult( new PluginResult(Status.OK, this._dir) );
+			callbackContext.sendPluginResult( new PluginResult(Status.OK, this._dir) );
 		}
 		else{
-			return callbackContext.sendPluginResult( new PluginResult(Status.ERROR, "No data passed.") );
+			callbackContext.sendPluginResult( new PluginResult(Status.ERROR, "No data passed.") );
 		}
 	}
 
