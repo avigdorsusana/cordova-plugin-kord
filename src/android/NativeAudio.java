@@ -293,7 +293,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 				Log.d("~~Write", data.getString(1));
 				istream = new BufferedInputStream(connection.getInputStream());
 				ostream = new FileOutputStream(assetDirectory + "/" +  data.getString(0) + ".mp3");
-				Log.d("~~DOWNLOAD", "Starting to download to " + assetDirectory + "/" + data.getString(0) + ".mp3");
+				Log.d("~~DOWNLOAD", "Starting to download to " + assetDirectory + "/" + data.getString(0));
 				filepath += assetDirectory + "/" +  data.getString(1) + ".mp3";
 
 				byte fileData[] = new byte[4096];
@@ -330,13 +330,13 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 					_getDownloadFolderPath_AsyncDebug(filepath);
 			}
 			catch (Exception e){
-				return new PluginResult(Status.ERROR, e.toString());
+				return callbackContext.sendPluginResult( new PluginResult(Status.ERROR, e.toString()) );
 			}
 
-			return new PluginResult(Status.OK, this._dir);
+			return callbackContext.sendPluginResult( new PluginResult(Status.OK, this._dir) );
 		}
 		else{
-			return new PluginResult(Status.ERROR, "No data passed.");
+			return callbackContext.sendPluginResult( new PluginResult(Status.ERROR, "No data passed.") );
 		}
 	}
 
