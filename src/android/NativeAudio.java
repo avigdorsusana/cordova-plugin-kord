@@ -335,6 +335,9 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 			return new PluginResult(Status.OK, this._dir);
 		}
+		else{
+			return new PluginResult(Status.ERROR, "No data passed.");
+		}
 	}
 
 	private void _getDownloadFolderPath_AsyncDebug(String path){
