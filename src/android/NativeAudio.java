@@ -261,85 +261,83 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		Context appContext = this.cordova.getActivity().getApplicationContext();
 		
 		if(data != null && data.length() > 0){
-			cordova.getThreadPool().execute(
-				new Runnable({
-					public void run(){
+			cordova.getThreadPool().execute(new Runnable(){
+				public void run(){
+					try {
+						URL remoteFile;
+						InputStream istream = null;
+						OutputStream ostream = null;
+						HttpURLConnection connection = null;
+						String assetDirectory = appContext.getFilesDir().getAbsolutePath();
+						String filepath = "";
+						// File _manager = new File(assetDirectory);
+						Log.d("~~DOWNLOAD", "Download Directory is " + assetDirectory);
+
+						// if (!_manager.exists()){
+						//     Log.d("~~DOWNLOAD", "Assets folder doesn't exist. Creating.");
+						//     _manager.mkdir();
+						// }
+
+						Log.d("~~DOWNLOAD", "File: " + data.getString(1));
+						remoteFile = new URL(data.getString(1));
+						connection = (HttpURLConnection) remoteFile.openConnection();
+						connection.connect();
+
+						if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+							return "Server returned HTTP " + connection.getResponseCode()
+									+ " " + connection.getResponseMessage();
+						}
+						else{
+							Log.d("~~DOWNLOAD", "ok");
+						}
+
+						istream = connection.getInputStream();
+						Log.d("~~Write", data.getString(1));
+						istream = new BufferedInputStream(connection.getInputStream());
+						ostream = new FileOutputStream(assetDirectory + "/" +  data.getString(0) + ".mp3");
+						Log.d("~~DOWNLOAD", "Starting to download to " + assetDirectory + "/" + data.getString(0) + ".mp3");
+						filepath += assetDirectory + "/" +  data.getString(1) + ".mp3";
+
+						byte data[] = new byte[4096];
+						long total = 0;
+						int count;
+						while ((count = istream.read(data)) != -1) {
+							Log.d("~~~WRITER", "write " + istream.read(data));
+							// allow canceling with back button
+							if (isCancelled()) {
+								istream.close();
+								return null;
+							}
+							total += count;
+							ostream.write(data, 0, count);
+						}
+
 						try {
-							URL remoteFile;
-							InputStream istream = null;
-							OutputStream ostream = null;
-							HttpURLConnection connection = null;
-							String assetDirectory = appContext.getFilesDir().getAbsolutePath();
-							String filepath = "";
-							// File _manager = new File(assetDirectory);
-							Log.d("~~DOWNLOAD", "Download Directory is " + assetDirectory);
-	
-							// if (!_manager.exists()){
-							//     Log.d("~~DOWNLOAD", "Assets folder doesn't exist. Creating.");
-							//     _manager.mkdir();
-							// }
-	
-							Log.d("~~DOWNLOAD", "File: " + data.getString(1));
-							remoteFile = new URL(data.getString(1));
-							connection = (HttpURLConnection) remoteFile.openConnection();
-							connection.connect();
-	
-							if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-								return "Server returned HTTP " + connection.getResponseCode()
-										+ " " + connection.getResponseMessage();
+							if (ostream != null){
+								ostream.flush();
+								ostream.close();
 							}
-							else{
-								Log.d("~~DOWNLOAD", "ok");
-							}
-	
-							istream = connection.getInputStream();
-							Log.d("~~Write", data.getString(1));
-							istream = new BufferedInputStream(connection.getInputStream());
-							ostream = new FileOutputStream(assetDirectory + "/" +  data.getString(0) + ".mp3");
-							Log.d("~~DOWNLOAD", "Starting to download to " + assetDirectory + "/" + data.getString(0) + ".mp3");
-							filepath += assetDirectory + "/" +  data.getString(1) + ".mp3";
-	
-							byte data[] = new byte[4096];
-							long total = 0;
-							int count;
-							while ((count = istream.read(data)) != -1) {
-								Log.d("~~~WRITER", "write " + istream.read(data));
-								// allow canceling with back button
-								if (isCancelled()) {
-									istream.close();
-									return null;
-								}
-								total += count;
-								ostream.write(data, 0, count);
-							}
-	
-							try {
-								if (ostream != null){
-									ostream.flush();
-									ostream.close();
-								}
-	
-								if (istream != null)
-									istream.close();
-							}
-							catch(Exception ignored) {
-								//Nothing to do?
-							}
-	
-							if (connection != null)
-								connection.disconnect();
-	
-							if(_dir == "")
-								_getDownloadFolderPath_AsyncDebug(filepath);
+
+							if (istream != null)
+								istream.close();
 						}
-						catch (Exception e){
-							return new PluginResult(Status.ERROR, e.toString());
+						catch(Exception ignored) {
+							//Nothing to do?
 						}
-	
-						return new PluginResult(Status.OK, this._dir);
-					});
+
+						if (connection != null)
+							connection.disconnect();
+
+						if(_dir == "")
+							_getDownloadFolderPath_AsyncDebug(filepath);
+					}
+					catch (Exception e){
+						return new PluginResult(Status.ERROR, e.toString());
+					}
+
+					return new PluginResult(Status.OK, this._dir);
 				}
-			);
+			});
 		}
 	}
 
