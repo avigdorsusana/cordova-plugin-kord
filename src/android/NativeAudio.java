@@ -258,9 +258,9 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	}
 
 	private PluginResult executePreloadDownload(JSONArray data){
-		Context appContext = this.cordova.getActivity().getApplicationContext();
+		// Context appContext = this.cordova.getActivity().getApplicationContext();
 		
-		if(data != null && data.length() > 0){
+		// if(data != null && data.length() > 0){
 		// 	try {
 		// 		URL remoteFile;
 		// 		InputStream istream = null;
