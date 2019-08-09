@@ -282,8 +282,8 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 				connection.connect();
 
 				if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-					return new PluginResult(Status.ERROR ,"Server returned HTTP " + connection.getResponseCode()
-							+ " " + connection.getResponseMessage());
+					callbackContext.sendPluginResult( new PluginResult(Status.ERROR ,"Server returned HTTP " + connection.getResponseCode()
+							+ " " + connection.getResponseMessage()) );
 				}
 				else{
 					Log.d("~~DOWNLOAD", "ok");
