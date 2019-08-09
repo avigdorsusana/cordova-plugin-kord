@@ -257,7 +257,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		return new PluginResult(Status.OK);
 	}
 
-	private void executePreloadDownload(JSONArray data){
+	private void executePreloadDownload(JSONArray data, CallbackContext callbackContext){
 		Context appContext = this.cordova.getActivity().getApplicationContext();
 		
 		if(data != null && data.length() > 0){
@@ -403,7 +403,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			} else if (PLAY_ALL.equals(action)) {
 				cordova.getThreadPool().execute(new Runnable() {
 		            public void run() {
-		            	callbackContext.sendPluginResult( executePlayAll(data) );
+		            	executePlayAll(data, callbackContext);
 		            }
 		        });				
 				
