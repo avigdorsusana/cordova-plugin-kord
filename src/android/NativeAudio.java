@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Writer;
+import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
