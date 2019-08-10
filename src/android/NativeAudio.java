@@ -114,7 +114,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 				// NativeAudioAsset asset = new NativeAudioAsset(
 				// 	assetDirectory + "/" + audioID + ".mp3", voices, (float)volume, ctx);
 				NativeAudioAsset asset = new NativeAudioAsset(
-					afd, voices, (float)volume, ctx);
+					afd, voices, (float)volume);
 
 				assetMap.put(audioID, asset);
 
