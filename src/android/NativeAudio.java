@@ -67,7 +67,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	public static final String SET_VOLUME_FOR_COMPLEX_ASSET="setVolumeForComplexAsset";
 
 	private static final String LOGTAG = "NativeAudio";
-	private static String _dir = "";
+	private static String _dir;
 	
 	private static HashMap<String, NativeAudioAsset> assetMap;
     private static ArrayList<NativeAudioAsset> resumeList;
@@ -109,7 +109,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 				Context ctx = cordova.getActivity().getApplicationContext();
 				AssetManager am = ctx.getResources().getAssets();
 				// AssetFileDescriptor afd = am.openFd(fullPath);
-				AssetFileDescriptor afd = am.openFd("file://" + assetDirectory + "/" + audioID + ".mp3");
+				AssetFileDescriptor afd = am.openFd(assetDirectory + "/" + audioID + ".mp3");
 
 				NativeAudioAsset asset = new NativeAudioAsset(
 					assetDirectory + "/" + audioID + ".mp3", voices, (float)volume, ctx);
@@ -264,6 +264,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	}
 
 	private PluginResult executePreloadDownload(JSONArray data){
+		this._dir = "";
 		Context appContext = this.cordova.getActivity().getApplicationContext();
 
 		try {
