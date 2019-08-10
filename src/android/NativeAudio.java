@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -119,7 +120,10 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		} catch (JSONException e) {
 			return new PluginResult(Status.ERROR, e.toString());
 		} catch (IOException e) {
-			return new PluginResult(Status.ERROR, e.toString());
+			Writer writer = new StringWriter();
+			e.printStackTrace(new PrintWriter(writer));
+			String s = writer.toString();
+			return new PluginResult(Status.ERROR, s);
 		}		
 	}
 
