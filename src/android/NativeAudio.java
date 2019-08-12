@@ -10,20 +10,13 @@ package com.rjfun.cordova.plugin.nativeaudio;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
-import java.io.BufferedOutputStream;
-import java.io.BufferedInputStream;
 import java.io.OutputStream;
 import java.io.InputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.Writer;
-import java.io.StringWriter;
-import java.io.PrintWriter;
-import java.net.HttpURLConnection;
+import java.net.URLConnection;
 import java.net.URL;
-
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,8 +27,6 @@ import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.media.AudioManager;
-import android.net.Uri;
-import android.os.Environment;
 import android.util.Log;
 import android.view.KeyEvent;
 
@@ -67,7 +58,6 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	public static final String SET_VOLUME_FOR_COMPLEX_ASSET="setVolumeForComplexAsset";
 
 	private static final String LOGTAG = "NativeAudio";
-	private static String _dir;
 	
 	private static HashMap<String, NativeAudioAsset> assetMap;
     private static ArrayList<NativeAudioAsset> resumeList;
@@ -125,10 +115,10 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		} catch (JSONException e) {
 			return new PluginResult(Status.ERROR, e.toString());
 		} catch (IOException e) {
-			Writer writer = new StringWriter();
-			e.printStackTrace(new PrintWriter(writer));
-			String s = writer.toString();
-			return new PluginResult(Status.ERROR, s);
+			// Writer writer = new StringWriter();
+			// e.printStackTrace(new PrintWriter(writer));
+			// String s = writer.toString();
+			// return new PluginResult(Status.ERROR, s);
 		}		
 	}
 
@@ -266,64 +256,28 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		return new PluginResult(Status.OK);
 	}
 
-	private PluginResult executePreloadDownload(JSONArray data){
-		this._dir = "";
+	private void executePreloadDownload(JSONArray data){
+		// DownloadActivity download = new DownloadActivity(this.cordova.getActivity().getApplicationContext());
+		// download.execute(data.getString(0), data.getString(1));
+
 		Context appContext = this.cordova.getActivity().getApplicationContext();
 
 		try {
-			URL remoteFile;
-			InputStream istream = null;
-			OutputStream ostream = null;
-			HttpURLConnection connection = null;
+			URLConnection connection = new 	URL(data.getString(0)).openConnection();
+			InputStream is = connection.getInputStream();
+
 			String assetDirectory = appContext.getFilesDir().getAbsolutePath();
-			String filepath = "";
-			// File _manager = new File(assetDirectory);
-			Log.d("~~DOWNLOAD", "Download Directory is " + assetDirectory);
+			OutputStream ostream = new FileOutputStream(new File(assetDirectory + "/" + data.getString(1) + ".mp3"));
 
-			// if (!_manager.exists()){
-			//     Log.d("~~DOWNLOAD", "Assets folder doesn't exist. Creating.");
-			//     _manager.mkdir();
-			// }
-
-			Log.d("~~DOWNLOAD", "File: " + data.getString(1));
-			remoteFile = new URL(data.getString(1));
-			connection = (HttpURLConnection) remoteFile.openConnection();
-			connection.connect();
-
-			if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-				return new PluginResult(Status.ERROR ,"Server returned HTTP " + connection.getResponseCode()
-						+ " " + connection.getResponseMessage());
-			}
-			else{
-				Log.d("~~DOWNLOAD", "ok");
-			}
-
-			istream = connection.getInputStream();
-			Log.d("~~Write", data.getString(1));
-			istream = new BufferedInputStream(connection.getInputStream());
-			ostream = new FileOutputStream(assetDirectory + "/" +  data.getString(0) + ".mp3");
-			Log.d("~~DOWNLOAD", "Starting to download to " + assetDirectory + "/" + data.getString(0) + ".mp3");
-			filepath += assetDirectory + "/" +  data.getString(1) + ".mp3";
-
-			byte fileData[] = new byte[4096];
-			long total = 0;
-			int count;
-			while ((count = istream.read(fileData)) != -1) {
-				Log.d("~~~WRITER", "write " + istream.read(fileData));
-				// allow canceling with back button
-				// if (isCancelled()) {
-				// 	istream.close();
-				// 	return null;
-				// }
-				total += count;
-				ostream.write(fileData, 0, count);
+			byte[] buffer = new byte[4096];
+			int length;
+			while ((length = is.read(buffer)) > 0) {
+				ostream.write(buffer, 0, length);
 			}
 
 			try {
-				if (ostream != null){
-					ostream.flush();
+				if (ostream != null)
 					ostream.close();
-				}
 
 				if (istream != null)
 					istream.close();
@@ -334,19 +288,13 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 			if (connection != null)
 				connection.disconnect();
-
-			if(_dir == "")
-				_getDownloadFolderPath_AsyncDebug(filepath);
 		}
-		catch (Exception e){
+		catch ()
+		catch (IOException e){
 			return new PluginResult(Status.ERROR, e.toString());
 		}
 
-		return new PluginResult(Status.OK, this._dir);
-	}
-
-	private void _getDownloadFolderPath_AsyncDebug(String path){
-		this._dir = path;
+		return new PluginResult(Status.OK, assetDirectory + "/" + data.getString(1) + ".mp3");
 	}
 
 	@Override
@@ -496,4 +444,17 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
             asset.resume();
         }
 	}
+
+	// private class DownloadActivity extends AsyncTask<String, String, CallbackContext>{
+	// 	private Context appContext;
+	// 	private CallbackContext callbackContext;
+    //     public DownloadActivity(Context context, CallbackContext cbContext){
+	// 		this.appContext = context;
+	// 		this.callbackContext = cbContext;
+    //     }
+
+    //     @Override
+    //     protected void doInBackground(String... fileToDownload){
+    //     }
+    // }
 }
