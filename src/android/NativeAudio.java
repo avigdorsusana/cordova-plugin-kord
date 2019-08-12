@@ -256,7 +256,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		return new PluginResult(Status.OK);
 	}
 
-	private void executePreloadDownload(JSONArray data){
+	private PluginResult executePreloadDownload(JSONArray data){
 		// DownloadActivity download = new DownloadActivity(this.cordova.getActivity().getApplicationContext());
 		// download.execute(data.getString(0), data.getString(1));
 
