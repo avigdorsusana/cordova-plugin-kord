@@ -332,6 +332,36 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		return new PluginResult(Status.OK); 
 	}
 
+	private PluginResult getDuration(JSONArray data){
+		int timeToReturn = 0;
+		try {
+			if (assetMap.containsKey(key)) {
+				NativeAudioAsset asset = assetMap.get(key);
+				timeToReturn = asset.duration(data.getInt(0) * 1000);
+			} else {
+				return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
+			}
+		} catch (Exception e) {
+			return new PluginResult(Status.ERROR, e.toString());
+		}
+		return new PluginResult(Status.OK, timeToReturn); 
+	}
+
+	private PluginResult getCurrentTime(JSONArray data){
+		int timeToReturn = 0;
+		try {
+			if (assetMap.containsKey(key)) {
+				NativeAudioAsset asset = assetMap.get(key);
+				timeToReturn = asset.currentTime();
+			} else {
+				return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
+			}
+		} catch (Exception e) {
+			return new PluginResult(Status.ERROR, e.toString());
+		}
+		return new PluginResult(Status.OK, timeToReturn.toString()); 
+	}
+
 //===============================================================
 //===============================================================
 //===============================================================

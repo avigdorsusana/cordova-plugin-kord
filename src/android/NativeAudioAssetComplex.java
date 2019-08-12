@@ -118,7 +118,25 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 			mp.seekTo(timeMS);
 		}
 		catch(IllegalStateException e){
+			return -1;
+		}
+	}
 
+	public int getCurrentTime(){
+		try {
+			return (mp.getCurrentPosition() / 1000);
+		}
+		catch(IllegalStateException e){
+			return -1;
+		}
+	}
+
+	public int getDuration(){
+		try {
+			return (mp.getDuration() / 1000);
+		}
+		catch(IllegalStateException e){
+			return -1;
 		}
 	}
 

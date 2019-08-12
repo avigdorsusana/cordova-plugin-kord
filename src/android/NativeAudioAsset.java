@@ -94,6 +94,28 @@ public class NativeAudioAsset
 			voice.seek(timeMS);
 		}
 	}
+
+	public int duration()
+	{
+		// for ( int x=0; x<voices.size(); x++) 
+		// {
+		// 	NativeAudioAssetComplex voice = voices.get(x);
+		// 	voice.seek(timeMS);
+		// }
+		return 25;
+
+	}
+
+	public int currentTime()
+	{
+		// for ( int x=0; x<voices.size(); x++) 
+		// {
+		// 	NativeAudioAssetComplex voice = voices.get(x);
+		// 	voice.seek(timeMS);
+		// }
+		return 25;
+
+	}
 	
 	public void loop() throws IOException
 	{
