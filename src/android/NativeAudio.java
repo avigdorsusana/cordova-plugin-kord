@@ -261,17 +261,18 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		// download.execute(data.getString(0), data.getString(1));
 
 		Context appContext = this.cordova.getActivity().getApplicationContext();
+		String assetDirectory;
 
 		try {
 			URLConnection connection = new 	URL(data.getString(0)).openConnection();
-			InputStream is = connection.getInputStream();
+			InputStream istream = connection.getInputStream();
 
-			String assetDirectory = appContext.getFilesDir().getAbsolutePath();
+			assetDirectory = appContext.getFilesDir().getAbsolutePath();
 			OutputStream ostream = new FileOutputStream(new File(assetDirectory + "/" + data.getString(1) + ".mp3"));
 
 			byte[] buffer = new byte[4096];
 			int length;
-			while ((length = is.read(buffer)) > 0) {
+			while ((length = istream.read(buffer)) > 0) {
 				ostream.write(buffer, 0, length);
 			}
 
@@ -285,12 +286,6 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			catch(Exception ignored) {
 				//Nothing to do?
 			}
-
-			if (connection != null)
-				connection.disconnect();
-		}
-		catch (UnknownServiceException e){
-			return new PluginResult(Status.ERROR, e.toString());
 		}
 		catch (IOException e){
 			return new PluginResult(Status.ERROR, e.toString());
