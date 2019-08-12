@@ -107,8 +107,6 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 				// 	afd, voices, (float)volume);
 
 				assetMap.put(audioID, asset);
-
-				return new PluginResult(Status.OK);
 			} else {
 				return new PluginResult(Status.ERROR, ERROR_AUDIOID_EXISTS);
 			}
@@ -119,7 +117,9 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			// e.printStackTrace(new PrintWriter(writer));
 			// String s = writer.toString();
 			// return new PluginResult(Status.ERROR, s);
-		}		
+		}	
+		
+		return new PluginResult(Status.OK);
 	}
 
 	private PluginResult executePlayAll(JSONArray data){
@@ -286,6 +286,9 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			catch(Exception ignored) {
 				//Nothing to do?
 			}
+		}
+		catch (JSONException e) {
+			return new PluginResult(Status.ERROR, e.toString());
 		}
 		catch (IOException e){
 			return new PluginResult(Status.ERROR, e.toString());
