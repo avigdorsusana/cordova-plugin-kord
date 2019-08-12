@@ -51,6 +51,8 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	public static final String PRELOAD_COMPLEX_DOWNLOAD="preloadComplexDownload";
 	public static final String PLAY="play";
 	public static final String PLAY_ALL="playAll";
+	public static final String PAUSE_ALL="pauseAll";
+	public static final String SEEK_ALL="seekAll";
 	public static final String STOP="stop";
 	public static final String LOOP="loop";
 	public static final String UNLOAD="unload";
