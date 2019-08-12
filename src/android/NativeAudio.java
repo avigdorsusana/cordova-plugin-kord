@@ -264,10 +264,10 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		String assetDirectory;
 
 		try {
-			URLConnection connection = new 	URL(data.getString(0)).openConnection();
+			URLConnection connection = new 	URL(data.getString(1)).openConnection();
 			InputStream istream = connection.getInputStream();
 
-			assetDirectory = appContext.getFilesDir().getAbsolutePath() + "/" + data.getString(1) + ".mp3";
+			assetDirectory = appContext.getFilesDir().getAbsolutePath() + "/" + data.getString(0) + ".mp3";
 			OutputStream ostream = new FileOutputStream(new File(assetDirectory));
 
 			byte[] buffer = new byte[4096];
