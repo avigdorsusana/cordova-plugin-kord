@@ -9,6 +9,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
+import android.media.MediaPlayer.OnSeekCompleteListener;
 import android.net.Uri;
 
 import org.apache.cordova.CallbackContext;
@@ -216,7 +217,6 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		}
 	}
 
-	@Override
 	public void onSeekComplete(MediaPlayer mplayer){
 		if (completeSeek != null){
 			try {
