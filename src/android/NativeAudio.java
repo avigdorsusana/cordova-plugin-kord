@@ -344,7 +344,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		} catch (Exception e) {
 			return new PluginResult(Status.ERROR, e.toString());
 		}
-		return new PluginResult(Status.OK, (Integer) timeToReturn.toString()); 
+		return new PluginResult(Status.OK, timeToReturn +  ""); 
 	}
 
 	private PluginResult getCurrentTime(JSONArray data){
@@ -359,7 +359,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		} catch (Exception e) {
 			return new PluginResult(Status.ERROR, e.toString());
 		}
-		return new PluginResult(Status.OK, (Integer) timeToReturn.toString()); 
+		return new PluginResult(Status.OK, timeToReturn + ""); 
 	}
 
 //===============================================================
