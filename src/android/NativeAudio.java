@@ -222,7 +222,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 	private PluginResult executePreloadDownload(JSONArray data){
 		Context appContext = this.cordova.getActivity().getApplicationContext();
-		String assetDirectory;
+		String assetDirectory = "";
 
 		try {
 			URLConnection connection = new 	URL(data.getString(1)).openConnection();
@@ -254,9 +254,11 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		catch (IOException e){
 			return new PluginResult(Status.ERROR, e.toString());
 		}
-		finally{
+		
+		if (assetDirectory == "")
+			return new PluginResult(Status.ERROR, "Asset not downloaded");
+		else
 			return new PluginResult(Status.OK, assetDirectory);
-		}
 	}
 
 	private PluginResult executePlayAll(){
