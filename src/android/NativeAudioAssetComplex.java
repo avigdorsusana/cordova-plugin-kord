@@ -123,7 +123,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 
 	public int getCurrentTime(){
 		try {
-			return (mp.getCurrentPosition() / 1000);
+			return mp.getCurrentPosition();
 		}
 		catch(IllegalStateException e){
 			return -1;
@@ -132,7 +132,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 
 	public int getDuration(){
 		try {
-			return (mp.getDuration() / 1000);
+			return mp.getDuration();
 		}
 		catch(IllegalStateException e){
 			return -1;
