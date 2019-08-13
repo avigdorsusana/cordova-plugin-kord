@@ -14,7 +14,7 @@ import android.net.Uri;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 
-public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletionListener {
+public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletionListener, OnSeekCompleteListener {
 
 	private static final int INVALID = 0;
 	private static final int PREPARED = 1;
@@ -27,7 +27,8 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	private Context appContext;
 	private Uri fileUri;
 	private int state;
-    Callable<Void> completeCallback;
+	Callable<Void> completeCallback;
+	Callable<Void> completeSeek;
 
 	public NativeAudioAssetComplex( AssetFileDescriptor afd, float volume)  throws IOException
 	{
@@ -88,7 +89,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	{
 		try
 		{
-    				if ( mp.isPlaying() )
+			if ( mp.isPlaying() )
 				{
 					mp.pause();
 					return true;
@@ -106,7 +107,9 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		mp.start();
 	}
 
-	public void seek(int timeMS){
+	public void seek(int timeMS, Callable<Void> completeCb) throws IOException{
+		completeSeek = completeCb;
+
 		try {
 			mp.seekTo(timeMS);
 		}
@@ -208,6 +211,18 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 			}
 			catch (Exception e)
 			{
+				e.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public void onSeekComplete(MediaPlayer mplayer){
+		if (completeSeek != null){
+			try {
+				completeSeek.call();
+			}
+			catch (Exception e){
 				e.printStackTrace();
 			}
 		}

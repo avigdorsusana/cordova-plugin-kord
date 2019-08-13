@@ -265,20 +265,28 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		// final String audioID;
 		int x = 0, curtime = 0;
 
-		for (String key : assetMap.keySet()) {
-			try {
-				// audioID = data.getString(0);
-				//Log.d( LOGTAG, "play - " + audioID );
-				if (assetMap.containsKey(key)) {
-					NativeAudioAsset asset = assetMap.get(key);
-					if (x == 0) curtime = getCurrentTime(key);
-					asset.seek(curtime);
-					x++;
-				}
-			}
-			catch (Exception e) {
-				return new PluginResult(Status.ERROR, e.toString());
-			}
+		// for (String key : assetMap.keySet()) {
+		// 	try {
+		// 		// audioID = data.getString(0);
+		// 		//Log.d( LOGTAG, "play - " + audioID );
+		// 		if (assetMap.containsKey(key)) {
+		// 			NativeAudioAsset asset = assetMap.get(key);
+		// 			if (x == 0) curtime = getCurrentTime(key);
+		// 			asset.seek(curtime);
+		// 			x++;
+		// 		}
+		// 	}
+		// 	catch (Exception e) {
+		// 		return new PluginResult(Status.ERROR, e.toString());
+		// 	}
+		// }
+
+		while (x < assetMap.size()){
+			NativeAudioAsset _asset = assetMap.get(x);
+			if (x == 0) curtime = _asset.currentTime();
+			_asset.seek(curtime, new Callable<Void>(){
+				x++;
+			});
 		}
 
 		for (String key : assetMap.keySet()) {
@@ -339,7 +347,20 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			try {
 				if (assetMap.containsKey(key)) {
 					NativeAudioAsset asset = assetMap.get(key);
-						asset.seek(data.getInt(0));
+						// asset.seek(data.getInt(0));
+						asset.seek(data.getInt(0), new Callable<Void>() {
+							public Void call() throws Exception {
+								if (completeCallbacks != null) {
+									CallbackContext callbackContext = completeCallbacks.get(key);
+									if (callbackContext != null) {
+									JSONObject done = new JSONObject();
+									done.put("id", key);
+									// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
+									}
+								}
+								return null;
+							}
+						});
 				} else {
 					return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
 				}
