@@ -46,6 +46,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	public static final String PLAY_ALL="playAll";
 	public static final String PAUSE_ALL="pauseAll";
 	public static final String SEEK_ALL="seekAll";
+	public static final String SYNC_ALL="syncAll";
 	public static final String DURATION="duration";
 	public static final String CURRENT_TIME="currentTime";
 	public static final String STOP="stop";
@@ -263,11 +264,31 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			return new PluginResult(Status.OK, assetDirectory);
 	}
 
+	private PluginResult executeSyncAll(){
+		// final String audioID;
+		
+		int x = 0, curtime = 0;
+		for (String key : assetMap.keySet()) {
+			try {
+				// audioID = data.getString(0);
+				//Log.d( LOGTAG, "play - " + audioID );
+				if (assetMap.containsKey(key)) {
+					NativeAudioAsset asset = assetMap.get(key);
+					if (x == 0) curtime = getCurrentTime(key);
+					asset.seek(curtime);
+					x++;
+				}
+			}
+			catch (Exception e) {
+				return new PluginResult(Status.ERROR, e.toString());
+			}
+		}
+	}
+
 	private PluginResult executePlayAll(){
 		// final String audioID;
-		trackcount = 0;
-		synctime = 0;
-
+		
+		// int x = 0, curtime = 0;
 		// for (String key : assetMap.keySet()) {
 		// 	try {
 		// 		// audioID = data.getString(0);
@@ -284,24 +305,26 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		// 	}
 		// }
 
-		while (trackcount < assetMap.size()){
-			NativeAudioAsset _asset = assetMap.get(trackcount);
-			if (trackcount == 0) synctime = _asset.currentTime();
-			try{
-				// _asset.seek(synctime, new Callable<Void>(){
-				// 	public Void call() throws Exception {
-				// 		// trackcount++;
-				// 		return null;
-				// 	}
-				// });
+		//trackcount = 0;
+		//synctime = 0;
+		// while (trackcount < assetMap.size()){
+		// 	NativeAudioAsset _asset = assetMap.get(trackcount);
+		// 	if (trackcount == 0) synctime = _asset.currentTime();
+		// 	try{
+		// 		// _asset.seek(synctime, new Callable<Void>(){
+		// 		// 	public Void call() throws Exception {
+		// 		// 		// trackcount++;
+		// 		// 		return null;
+		// 		// 	}
+		// 		// });
 
-				_asset.seek(synctime);
-				trackcount++;
-			}	
-			catch (Exception e){
-				return new PluginResult(Status.ERROR, e.toString());
-			}
-		}
+		// 		_asset.seek(synctime);
+		// 		trackcount++;
+		// 	}	
+		// 	catch (Exception e){
+		// 		return new PluginResult(Status.ERROR, e.toString());
+		// 	}
+		// }
 
 		for (String key : assetMap.keySet()) {
 			try {
@@ -510,6 +533,13 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 				cordova.getThreadPool().execute(new Runnable() {
 		            public void run() {
 		            	callbackContext.sendPluginResult( executePauseAll() );
+		            }
+				});
+
+			} else if (SYNC_ALL.equals(action)) {
+				cordova.getThreadPool().execute(new Runnable() {
+		            public void run() {
+		            	callbackContext.sendPluginResult( executeSyncAll() );
 		            }
 		        });				
 				
