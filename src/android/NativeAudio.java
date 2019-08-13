@@ -59,7 +59,9 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	private static HashMap<String, NativeAudioAsset> assetMap;
     private static ArrayList<NativeAudioAsset> resumeList;
     private static HashMap<String, CallbackContext> completeCallbacks;
-    private boolean fadeMusic = false;
+	private boolean fadeMusic = false;
+	private static int synctime;
+	private static int trackcount;
 
     public void setOptions(JSONObject options) {
 		if(options != null) {
@@ -263,7 +265,8 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 	private PluginResult executePlayAll(){
 		// final String audioID;
-		int x = 0, curtime = 0;
+		trackcount = 0;
+		synctime = 0;
 
 		// for (String key : assetMap.keySet()) {
 		// 	try {
@@ -281,12 +284,12 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		// 	}
 		// }
 
-		while (x < assetMap.size()){
+		while (trackcount < assetMap.size()){
 			NativeAudioAsset _asset = assetMap.get(x);
-			if (x == 0) curtime = _asset.currentTime();
+			if (trackcount == 0) curtime = _asset.currentTime();
 			_asset.seek(curtime, new Callable<Void>(){
 				public Void call() throws Exception {
-					x++;
+					trackcount++;
 					return null;
 				}
 			});
