@@ -88,10 +88,12 @@ public class NativeAudioAsset
 
 	public void seek(int timeMS)
 	{
+		//Time is not actually in milliseconds when it gets here
+		//sorry future me
 		for ( int x=0; x<voices.size(); x++) 
 		{
 			NativeAudioAssetComplex voice = voices.get(x);
-			voice.seek(timeMS);
+			voice.seek(timeMS * 1000);
 		}
 	}
 
