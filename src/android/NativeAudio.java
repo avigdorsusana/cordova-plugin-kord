@@ -373,21 +373,22 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		return new PluginResult(Status.OK, "|" + timeToReturn + "|"); 
 	}
 
-	private PluginResult getCurrentTime(String assetKey){
+	private int getCurrentTime(String assetKey){
 		int timeToReturn = 0;
-		try {
-			if (assetMap.containsKey(assetKey)) {
-				NativeAudioAsset asset = assetMap.get(assetKey);
-				timeToReturn = asset.currentTime();
-				if (timeToReturn == -1)
-					return new PluginResult(Status.ERROR, "Get Time Error: " + timeToReturn);
-			} else {
-				return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
-			}
-		} catch (Exception e) {
-			return new PluginResult(Status.ERROR, e.toString());
-		}
-		return new PluginResult(Status.OK, "|" + timeToReturn + "|"); 
+		// try {
+		// 	if (assetMap.containsKey(assetKey)) {
+		// 		NativeAudioAsset asset = assetMap.get(assetKey);
+		// 		timeToReturn = asset.currentTime();
+		// 		if (timeToReturn == -1)
+		// 			// return new PluginResult(Status.ERROR, "Get Time Error: " + timeToReturn);
+		// 	} else {
+		// 		// return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
+		// 	}
+		// } catch (Exception e) {
+		// 	// return new PluginResult(Status.ERROR, e.toString());
+		// }
+		return timeToReturn;
+		// return new PluginResult(Status.OK, "|" + timeToReturn + "|"); 
 	}
 
 //===============================================================
