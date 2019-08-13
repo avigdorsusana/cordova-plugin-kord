@@ -78,7 +78,7 @@ module.exports  = {
         return cordova.exec(successCallback, errorCallback, "NativeAudio", "unload", [id]);
     },
 
-    syncAll: function(id, successCallback, errorCallback) {
+    syncAll: function(successCallback, errorCallback) {
         return cordova.exec(successCallback, errorCallback, "NativeAudio", "syncAll", []);
 	},
 	
