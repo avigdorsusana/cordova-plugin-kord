@@ -376,7 +376,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	private PluginResult getCurrentTime(String assetKey){
 		int timeToReturn = 0;
 		try {
-			if (assetMap.containsKey(assetKey) {
+			if (assetMap.containsKey(assetKey)) {
 				NativeAudioAsset asset = assetMap.get(assetKey);
 				timeToReturn = asset.currentTime();
 				if (timeToReturn == -1)
