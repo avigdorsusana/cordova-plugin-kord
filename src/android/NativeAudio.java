@@ -52,7 +52,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	public static final String PLAY="play";
 	public static final String PLAY_ALL="playAll";
 	public static final String PAUSE_ALL="pauseAll";
-	public static final String SEEK_ALL="seekAll";
+	// public static final String SEEK_ALL="seekAll";
 	public static final String DURATION="duration";
 	public static final String CURRENT_TIME="currentTime";
 	public static final String STOP="stop";
@@ -323,21 +323,21 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		return new PluginResult(Status.OK);
 	}
 	
-	private PluginResult executeSeekAll(JSONArray data){
-		for (String key : assetMap.keySet()) {
-			try {
-				if (assetMap.containsKey(key)) {
-					NativeAudioAsset asset = assetMap.get(key);
-						asset.seek(data.getInt(0));
-				} else {
-					return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
-				}
-			} catch (Exception e) {
-				return new PluginResult(Status.ERROR, e.toString());
-			}
-		}
-		return new PluginResult(Status.OK); 
-	}
+	// private PluginResult executeSeekAll(JSONArray data){
+	// 	for (String key : assetMap.keySet()) {
+	// 		try {
+	// 			if (assetMap.containsKey(key)) {
+	// 				NativeAudioAsset asset = assetMap.get(key);
+	// 					asset.seek(data.getInt(0));
+	// 			} else {
+	// 				return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
+	// 			}
+	// 		} catch (Exception e) {
+	// 			return new PluginResult(Status.ERROR, e.toString());
+	// 		}
+	// 	}
+	// 	return new PluginResult(Status.OK); 
+	// }
 
 	private PluginResult getDuration(JSONArray data){
 		int timeToReturn = 0;
@@ -358,7 +358,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 	private PluginResult getCurrentTime(JSONArray data){
 		int timeToReturn = 0;
-		String test = "";
+		String test;
 		try {
 			if (assetMap.containsKey(data.getString(0))) {
 				test = data.getString(0);
@@ -467,14 +467,16 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		            }
 		        });				
 				
-			} else if (SEEK_ALL.equals(action)) {
-				cordova.getThreadPool().execute(new Runnable() {
-		            public void run() {
-		            	callbackContext.sendPluginResult( executeSeekAll(data) );
-		            }
-		        });				
+			} 
+			// else if (SEEK_ALL.equals(action)) {
+			// 	cordova.getThreadPool().execute(new Runnable() {
+		    //         public void run() {
+		    //         	callbackContext.sendPluginResult( executeSeekAll(data) );
+		    //         }
+		    //     });				
 				
-			} else if (DURATION.equals(action)) {
+			// } 
+			else if (DURATION.equals(action)) {
 				cordova.getThreadPool().execute(new Runnable() {
 		            public void run() {
 		            	callbackContext.sendPluginResult( getDuration(data) );
