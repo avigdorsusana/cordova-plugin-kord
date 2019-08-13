@@ -266,6 +266,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 	private PluginResult executeSyncAll(){
 		// final String audioID;
+		String debug = "";
 		
 		int x = 0, curtime = 0;
 		for (String key : assetMap.keySet()) {
@@ -277,6 +278,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 					if (x == 0) curtime = getCurrentTime(key);
 					asset.seek(curtime);
 					x++;
+					debug += key + "|" + curtime + ",";
 				}
 			}
 			catch (Exception e) {
@@ -284,7 +286,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			}
 		}
 
-		return new PluginResult(Status.OK);
+		return new PluginResult(Status.OK, debug);
 	}
 
 	private PluginResult executePlayAll(){
@@ -328,6 +330,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		// 	}
 		// }
 
+		String debug = "";
 		for (String key : assetMap.keySet()) {
 			try {
 				// audioID = data.getString(0);
@@ -339,6 +342,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 					// else
 
 						synctime = asset.currentTime();
+						debug += key + "|" + synctime + ",";
 						
 
 						asset.play(new Callable<Void>() {
@@ -364,14 +368,16 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			// 	return new PluginResult(Status.ERROR, e.toString());
 			// }
 		}
-		return new PluginResult(Status.OK, "|" + synctime + "|");
+		return new PluginResult(Status.OK, "|" + synctime + "|" + debug + "|");
 	}
 
 	private PluginResult executePauseAll(){
+		String debug =  "";
 		for (String key : assetMap.keySet()) {
 			try {
 				if (assetMap.containsKey(key)) {
 					NativeAudioAsset asset = assetMap.get(key);
+						debug += key + "|" + synctime + ",";
 						asset.pause();
 				} else {
 					return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
@@ -380,7 +386,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 				return new PluginResult(Status.ERROR, e.toString());
 			}
 		}
-		return new PluginResult(Status.OK);
+		return new PluginResult(Status.OK, debug);
 	}
 	
 	private PluginResult executeSeekAll(JSONArray data){
