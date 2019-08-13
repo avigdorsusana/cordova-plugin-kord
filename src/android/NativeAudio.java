@@ -337,14 +337,14 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		try {
 			if (assetMap.containsKey(data.getString(0))) {
 				NativeAudioAsset asset = assetMap.get(data.getString(0));
-				timeToReturn = (asset.duration() * 1000);
+				timeToReturn = (asset.duration());
 			} else {
 				return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
 			}
 		} catch (Exception e) {
 			return new PluginResult(Status.ERROR, e.toString());
 		}
-		return new PluginResult(Status.OK, timeToReturn +  ""); 
+		return new PluginResult(Status.OK,  "|" + timeToReturn + "|"); 
 	}
 
 	private PluginResult getCurrentTime(JSONArray data){
@@ -352,14 +352,14 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		try {
 			if (assetMap.containsKey(data.getString(0))) {
 				NativeAudioAsset asset = assetMap.get(data.getString(0));
-				timeToReturn = asset.currentTime() * 1000;
+				timeToReturn = asset.currentTime();
 			} else {
 				return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
 			}
 		} catch (Exception e) {
 			return new PluginResult(Status.ERROR, e.toString());
 		}
-		return new PluginResult(Status.OK, timeToReturn + ""); 
+		return new PluginResult(Status.OK, "|" + timeToReturn + "|"); 
 	}
 
 //===============================================================
