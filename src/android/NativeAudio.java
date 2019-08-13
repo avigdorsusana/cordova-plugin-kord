@@ -287,12 +287,17 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		while (trackcount < assetMap.size()){
 			NativeAudioAsset _asset = assetMap.get(trackcount);
 			if (trackcount == 0) synctime = _asset.currentTime();
-			_asset.seek(synctime, new Callable<Void>(){
-				public Void call() throws Exception {
-					trackcount++;
-					return null;
-				}
-			});
+			try{
+				_asset.seek(synctime, new Callable<Void>(){
+					public Void call() throws Exception {
+						trackcount++;
+						return null;
+					}
+				});
+			}	
+			catch (IOException e){
+				return new PluginResult(Status.ERROR, e.toString());
+			}
 		}
 
 		for (String key : assetMap.keySet()) {
