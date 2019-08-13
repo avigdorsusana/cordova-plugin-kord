@@ -118,7 +118,6 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 			mp.seekTo(timeMS);
 		}
 		catch(IllegalStateException e){
-			return -1;
 		}
 	}
 
