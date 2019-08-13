@@ -285,9 +285,9 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		// }
 
 		while (trackcount < assetMap.size()){
-			NativeAudioAsset _asset = assetMap.get(x);
-			if (trackcount == 0) curtime = _asset.currentTime();
-			_asset.seek(curtime, new Callable<Void>(){
+			NativeAudioAsset _asset = assetMap.get(trackcount);
+			if (trackcount == 0) synctime = _asset.currentTime();
+			_asset.seek(synctime, new Callable<Void>(){
 				public Void call() throws Exception {
 					trackcount++;
 					return null;
@@ -329,7 +329,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			// 	return new PluginResult(Status.ERROR, e.toString());
 			// }
 		}
-		return new PluginResult(Status.OK, "|" + curtime + "|");
+		return new PluginResult(Status.OK, "|" + synctime + "|");
 	}
 
 	private PluginResult executePauseAll(){
