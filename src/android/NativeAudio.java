@@ -304,7 +304,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			// 	return new PluginResult(Status.ERROR, e.toString());
 			// }
 		}
-		return new PluginResult(Status.OK);
+		return new PluginResult(Status.OK, "|" + curtime + "|");
 	}
 
 	private PluginResult executePauseAll(){
