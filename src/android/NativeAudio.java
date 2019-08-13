@@ -285,7 +285,10 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			NativeAudioAsset _asset = assetMap.get(x);
 			if (x == 0) curtime = _asset.currentTime();
 			_asset.seek(curtime, new Callable<Void>(){
-				x++;
+				public Void call() throws Exception {
+					x++;
+					return null;
+				}
 			});
 		}
 
