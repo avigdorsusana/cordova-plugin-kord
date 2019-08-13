@@ -337,6 +337,8 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 					// if (LOOP.equals(action))
 					// 	asset.loop();
 					// else
+
+						synctime = asset.currentTime();
 						
 
 						asset.play(new Callable<Void>() {
