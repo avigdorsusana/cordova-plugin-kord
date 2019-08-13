@@ -83,11 +83,11 @@ public class NativeAudioAsset
 	{
 		//Time is not actually in milliseconds when it gets here
 		//sorry future me
-		for ( int x=0; x<voices.size(); x++) 
-		{
-			NativeAudioAssetComplex voice = voices.get(x);
-			voice.seek(time * 1000, completeCb);
-		}
+		// for ( int x=0; x<voices.size(); x++) 
+		// {
+		// 	NativeAudioAssetComplex voice = voices.get(x);
+		// 	voice.seek(time * 1000, completeCb);
+		// }
 	}
 
 	public int duration()
