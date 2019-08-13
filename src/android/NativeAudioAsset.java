@@ -86,7 +86,7 @@ public class NativeAudioAsset
 		for ( int x=0; x<voices.size(); x++) 
 		{
 			NativeAudioAssetComplex voice = voices.get(x);
-			voice.seek(time * 1000, completeCb);
+			voice.seek(time * 1000);
 		}
 	}
 
