@@ -356,12 +356,12 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		return new PluginResult(Status.OK,  "|" + timeToReturn + "|"); 
 	}
 
-	private PluginResult getDuration(String assetKey){
+	private PluginResult getCurrentTime(JSONArray data){
 		int timeToReturn = 0;
 		try {
-			if (assetMap.containsKey(assetKey)) {
-				NativeAudioAsset asset = assetMap.get(assetKey);
-				timeToReturn = (asset.duration());
+			if (assetMap.containsKey(data.getString(0))) {
+				NativeAudioAsset asset = assetMap.get(data.getString(0));
+				timeToReturn = asset.currentTime();
 				if (timeToReturn == -1)
 					return new PluginResult(Status.ERROR, "Get Time Error: " + timeToReturn);
 			} else {
@@ -370,14 +370,14 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		} catch (Exception e) {
 			return new PluginResult(Status.ERROR, e.toString());
 		}
-		return new PluginResult(Status.OK,  "|" + timeToReturn + "|"); 
+		return new PluginResult(Status.OK, "|" + timeToReturn + "|"); 
 	}
 
-	private PluginResult getCurrentTime(JSONArray data){
+	private PluginResult getCurrentTime(String assetKey){
 		int timeToReturn = 0;
 		try {
-			if (assetMap.containsKey(data.getString(0))) {
-				NativeAudioAsset asset = assetMap.get(data.getString(0));
+			if (assetMap.containsKey(assetKey) {
+				NativeAudioAsset asset = assetMap.get(assetKey);
 				timeToReturn = asset.currentTime();
 				if (timeToReturn == -1)
 					return new PluginResult(Status.ERROR, "Get Time Error: " + timeToReturn);
