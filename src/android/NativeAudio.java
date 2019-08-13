@@ -53,6 +53,8 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	public static final String PLAY_ALL="playAll";
 	public static final String PAUSE_ALL="pauseAll";
 	public static final String SEEK_ALL="seekAll";
+	public static final String DURATION="duration";
+	public static final String CURRENT_TIME="currentTime";
 	public static final String STOP="stop";
 	public static final String LOOP="loop";
 	public static final String UNLOAD="unload";
@@ -440,6 +442,20 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 				cordova.getThreadPool().execute(new Runnable() {
 		            public void run() {
 		            	callbackContext.sendPluginResult( executeSeekAll(data) );
+		            }
+		        });				
+				
+			} else if (DURATION.equals(action)) {
+				cordova.getThreadPool().execute(new Runnable() {
+		            public void run() {
+		            	callbackContext.sendPluginResult( getDuration(data) );
+		            }
+		        });				
+				
+			} else if (CURRENT_TIME.equals(action)) {
+				cordova.getThreadPool().execute(new Runnable() {
+		            public void run() {
+		            	callbackContext.sendPluginResult( getCurrentTime(data) );
 		            }
 		        });				
 				
