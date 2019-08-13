@@ -103,7 +103,7 @@ public class NativeAudioAsset
 		// 	voice.seek(timeMS);
 		// }
 		NativeAudioAssetComplex voice = voices.get(0);
-		return voice.getDuration();
+		return (voice.getDuration() / 1000);
 
 	}
 
@@ -115,7 +115,7 @@ public class NativeAudioAsset
 		// 	voice.seek(timeMS);
 		// }
 		NativeAudioAssetComplex voice = voices.get(0);
-		return voice.getCurrentTime();
+		return (voice.getCurrentTime() / 1000);
 
 	}
 	
