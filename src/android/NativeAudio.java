@@ -139,14 +139,14 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 				else
 					asset.play(new Callable<Void>() {
                         public Void call() throws Exception {
-				if (completeCallbacks != null) {
-				    CallbackContext callbackContext = completeCallbacks.get(audioID);
-				    if (callbackContext != null) {
-					JSONObject done = new JSONObject();
-					done.put("id", audioID);
-					callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
-				    }
-				}
+							if (completeCallbacks != null) {
+								CallbackContext callbackContext = completeCallbacks.get(audioID);
+								if (callbackContext != null) {
+								JSONObject done = new JSONObject();
+								done.put("id", audioID);
+								callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
+								}
+							}
                             return null;
                         }
                     });
@@ -267,6 +267,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 	private PluginResult executePlayAll(JSONArray data){
 		// final String audioID;
+		int x = 0, curtime = 0;
 		for (String key : assetMap.keySet()) {
 			try {
 				// audioID = data.getString(0);
@@ -276,6 +277,11 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 					// if (LOOP.equals(action))
 					// 	asset.loop();
 					// else
+
+						if (x == 0) curtime = getCurrentTime(key);
+						asset.seek(curtime);
+						x++;
+
 						asset.play(new Callable<Void>() {
 							public Void call() throws Exception {
 								if (completeCallbacks != null) {
