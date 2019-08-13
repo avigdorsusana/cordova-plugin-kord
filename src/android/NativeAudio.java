@@ -265,9 +265,10 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		return new PluginResult(Status.OK, assetDirectory);
 	}
 
-	private PluginResult executePlayAll(JSONArray data){
+	private PluginResult executePlayAll(){
 		// final String audioID;
 		int x = 0, curtime = 0;
+		JSONArray data = new JSONArray();
 		for (String key : assetMap.keySet()) {
 			try {
 				// audioID = data.getString(0);
@@ -277,8 +278,8 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 					// if (LOOP.equals(action))
 					// 	asset.loop();
 					// else
-
-						if (x == 0) curtime = getCurrentTime(key);
+						data.put(key, value);
+						if (x == 0) curtime = getCurrentTime(data.getString(0));
 						asset.seek(curtime);
 						x++;
 
@@ -308,7 +309,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		return new PluginResult(Status.OK);
 	}
 
-	private PluginResult executePauseAll(JSONArray data){
+	private PluginResult executePauseAll(){
 		for (String key : assetMap.keySet()) {
 			try {
 				if (assetMap.containsKey(key)) {
