@@ -230,7 +230,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		else
 		{
 			state = PREPARED;
-			mp.seekTo(0);
+			// mp.seekTo(0);
 		}
 
 		// try
