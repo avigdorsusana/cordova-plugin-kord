@@ -101,6 +101,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	public void prepare() throws IOException
 	{
 		mp.prepare();
+		onPrepared( mp );
 	}
 
 	public boolean pause()
