@@ -50,7 +50,10 @@ module.exports  = {
         
 	},
 
-	playAll: function(successCallback, errorCallback) {
+	playAll: function(successCallback, errorCallback, prepareCallback) {
+        if(typeof prepareCallback === "function") {
+        	cordova.exec(prepareCallback, errorCallback, "NativeAudio", "addCompleteListener", []);    
+        }
         return cordova.exec(successCallback, errorCallback, "NativeAudio", "playAll", []);
 	},
 	

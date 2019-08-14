@@ -59,7 +59,8 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	
 	private static HashMap<String, NativeAudioAsset> assetMap;
     private static ArrayList<NativeAudioAsset> resumeList;
-    private static HashMap<String, CallbackContext> completeCallbacks;
+	private static HashMap<String, CallbackContext> completeCallbacks;
+	// private static HashMap<String, CallbackContext> prepareCallbacks;
 	private boolean fadeMusic = false;
 	private static int synctime;
 	private static int trackcount;
@@ -103,6 +104,20 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 				NativeAudioAsset asset = new NativeAudioAsset(
 					assetDirectory + "/" + audioID + ".mp3", voices, (float)volume, ctx);
+
+					// asset.prepare(new Callable<Void>() {
+					// 	public Void call() throws Exception {
+					// 		if (completeCallbacks != null) {
+					// 			CallbackContext callbackContext = completeCallbacks.get(key);
+					// 			if (callbackContext != null) {
+					// 			JSONObject done = new JSONObject();
+					// 			done.put("id", key);
+					// 			// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
+					// 			}
+					// 		}
+					// 		return null;
+					// 	}
+					// });
 				// NativeAudioAsset asset = new NativeAudioAsset(
 				// 	afd, voices, (float)volume);
 
@@ -585,7 +600,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
                     completeCallbacks.put(audioID, callbackContext);
                 } catch (JSONException e) {
                     callbackContext.sendPluginResult(new PluginResult(Status.ERROR, e.toString()));
-		}
+				}	
 	    } else if (SET_VOLUME_FOR_COMPLEX_ASSET.equals(action)) {
 				cordova.getThreadPool().execute(new Runnable() {
 			public void run() {

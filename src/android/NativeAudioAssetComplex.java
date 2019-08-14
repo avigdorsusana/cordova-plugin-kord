@@ -31,7 +31,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	private Uri fileUri;
 	private int state;
 	Callable<Void> completeCallback;
-	Callable<Void> completeSeek;
+	// Callable<Void> preparedCallback;
 
 	public NativeAudioAssetComplex( AssetFileDescriptor afd, float volume)  throws IOException
 	{
@@ -87,6 +87,17 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 			mp.start();
 		}
 	}
+
+	// public void prepare(Callable<Void> completeCb) throws IOException
+	// {
+	// 	preparedCallback = completeCb;
+	// 	invokePrepare();
+	// }
+
+	// private void invokePrepare()
+	// {
+	// 	mp.prepareAsync();
+	// }
 
 	public boolean pause()
 	{
@@ -199,6 +210,18 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 			state = PREPARED;
 			mp.seekTo(0);
 		}
+
+		// try
+		// {
+		// 	if (prepared != null){
+		// 		preparedCallback.call();
+		// 	}
+		// }
+		// catch (Exception e)
+		// {
+		// 	e.printStackTrace();
+		// }
+
 	}
 	
 	public void onCompletion(MediaPlayer mPlayer)
