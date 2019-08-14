@@ -77,7 +77,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		mp.prepare();
 	}
 	
-	public void play(Callable<Void> completeCb) throws IOException, BrokenBarrierException
+	public void play(Callable<Void> completeCb) throws IOException, BrokenBarrierException, InterruptedException
 	{
         completeCallback = completeCb;
 		invokePlay( false );
