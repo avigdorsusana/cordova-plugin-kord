@@ -154,6 +154,19 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		}
 	}
 
+	public void trueStop(){
+		try
+		{
+			state = INVALID;
+			mp.stop();
+			mp.prepare();
+		}
+		catch (IllegalStateException e)
+		{
+
+		}
+	}
+
     public void stop()
 	{
 		try

@@ -70,6 +70,15 @@ public class NativeAudioAsset
 		}
 	}
 
+	public void trueStop()
+	{
+		for ( int x=0; x<voices.size(); x++) 
+		{
+			NativeAudioAssetComplex voice = voices.get(x);
+			voice.trueStop();
+		}
+	}
+
     public void stop()
 	{
 		for ( int x=0; x<voices.size(); x++) 
