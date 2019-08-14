@@ -50,7 +50,10 @@ module.exports  = {
         
 	},
 
-	playAll: function(successCallback, errorCallback) {
+	playAll: function(successCallback, errorCallback, prepareCallback) {
+        if(typeof prepareCallback === "function") {
+        	cordova.exec(prepareCallback, errorCallback, "NativeAudio", "addCompleteListener", []);    
+        }
         return cordova.exec(successCallback, errorCallback, "NativeAudio", "playAll", []);
 	},
 	
@@ -76,7 +79,12 @@ module.exports  = {
 
     unload: function(id, successCallback, errorCallback) {
         return cordova.exec(successCallback, errorCallback, "NativeAudio", "unload", [id]);
+    },
+
+    syncAll: function(successCallback, errorCallback) {
+        return cordova.exec(successCallback, errorCallback, "NativeAudio", "syncAll", []);
 	},
+	
 	
 	duration: function(id, successCallback, errorCallback) {
         return cordova.exec(successCallback, errorCallback, "NativeAudio", "duration", [id]);

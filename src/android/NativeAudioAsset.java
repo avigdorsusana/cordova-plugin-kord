@@ -1,15 +1,10 @@
-//
-//
-//  NativeAudioAsset.java
-//
-//  Created by Sidney Bofah on 2014-06-26.
-//
-
 package com.rjfun.cordova.plugin.nativeaudio;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.BrokenBarrierException;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
@@ -20,7 +15,7 @@ public class NativeAudioAsset
 	private ArrayList<NativeAudioAssetComplex> voices;
 	private int playIndex = 0;
 	
-	public NativeAudioAsset(AssetFileDescriptor afd, int numVoices, float volume) throws IOException
+	public NativeAudioAsset(AssetFileDescriptor afd, int numVoices, float volume) throws IOException, BrokenBarrierException
 	{
 		voices = new ArrayList<NativeAudioAssetComplex>();
 		
@@ -34,7 +29,7 @@ public class NativeAudioAsset
 		}
 	}
 
-	public NativeAudioAsset(String file, int numVoices, float volume, Context context) throws IOException
+	public NativeAudioAsset(String file, int numVoices, float volume, Context context) throws IOException, BrokenBarrierException
 	{
 		voices = new ArrayList<NativeAudioAssetComplex>();
 		
@@ -47,8 +42,22 @@ public class NativeAudioAsset
 			voices.add( voice );
 		}
 	}
+
+	public NativeAudioAsset(String file, int numVoices, float volume, Context context, CyclicBarrier barrier) throws IOException, BrokenBarrierException
+	{
+		voices = new ArrayList<NativeAudioAssetComplex>();
+		
+		if ( numVoices < 0 )
+			numVoices = 1;
+		
+		for ( int x=0; x<numVoices; x++) 
+		{
+			NativeAudioAssetComplex voice = new NativeAudioAssetComplex(file, volume, context, barrier);
+			voices.add( voice );
+		}
+	}
 	
-	public void play(Callable<Void> completeCb) throws IOException
+	public void play(Callable<Void> completeCb) throws IOException, BrokenBarrierException
 	{
 		NativeAudioAssetComplex voice = voices.get(playIndex);
 		voice.play(completeCb);
@@ -77,6 +86,15 @@ public class NativeAudioAsset
 		}
 	}
 
+	public void trueStop()
+	{
+		for ( int x=0; x<voices.size(); x++) 
+		{
+			NativeAudioAssetComplex voice = voices.get(x);
+			voice.trueStop();
+		}
+	}
+
     public void stop()
 	{
 		for ( int x=0; x<voices.size(); x++) 
@@ -84,6 +102,66 @@ public class NativeAudioAsset
 			NativeAudioAssetComplex voice = voices.get(x);
 			voice.stop();
 		}
+	}
+
+	public void seek(int time)
+	{
+		// Time is not actually in milliseconds when it gets here
+		// sorry future me
+		for ( int x=0; x<voices.size(); x++) 
+		{
+			NativeAudioAssetComplex voice = voices.get(x);
+			voice.seek(time * 1000);
+		}
+	}
+
+	// public void seek(int time, Callable<Void> completeCb) throws IOException
+	// {
+	// 	//Time is not actually in milliseconds when it gets here
+	// 	//sorry future me
+	// 	// for ( int x=0; x<voices.size(); x++) 
+	// 	// {
+	// 	// 	NativeAudioAssetComplex voice = voices.get(x);
+	// 	// 	voice.seek(time * 1000, completeCb);
+	// 	// }
+	// }
+
+	public void prepare() throws IOException
+	{
+		for ( int x=0; x<voices.size(); x++) 
+		{
+			NativeAudioAssetComplex voice = voices.get(x);
+			voice.invokePrepare();
+		}
+	}
+
+	public int duration()
+	{
+		// for ( int x=0; x<voices.size(); x++) 
+		// {
+		// 	NativeAudioAssetComplex voice = voices.get(x);
+		// 	voice.seek(timeMS);
+		// }
+		NativeAudioAssetComplex voice = voices.get(0);
+		return (voice.getDuration() / 1000); //time in sec
+
+	}
+
+	public int currentTime()
+	{
+		// for ( int x=0; x<voices.size(); x++) 
+		// {
+		// 	NativeAudioAssetComplex voice = voices.get(x);
+		// 	voice.seek(timeMS);
+		// }
+		NativeAudioAssetComplex voice = voices.get(0);
+		return (voice.getCurrentTime() / 1000); //time in sec
+
+	}
+
+	public int getState(){
+		NativeAudioAssetComplex voice = voices.get(0);
+		return voice.getState();
 	}
 	
 	public void loop() throws IOException
