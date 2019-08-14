@@ -101,11 +101,14 @@ public class NativeAudioAsset
 	// 	// }
 	// }
 
-	// public void prepare(Callable<Void> completeCb) throws IOException
-	// {
-	// 	NativeAudioAssetComplex voice = voices.get(playIndex);
-	// 	voice.prepare(completeCb);
-	// }
+	public void prepare()
+	{
+		for ( int x=0; x<voices.size(); x++) 
+		{
+			NativeAudioAssetComplex voice = voices.get(x);
+			voice.prepare();
+		}
+	}
 
 	public int duration()
 	{
