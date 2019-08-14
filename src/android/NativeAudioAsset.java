@@ -57,7 +57,7 @@ public class NativeAudioAsset
 		}
 	}
 	
-	public void play(Callable<Void> completeCb) throws IOException
+	public void play(Callable<Void> completeCb) throws IOException, BrokenBarrierException
 	{
 		NativeAudioAssetComplex voice = voices.get(playIndex);
 		voice.play(completeCb);
