@@ -3,6 +3,7 @@ package com.rjfun.cordova.plugin.nativeaudio;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CyclicBarrier;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
@@ -37,6 +38,20 @@ public class NativeAudioAsset
 		for ( int x=0; x<numVoices; x++) 
 		{
 			NativeAudioAssetComplex voice = new NativeAudioAssetComplex(file, volume, context);
+			voices.add( voice );
+		}
+	}
+
+	public NativeAudioAsset(String file, int numVoices, float volume, Context context, CyclicBarrier barrier) throws IOException
+	{
+		voices = new ArrayList<NativeAudioAssetComplex>();
+		
+		if ( numVoices < 0 )
+			numVoices = 1;
+		
+		for ( int x=0; x<numVoices; x++) 
+		{
+			NativeAudioAssetComplex voice = new NativeAudioAssetComplex(file, volume, context, barrier);
 			voices.add( voice );
 		}
 	}

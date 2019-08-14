@@ -3,6 +3,7 @@ package com.rjfun.cordova.plugin.nativeaudio;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CyclicBarrier;
 import java.io.OutputStream;
 import java.io.InputStream;
 import java.io.File;
@@ -58,12 +59,14 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	private static final String LOGTAG = "NativeAudio";
 	
 	private static HashMap<String, NativeAudioAsset> assetMap;
-    private static ArrayList<NativeAudioAsset> resumeList;
+	private static ArrayList<NativeAudioAsset> resumeList;
+	private static ArrayList<Thread> threadList;
 	private static HashMap<String, CallbackContext> completeCallbacks;
 	// private static HashMap<String, CallbackContext> prepareCallbacks;
 	private boolean fadeMusic = false;
 	private static int synctime;
 	private static int trackcount;
+	private CyclicBarrier barrier;
 
     public void setOptions(JSONObject options) {
 		if(options != null) {
@@ -278,7 +281,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		if (assetDirectory == "")
 			return new PluginResult(Status.ERROR, "Asset not downloaded");
 		else
-			return new PluginResult(Status.OK, assetDirectory);
+			return new PluginResult(Status.OK, assetDirectory + "|" + cordova.getThreadPool());
 	}
 
 	private PluginResult executeSyncAll(){
@@ -322,6 +325,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	}
 
 	private PluginResult executePlayAll(){
+		barrier = new CyclicBarrier(assetMap.size());
 		// final String audioID;
 		
 		// int x = 0, curtime = 0;
@@ -690,5 +694,9 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
     //     @Override
     //     protected void doInBackground(String... fileToDownload){
     //     }
-    // }
+	// }
+	
+	private void addThreadToMonitor(Thread thread){}
+	private Boolean removeThreadFromMonitor(Thread thread){}
+	private Boolean pruneThreads(){}
 }

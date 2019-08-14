@@ -2,6 +2,7 @@ package com.rjfun.cordova.plugin.nativeaudio;
 
 import java.io.IOException;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CyclicBarrier;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
@@ -30,6 +31,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	private Context appContext;
 	private Uri fileUri;
 	private int state;
+	private CyclicBarrier barrier;
 	Callable<Void> completeCallback;
 	// Callable<Void> preparedCallback;
 
@@ -45,7 +47,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		mp.prepare();
 	}
 
-	public NativeAudioAssetComplex( String file, float volume, Context context)  throws IOException
+	public NativeAudioAssetComplex( String file, float volume, Context context, CyclicBarrier barrier)  throws IOException
 	{
 		state = INVALID;
 		mp = new MediaPlayer();
@@ -58,11 +60,27 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		mp.setVolume(volume, volume);
 		mp.prepare();
 	}
+
+	public NativeAudioAssetComplex( String file, float volume, Context context)  throws IOException, BrokenBarrierException
+	{
+		state = INVALID;
+		this.barrier = barrier;
+		mp = new MediaPlayer();
+		appContext = context; //cordova.getActivity().getApplicationContext();
+		fileUri = Uri.parse(file);
+        mp.setOnCompletionListener(this);
+        mp.setOnPreparedListener(this);
+		mp.setDataSource(appContext, fileUri);
+		mp.setAudioStreamType(AudioManager.STREAM_MUSIC); 
+		mp.setVolume(volume, volume);
+		mp.prepare();
+	}
 	
-	public void play(Callable<Void> completeCb) throws IOException
+	public void play(Callable<Void> completeCb) throws IOException, BrokenBarrierException
 	{
         completeCallback = completeCb;
 		invokePlay( false );
+		barrier.await();
 	}
 	
 	private void invokePlay( Boolean loop )
