@@ -56,7 +56,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		mp.setDataSource(appContext, fileUri);
 		mp.setAudioStreamType(AudioManager.STREAM_MUSIC); 
 		mp.setVolume(volume, volume);
-		// mp.prepare();
+		mp.prepare();
 	}
 	
 	public void play(Callable<Void> completeCb) throws IOException
