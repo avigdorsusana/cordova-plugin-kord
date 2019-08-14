@@ -14,7 +14,7 @@ public class NativeAudioAsset
 	private ArrayList<NativeAudioAssetComplex> voices;
 	private int playIndex = 0;
 	
-	public NativeAudioAsset(AssetFileDescriptor afd, int numVoices, float volume) throws IOException
+	public NativeAudioAsset(AssetFileDescriptor afd, int numVoices, float volume) throws IOException, BrokenBarrierException
 	{
 		voices = new ArrayList<NativeAudioAssetComplex>();
 		
@@ -28,7 +28,7 @@ public class NativeAudioAsset
 		}
 	}
 
-	public NativeAudioAsset(String file, int numVoices, float volume, Context context) throws IOException
+	public NativeAudioAsset(String file, int numVoices, float volume, Context context) throws IOException, BrokenBarrierException
 	{
 		voices = new ArrayList<NativeAudioAssetComplex>();
 		
@@ -42,7 +42,7 @@ public class NativeAudioAsset
 		}
 	}
 
-	public NativeAudioAsset(String file, int numVoices, float volume, Context context, CyclicBarrier barrier) throws IOException
+	public NativeAudioAsset(String file, int numVoices, float volume, Context context, CyclicBarrier barrier) throws IOException, BrokenBarrierException
 	{
 		voices = new ArrayList<NativeAudioAssetComplex>();
 		
