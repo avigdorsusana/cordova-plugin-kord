@@ -558,7 +558,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 						try {
 							callbackContext.sendPluginResult( executePlayOrLoop(action, data) );
 						}
-						catch (BrokenBarrierException){
+						catch (BrokenBarrierException e){
 							callbackContext.sendPluginResult( new PluginResult(Status.ERROR, e.toString()) );
 						}
 		            }
