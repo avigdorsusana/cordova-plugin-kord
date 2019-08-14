@@ -216,14 +216,14 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		if (state == PENDING_PLAY) 
 		{
 			mp.setLooping(false);
-			mp.seekTo(0);
+			// mp.seekTo(0);
 			mp.start();
 			state = PLAYING;
 		}
 		else if ( state == PENDING_LOOP )
 		{
 			mp.setLooping(true);
-			mp.seekTo(0);
+			// mp.seekTo(0);
 			mp.start();
 			state = LOOPING;
 		}
