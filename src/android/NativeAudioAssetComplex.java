@@ -94,7 +94,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	// 	invokePrepare();
 	// }
 
-	public void prepare()
+	public void prepare() throws IOException
 	{
 		mp.prepare();
 	}
