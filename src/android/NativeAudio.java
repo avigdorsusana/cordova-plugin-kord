@@ -555,7 +555,12 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			} else if (PLAY.equals(action) || LOOP.equals(action)) {
 				cordova.getThreadPool().execute(new Runnable() {
 		            public void run() {
-		            	callbackContext.sendPluginResult( executePlayOrLoop(action, data) );
+						try {
+							callbackContext.sendPluginResult( executePlayOrLoop(action, data) );
+						}
+						catch (BrokenBarrierException){
+							callbackContext.sendPluginResult( new PluginResult(Status.ERROR, e.toString()) );
+						}
 		            }
 		        });				
 				
