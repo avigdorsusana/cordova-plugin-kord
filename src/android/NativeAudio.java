@@ -282,7 +282,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	}
 
 	private PluginResult executeSyncAll(){
-		int x = 0, curtime = 0;
+		int x = 0, curtime = 0, state = -1;
 		String debug = "";
 
 		for (String key : assetMap.keySet()) {
@@ -307,13 +307,14 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 				//Log.d( LOGTAG, "play - " + audioID );
 				if (assetMap.containsKey(key)) {
 					NativeAudioAsset asset = assetMap.get(key);
+					state = asset.getState();
 					asset.prepare();
 					// asset.seek(curtime);
-					debug += key + "|" + curtime + ",";
+					debug += key + "|" + curtime + "|" + state;
 				}
 			}
 			catch (Exception e) {
-				return new PluginResult(Status.ERROR, e.toString());
+				return new PluginResult(Status.ERROR, e.toString() + " ////////// " + state);
 			}
 		}
 

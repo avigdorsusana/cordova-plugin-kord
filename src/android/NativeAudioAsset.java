@@ -133,6 +133,11 @@ public class NativeAudioAsset
 		return (voice.getCurrentTime() / 1000); //time in sec
 
 	}
+
+	public int getState(){
+		NativeAudioAssetComplex voice = voices.get(0);
+		return voice.getState();
+	}
 	
 	public void loop() throws IOException
 	{

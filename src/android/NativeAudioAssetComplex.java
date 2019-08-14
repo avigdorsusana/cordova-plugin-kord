@@ -88,6 +88,10 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		}
 	}
 
+	public int getState(){
+		return state;
+	}
+
 	// public void prepare(Callable<Void> completeCb) throws IOException
 	// {
 	// 	preparedCallback = completeCb;
