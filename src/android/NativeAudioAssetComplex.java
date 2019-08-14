@@ -36,7 +36,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	Callable<Void> completeCallback;
 	// Callable<Void> preparedCallback;
 
-	public NativeAudioAssetComplex( AssetFileDescriptor afd, float volume)  throws IOException
+	public NativeAudioAssetComplex( AssetFileDescriptor afd, float volume)  throws IOException, BrokenBarrierException
 	{
 		state = INVALID;
 		mp = new MediaPlayer();
@@ -48,7 +48,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		mp.prepare();
 	}
 
-	public NativeAudioAssetComplex( String file, float volume, Context context, CyclicBarrier barrier)  throws IOException
+	public NativeAudioAssetComplex( String file, float volume, Context context, CyclicBarrier barrier)  throws IOException, BrokenBarrierException
 	{
 		state = INVALID;
 		mp = new MediaPlayer();
