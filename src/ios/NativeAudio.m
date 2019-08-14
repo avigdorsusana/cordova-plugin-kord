@@ -29,11 +29,11 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
 
     AudioSessionInitialize(NULL, NULL, nil , nil);
     AVAudioSession *session = [AVAudioSession sharedInstance];
-    // we activate the audio session after the options to mix with others is set
-    [session setActive: NO error: nil];
+    
+	[session setActive: NO error: nil];
     NSError *setCategoryError = nil;
 
-    // Allows the application to mix its audio with audio from other apps.
+    //== allows the application to mix its audio with audio from other apps
     if (![session setCategory:AVAudioSessionCategoryAmbient
                   withOptions:AVAudioSessionCategoryOptionMixWithOthers
                         error:&setCategoryError]) {
@@ -191,8 +191,7 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
     NSNumber *delay = nil;
     if ( [arguments count] > 4 && [arguments objectAtIndex:4] != [NSNull null])
     {
-        // The delay is determines how fast the asset is
-        // faded in and out
+        //== the delay is determines how fast the asset is faded in and out
         delay = [arguments objectAtIndex:4];
     }
 
@@ -252,7 +251,7 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
                     NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
 
                     if(self.fadeMusic) {
-                        // Music assets are faded in
+                        //== music assets are faded in
                         [_asset playWithFade];
                     } else {
                         [_asset play];
@@ -310,7 +309,7 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
 				x++;
 			}
 
-			//== let system trigger a play to all tracks at the same time
+			//== let system trigger a play to all tracks at the same time >> removed > did not work as expected
 			/*double delay = 0.50;
 			dispatch_time_t offset_time = delay * NSEC_PER_SEC;
 			dispatch_time_t fire_time = dispatch_time(DISPATCH_TIME_NOW, offset_time);
@@ -415,7 +414,7 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
             if ([asset isKindOfClass:[NativeAudioAsset class]]) {
                 NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
                 if(self.fadeMusic) {
-                    // Music assets are faded out
+                    //== music assets are faded out
                     [_asset stopWithFade];
                 } else {
                     [_asset stop];
