@@ -695,8 +695,4 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
     //     protected void doInBackground(String... fileToDownload){
     //     }
 	// }
-	
-	private void addThreadToMonitor(Thread thread){}
-	private Boolean removeThreadFromMonitor(Thread thread){}
-	private Boolean pruneThreads(){}
 }
