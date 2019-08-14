@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.BrokenBarrierException;
 import java.io.OutputStream;
 import java.io.InputStream;
 import java.io.File;
@@ -137,7 +138,9 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			// e.printStackTrace(new PrintWriter(writer));
 			// String s = writer.toString();
 			// return new PluginResult(Status.ERROR, s);
-		}	
+		} catch (BrokenBarrierException e){
+			return new PluginResult(Status.ERROR, e.toString());
+		}
 		
 		return new PluginResult(Status.OK);
 	}
