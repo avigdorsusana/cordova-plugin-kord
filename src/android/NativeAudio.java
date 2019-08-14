@@ -145,7 +145,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		return new PluginResult(Status.OK);
 	}
 	
-	private PluginResult executePlayOrLoop(String action, JSONArray data) {
+	private PluginResult executePlayOrLoop(String action, JSONArray data) throws BrokenBarrierException {
 		final String audioID;
 		try {
 			audioID = data.getString(0);
