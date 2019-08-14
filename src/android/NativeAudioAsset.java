@@ -106,7 +106,7 @@ public class NativeAudioAsset
 		for ( int x=0; x<voices.size(); x++) 
 		{
 			NativeAudioAssetComplex voice = voices.get(x);
-			voice.prepare();
+			voice.invokePrepare();
 		}
 	}
 
