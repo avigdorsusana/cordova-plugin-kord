@@ -14,7 +14,7 @@ typedef void (^CompleteCallback)(NSString*);
 
 - (id) initWithPath:(NSString*) path withVoices:(NSNumber*) numVoices withVolume:(NSNumber*) volume withFadeDelay:(NSNumber *)delay;
 - (void) play;
-//- (void) playAt:(double) time;
+- (void) playAt:(double) time;
 - (void) playWithFade;
 - (void) pause;
 - (void) stop;
