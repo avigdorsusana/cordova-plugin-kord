@@ -322,8 +322,8 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
 				//dispatch_after(fire_time, dispatch_get_main_queue(), ^{
 					NSObject* asset = audioMapping[key];
 					NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
-					[_asset play];
-					//[_asset playAt:time];
+					//[_asset play];
+					[_asset playAt:time];
 				//});
 			}
 
