@@ -26,6 +26,7 @@ typedef void (^CompleteCallback)(NSString*);
 - (void) unload;
 - (double) duration;
 - (double) currentTime;
+- (double) deviceCurrentTime;
 - (void) setVolume:(NSNumber*) volume;
 - (void) setCallbackAndId:(CompleteCallback)cb audioId:(NSString*)audioId;
 - (void) audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag;

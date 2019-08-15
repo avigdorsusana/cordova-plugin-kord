@@ -142,6 +142,14 @@ static const CGFloat FADE_DELAY = 0.08;
 }
 
 
+- (double) deviceCurrentTime
+{
+	AVAudioPlayer * player = [voices objectAtIndex:playIndex];
+	double time = player.deviceCurrentTime;
+
+	return time;
+}
+
 
 - (void) setCurrentTime:(double) time;
 {
