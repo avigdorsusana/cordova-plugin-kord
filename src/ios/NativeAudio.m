@@ -289,9 +289,6 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
 {
     NSString *callbackId = command.callbackId;
     NSArray* arguments = command.arguments;
-
-	//NSNumber *time = [arguments objectAtIndex:0];
-	NSTimeInterval *time;
 	
 	[self.commandDelegate runInBackground:^{
 
@@ -300,6 +297,8 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
 			//== sync all tracks with first one
 			int x = 0;
 			double curtime = 0;
+			double time = 0;
+			//NSTimeInterval *time;
 
 			for(id key in audioMapping) {
 				
