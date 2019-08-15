@@ -307,7 +307,7 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
 				NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
 				if (x == 0) {
 					curtime = [_asset currentTime];
-					time = _asset.deviceCurrentTime + 0.5;
+					time = [_asset.deviceCurrentTime] + 0.5;
 				}
 				[_asset setCurrentTime:curtime];
 				
