@@ -290,6 +290,8 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
     NSString *callbackId = command.callbackId;
     NSArray* arguments = command.arguments;
 
+	//NSNumber *time = [arguments objectAtIndex:0];
+	NSTimeInterval *time;
 	
 	[self.commandDelegate runInBackground:^{
 
@@ -303,7 +305,10 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
 				
 				NSObject* asset = audioMapping[key];
 				NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
-				if (x == 0) curtime = [_asset currentTime];
+				if (x == 0) {
+					curtime = [_asset currentTime];
+					//time = _asset.deviceCurrentTime + 0.5;
+				}
 				[_asset setCurrentTime:curtime];
 				
 				x++;
@@ -319,6 +324,7 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
 					NSObject* asset = audioMapping[key];
 					NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
 					[_asset play];
+					//[_asset playAt:time];
 				//});
 			}
 
