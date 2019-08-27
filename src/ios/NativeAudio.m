@@ -10,8 +10,10 @@ NSString* ERROR_REFERENCE_DWNLD_FAIL = @"(NATIVE AUDIO) Asset reference cannot d
 NSString* ERROR_REFERENCE_WRITE_FAIL = @"(NATIVE AUDIO) Asset reference cannot write to file.";
 NSString* ERROR_TYPE_RESTRICTED = @"(NATIVE AUDIO) Action restricted to assets loaded using preloadComplex.";
 NSString* ERROR_VOLUME_NIL = @"(NATIVE AUDIO) Volume cannot be empty.";
+/* NSString* ERROR_SPEED_NIL = @"(NATIVE AUDIO) Speed cannot be empty."; */
 NSString* ERROR_SEEK_NIL = @"(NATIVE AUDIO) Seek cannot be empty.";
 NSString* ERROR_VOLUME_FORMAT = @"(NATIVE AUDIO) Volume is declared as float between 0.0 - 1.0";
+NSString* ERROR_SPEED_FORMAT = @"(NATIVE AUDIO) Speed is declared as float between 0.5 - 2.0";
 
 NSString* INFO_ASSET_LOADED = @"(NATIVE AUDIO) Asset loaded.";
 NSString* INFO_ASSET_UNLOADED = @"(NATIVE AUDIO) Asset unloaded.";
@@ -25,6 +27,8 @@ NSString* INFO_PLAYBACK_SEEKALL = @"(NATIVE AUDIO) Seek All.";
 NSString* INFO_VOLUME_CHANGED = @"(NATIVE AUDIO) Volume changed.";
 NSString* INFO_PLAYBACK_DURATION = @"(NATIVE AUDIO) Duration.";
 NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
+NSString* INFO_PLAYBACK_SPEED = @"(NATIVE AUDIO) Speed changed.";
+
 
 
 - (void)pluginInitialize
@@ -418,7 +422,7 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
                 }
             }
             
-            //== ALL ASSETS COULD SEEK WITHOUT ERROR, SO RETURN SUCCESS!
+            //== ALL ASSETS COULD SEEK WITHOUT ERROR, RETURN SUCCESS!
             [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: INFO_PLAYBACK_SEEKALL] callbackId:callbackId];
             
         } else {
@@ -701,6 +705,55 @@ NSString* INFO_VOLUME_CURRENTTIME = @"(NATIVE AUDIO) Current Time.";
         [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
     }
 }
+
+
+
+- (void) setSpeed:(CDVInvokedUrlCommand *)command
+{
+    NSString *callbackId = command.callbackId;
+    NSArray* arguments = command.arguments;
+	NSNumber *speed = [arguments objectAtIndex:0];
+
+    [self.commandDelegate runInBackground:^{
+
+		if (([speed floatValue] < 0.5f) || ([speed floatValue] > 2.0f)) {
+			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_SPEED_FORMAT, audioID];
+			[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
+		}
+
+		if (audioMapping) {
+            
+            for(id key in audioMapping) {
+                
+                NSObject* asset = audioMapping[key];
+                
+                if (asset != nil) {
+                    if ([asset isKindOfClass:[NativeAudioAsset class]]) {
+                        
+                        NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
+                        [_asset setSpeed:speed];
+                        
+                    } else if ( [asset isKindOfClass:[NSNumber class]] ) {
+                        [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: ERROR_TYPE_RESTRICTED] callbackId:callbackId];
+                    }
+                    
+                } else {
+                    [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: ERROR_REFERENCE_MISSING] callbackId:callbackId];
+                }
+            }
+            
+            //== ALL ASSETS COULD SET SPEED WITHOUT ERROR, RETURN SUCCESS!
+            [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: INFO_PLAYBACK_SPEED] callbackId:callbackId];
+            
+        } else {
+            NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_MISSING, @"audioMapping"];
+            [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
+        }
+        
+    }];
+}
+
+
 
 - (void) sendCompleteCallback:(NSString*)forId
 {

@@ -26,6 +26,7 @@
 - (void) seekAll:(CDVInvokedUrlCommand *)command;
 - (void) unload:(CDVInvokedUrlCommand *)command;
 - (void) setVolumeForComplexAsset:(CDVInvokedUrlCommand *)command;
+- (void) setSpeed:(CDVInvokedUrlCommand *)command;
 - (void) addCompleteListener:(CDVInvokedUrlCommand *)command;
 
 - (void) parseOptions:(NSDictionary*) options;

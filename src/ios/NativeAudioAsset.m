@@ -216,6 +216,17 @@ static const CGFloat FADE_DELAY = 0.08;
     }
 }
 
+
+- (void) setSpeed:(NSNumber*) spped;
+{
+	for (int x = 0; x < [voices count]; x++) {
+        AVAudioPlayer * player = [voices objectAtIndex:x];
+		[player enableRate:YES];
+        [player rate:speed.floatValue];
+    }
+}
+
+
 - (void) setCallbackAndId:(CompleteCallback)cb audioId:(NSString*)aID
 {
     self->audioId = aID;
