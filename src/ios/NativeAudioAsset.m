@@ -217,7 +217,7 @@ static const CGFloat FADE_DELAY = 0.08;
 }
 
 
-- (void) setSpeed:(NSNumber*) spped;
+- (void) setSpeed:(NSNumber*) speed;
 {
 	for (int x = 0; x < [voices count]; x++) {
         AVAudioPlayer * player = [voices objectAtIndex:x];
