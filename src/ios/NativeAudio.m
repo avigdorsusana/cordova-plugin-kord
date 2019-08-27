@@ -716,10 +716,10 @@ NSString* INFO_PLAYBACK_SPEED = @"(NATIVE AUDIO) Speed changed.";
 
     [self.commandDelegate runInBackground:^{
 
-		if (([speed floatValue] < 0.5f) || ([speed floatValue] > 2.0f)) {
+		/*if (([speed floatValue] < 0.5f) || ([speed floatValue] > 2.0f)) {
 			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_SPEED_FORMAT, audioID];
 			[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
-		}
+		}*/
 
 		if (audioMapping) {
             
