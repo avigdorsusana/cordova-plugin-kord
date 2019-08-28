@@ -94,6 +94,10 @@ module.exports  = {
         return cordova.exec(successCallback, errorCallback, "NativeAudio", "currentTime", [id]);
     },
 
+	setSpeed: function(speed, successCallback, errorCallback) {
+        return cordova.exec(successCallback, errorCallback, "NativeAudio", "setSpeed", [speed]);
+    },
+
     setVolumeForComplexAsset: function (id, volume, successCallback, errorCallback) {
         return cordova.exec(successCallback, errorCallback, "NativeAudio", "setVolumeForComplexAsset", [id, parseFloat(volume)]);
     }
