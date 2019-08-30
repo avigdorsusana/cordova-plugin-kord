@@ -562,9 +562,9 @@ NSString* INFO_PLAYBACK_SPEED = @"(NATIVE AUDIO) Speed changed.";
             if ([asset isKindOfClass:[NativeAudioAsset class]]) {
                 
                 NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
-                //double time = [_asset currentTime];
+                double time = [_asset currentTime];
 				//CMTime time = [_asset currentTime];
-				//position = CMTimeGetSeconds(time);
+				position = CMTimeGetSeconds(time);
                 
                 //NSString *RESULT = [NSString stringWithFormat:@"%@ |%d|", INFO_VOLUME_CURRENTTIME, time];
 				NSString *RESULT = [NSString stringWithFormat:@"%@ |%d|", INFO_VOLUME_CURRENTTIME, position];
