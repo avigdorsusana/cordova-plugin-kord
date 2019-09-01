@@ -552,8 +552,6 @@ NSString* INFO_PLAYBACK_SPEED = @"(NATIVE AUDIO) Speed changed.";
     NSArray* arguments = command.arguments;
     NSString *audioID = [arguments objectAtIndex:0];
 
-	double position = -1;
-
     if ( audioMapping ) {
         NSObject* asset = audioMapping[audioID];
 
@@ -563,11 +561,8 @@ NSString* INFO_PLAYBACK_SPEED = @"(NATIVE AUDIO) Speed changed.";
                 
                 NativeAudioAsset *_asset = (NativeAudioAsset*) asset;
                 double time = [_asset currentTime];
-				//CMTime time = [_asset currentTime];
-				position = CMTimeGetSeconds(time);
                 
-                //NSString *RESULT = [NSString stringWithFormat:@"%@ |%d|", INFO_VOLUME_CURRENTTIME, time];
-				NSString *RESULT = [NSString stringWithFormat:@"%@ |%d|", INFO_VOLUME_CURRENTTIME, position];
+                NSString *RESULT = [NSString stringWithFormat:@"%@ |%d|", INFO_VOLUME_CURRENTTIME, time];
                 [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
                 
             } else if ( [asset isKindOfClass:[NSNumber class]] ) {
