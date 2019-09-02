@@ -249,9 +249,13 @@ NSString* INFO_PLAYBACK_SPEED = @"(NATIVE AUDIO) Speed changed.";
 
     [self.commandDelegate runInBackground:^{
         if (existingReference == nil) {
-			NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask,YES);
-			NSString *cachesDirectory = [pathArray objectAtIndex:0];
-			NSString *path = [cachesDirectory stringByAppendingPathComponent:filename];
+			// NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask,YES);
+			// NSString *cachesDirectory = [pathArray objectAtIndex:0];
+			// NSString *path = [cachesDirectory stringByAppendingPathComponent:filename];
+
+			NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
+			NSString *documentsDirectory = [pathArray objectAtIndex:0];
+			NSString *path = [documentsDirectory stringByAppendingPathComponent:filename];
 			
 			if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
 			
