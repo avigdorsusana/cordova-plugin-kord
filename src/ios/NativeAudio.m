@@ -6,8 +6,9 @@
 NSString* ERROR_ASSETPATH_INCORRECT = @"(NATIVE AUDIO) Asset not found.";
 NSString* ERROR_REFERENCE_EXISTS = @"(NATIVE AUDIO) Asset reference already exists.";
 NSString* ERROR_REFERENCE_MISSING = @"(NATIVE AUDIO) Asset reference does not exist.";
-NSString* ERROR_REFERENCE_DWNLD_FAIL = @"(NATIVE AUDIO) Asset reference cannot download.";
-NSString* ERROR_REFERENCE_WRITE_FAIL = @"(NATIVE AUDIO) Asset reference cannot write to file.";
+NSString* ERROR_REFERENCE_FAIL = @"(NATIVE AUDIO) Asset reference cant download.";
+// NSString* ERROR_REFERENCE_DWNLD_FAIL = @"(NATIVE AUDIO) Asset reference cannot download.";
+// NSString* ERROR_REFERENCE_WRITE_FAIL = @"(NATIVE AUDIO) Asset reference cannot write to file.";
 NSString* ERROR_TYPE_RESTRICTED = @"(NATIVE AUDIO) Action restricted to assets loaded using preloadComplex.";
 NSString* ERROR_VOLUME_NIL = @"(NATIVE AUDIO) Volume cannot be empty.";
 /* NSString* ERROR_SPEED_NIL = @"(NATIVE AUDIO) Speed cannot be empty."; */
@@ -136,49 +137,71 @@ NSString* INFO_PLAYBACK_SPEED = @"(NATIVE AUDIO) Speed changed.";
 	//NSString* filename = [assetPath lastPathComponent];
 	NSString* filename = [NSString stringWithFormat:@"%@.mp3",audioID];
 
-    [self.commandDelegate runInBackground:^{
+    // [self.commandDelegate runInBackground:^{
         
-		NSURL *url = [NSURL URLWithString:assetPath];
+	// 	NSURL *url = [NSURL URLWithString:assetPath];
         
-        // NSURLSessionDownloadTask safely downloads network-based files
-        // to a temp location, regardless of device connection speed.
-        NSURLSession *thisSession = [NSURLSession sharedSession];
-        NSURLSessionDownloadTask *downloadAudioTask = [thisSession downloadTaskWithURL:url completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+    //     // NSURLSessionDownloadTask safely downloads network-based files
+    //     // to a temp location, regardless of device connection speed.
+    //     NSURLSession *thisSession = [NSURLSession sharedSession];
+    //     NSURLSessionDownloadTask *downloadAudioTask = [thisSession downloadTaskWithURL:url completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
             
-            if (!error) {
-                // Audio file was successfully downloaded.
+    //         if (!error) {
+    //             // Audio file was successfully downloaded.
                 
-                // Destination cache file path.
-                NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask,YES);
-                NSString *cachesDirectory = [pathArray objectAtIndex:0];
-                NSString  *filePath = [cachesDirectory stringByAppendingPathComponent:filename];
+    //             // Destination cache file path.
+    //             NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask,YES);
+    //             NSString *cachesDirectory = [pathArray objectAtIndex:0];
+    //             NSString  *filePath = [cachesDirectory stringByAppendingPathComponent:filename];
                 
-                // NSData dataWithContentsOfURL is safe for local files,
-                // such as downloaded local temp file location.
-                NSData *urlData = [NSData dataWithContentsOfURL:location];
-                if (urlData) {
+    //             // NSData dataWithContentsOfURL is safe for local files,
+    //             // such as downloaded local temp file location.
+    //             NSData *urlData = [NSData dataWithContentsOfURL:location];
+    //             if (urlData) {
                     
-                    // Write to destination cache file (overwrites if it already exists).
-                    [urlData writeToFile:filePath atomically:YES];
+    //                 // Write to destination cache file (overwrites if it already exists).
+    //                 [urlData writeToFile:filePath atomically:YES];
                     
-                    NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, filePath];
-                    [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
+    //                 NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, filePath];
+    //                 [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
                     
-                } else {
-                    // ERROR: urlData is NIL, data could not be written to cache file.
-                    NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_WRITE_FAIL, filePath];
-                    [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
-                }
+    //             } else {
+    //                 // ERROR: urlData is NIL, data could not be written to cache file.
+    //                 NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_WRITE_FAIL, filePath];
+    //                 [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
+    //             }
                 
-            } else {
-                // ERROR: Audio file could NOT be downloaded.
-                NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_DWNLD_FAIL, audioID];
-                [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
-            }
+    //         } else {
+    //             // ERROR: Audio file could NOT be downloaded.
+    //             NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_DWNLD_FAIL, audioID];
+    //             [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
+    //         }
             
-        }];
-        [downloadAudioTask resume];
+    //     }];
+    //     [downloadAudioTask resume];
         
+    // }];
+
+	[self.commandDelegate runInBackground:^{
+		NSURL  *url = [NSURL URLWithString:assetPath];
+		NSData *urlData = [NSData dataWithContentsOfURL:url];
+		
+		NSArray   *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+		NSString  *documentsDirectory = [paths objectAtIndex:0];  
+		NSString  *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,filename];
+		
+		if ( urlData ) {
+			[urlData writeToFile:filePath atomically:YES];
+			
+			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", INFO_ASSET_LOADED, filePath];
+			[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: RESULT] callbackId:callbackId];
+			
+		} else {
+			NSString *RESULT = [NSString stringWithFormat:@"%@ (%@)", ERROR_REFERENCE_FAIL, filePath];
+            [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: RESULT] callbackId:callbackId];
+			
+		}
+
     }];
 }
 
