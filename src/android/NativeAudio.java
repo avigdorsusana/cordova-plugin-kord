@@ -3,8 +3,9 @@ package com.rjfun.cordova.plugin.nativeaudio;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
-import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.BrokenBarrierException;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.Calendar;
 import java.io.OutputStream;
 import java.io.InputStream;
 import java.io.File;
@@ -66,8 +67,16 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	// private static HashMap<String, CallbackContext> prepareCallbacks;
 	private boolean fadeMusic = false;
 	private static int synctime;
-	private static int trackcount;
-	private CyclicBarrier barrier;
+	// private static int trackcount;
+
+
+
+	private static Calendar playTime = Calendar.getInstance();
+	private static Timer playTimer;
+
+
+
+
 
     public void setOptions(JSONObject options) {
 		if(options != null) {
@@ -138,14 +147,13 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			// e.printStackTrace(new PrintWriter(writer));
 			// String s = writer.toString();
 			// return new PluginResult(Status.ERROR, s);
-		} catch (BrokenBarrierException e){
-			return new PluginResult(Status.ERROR, e.toString());
+			return new PluginResult(Status.ERROR, "IOException");
 		}
 		
 		return new PluginResult(Status.OK);
 	}
 	
-	private PluginResult executePlayOrLoop(String action, JSONArray data) throws BrokenBarrierException {
+	private PluginResult executePlayOrLoop(String action, JSONArray data) {
 		final String audioID;
 		try {
 			audioID = data.getString(0);
@@ -328,7 +336,6 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	}
 
 	private PluginResult executePlayAll(){
-		barrier = new CyclicBarrier(assetMap.size());
 		// final String audioID;
 		
 		// int x = 0, curtime = 0;
@@ -370,6 +377,9 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		// }
 
 		String debug = "";
+		playTime.getTime();
+		playTime.add(Calendar.MILLISECOND, 500);
+
 		for (String key : assetMap.keySet()) {
 			try {
 				// audioID = data.getString(0);
@@ -383,20 +393,37 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 						synctime = asset.currentTime();
 						debug += key + "|" + synctime + ",";
 						
-
-						asset.play(new Callable<Void>() {
-							public Void call() throws Exception {
-								if (completeCallbacks != null) {
-									CallbackContext callbackContext = completeCallbacks.get(key);
-									if (callbackContext != null) {
-									JSONObject done = new JSONObject();
-									done.put("id", key);
-									// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
+						//timer task goes here
+						timer.schedule(
+							asset.run(new Callable<Void>() {
+								public Void call() throws Exception {
+									if (completeCallbacks != null) {
+										CallbackContext callbackContext = completeCallbacks.get(key);
+										if (callbackContext != null) {
+										JSONObject done = new JSONObject();
+										done.put("id", key);
+										// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
+										}
 									}
+									return null;
 								}
-								return null;
-							}
-						});
+							}),
+							playTime
+						);
+						
+						// asset.play(new Callable<Void>() {
+						// 	public Void call() throws Exception {
+						// 		if (completeCallbacks != null) {
+						// 			CallbackContext callbackContext = completeCallbacks.get(key);
+						// 			if (callbackContext != null) {
+						// 			JSONObject done = new JSONObject();
+						// 			done.put("id", key);
+						// 			// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
+						// 			}
+						// 		}
+						// 		return null;
+						// 	}
+						// });
 				} else {
 					return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
 				}
@@ -555,12 +582,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			} else if (PLAY.equals(action) || LOOP.equals(action)) {
 				cordova.getThreadPool().execute(new Runnable() {
 		            public void run() {
-						try {
-							callbackContext.sendPluginResult( executePlayOrLoop(action, data) );
-						}
-						catch (BrokenBarrierException e){
-							callbackContext.sendPluginResult( new PluginResult(Status.ERROR, e.toString()) );
-						}
+						callbackContext.sendPluginResult( executePlayOrLoop(action, data) );
 		            }
 		        });				
 				

@@ -2,20 +2,19 @@ package com.rjfun.cordova.plugin.nativeaudio;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.TimerTask;
 import java.util.concurrent.Callable;
-import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.BrokenBarrierException;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 
-public class NativeAudioAsset
+public class NativeAudioAsset extends TimerTask
 {
 
 	private ArrayList<NativeAudioAssetComplex> voices;
 	private int playIndex = 0;
 	
-	public NativeAudioAsset(AssetFileDescriptor afd, int numVoices, float volume) throws IOException, BrokenBarrierException
+	public NativeAudioAsset(AssetFileDescriptor afd, int numVoices, float volume) throws IOException
 	{
 		voices = new ArrayList<NativeAudioAssetComplex>();
 		
@@ -29,7 +28,7 @@ public class NativeAudioAsset
 		}
 	}
 
-	public NativeAudioAsset(String file, int numVoices, float volume, Context context) throws IOException, BrokenBarrierException
+	public NativeAudioAsset(String file, int numVoices, float volume, Context context) throws IOException
 	{
 		voices = new ArrayList<NativeAudioAssetComplex>();
 		
@@ -42,22 +41,8 @@ public class NativeAudioAsset
 			voices.add( voice );
 		}
 	}
-
-	public NativeAudioAsset(String file, int numVoices, float volume, Context context, CyclicBarrier barrier) throws IOException, BrokenBarrierException
-	{
-		voices = new ArrayList<NativeAudioAssetComplex>();
-		
-		if ( numVoices < 0 )
-			numVoices = 1;
-		
-		for ( int x=0; x<numVoices; x++) 
-		{
-			NativeAudioAssetComplex voice = new NativeAudioAssetComplex(file, volume, context, barrier);
-			voices.add( voice );
-		}
-	}
 	
-	public void play(Callable<Void> completeCb) throws IOException, BrokenBarrierException
+	public void play(Callable<Void> completeCb) throws IOException
 	{
 		NativeAudioAssetComplex voice = voices.get(playIndex);
 		voice.play(completeCb);
@@ -190,5 +175,9 @@ public class NativeAudioAsset
 			NativeAudioAssetComplex voice = voices.get(x);
 			voice.setVolume(volume);
 		}
+	}
+
+	public void run(Callable<Void> completeCb){
+		this.play(completeCb);
 	}
 }
