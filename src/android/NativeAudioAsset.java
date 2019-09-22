@@ -8,7 +8,7 @@ import java.util.concurrent.Callable;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 
-public class NativeAudioAsset extends TimerTask
+public class NativeAudioAsset
 {
 
 	private ArrayList<NativeAudioAssetComplex> voices;

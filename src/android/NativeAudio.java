@@ -409,7 +409,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 						// 	});
 
 						playTimer.schedule(
-							new ScheduledPlay(asset),
+							new ScheduledPlay(asset, key),
 							playTime
 						);
 						
@@ -730,7 +730,8 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 	private class ScheduledPlay extends TimerTask{
 		NativeAudioAsset _asset;
-		ScheduledPlay(NativeAudioAsset asset){
+		String _id;
+		ScheduledPlay(NativeAudioAsset asset, String assetId){
 			_asset = asset;
 		}
 
@@ -739,10 +740,10 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			_asset.play(new Callable<Void>() {
 				public Void call() throws Exception {
 					if (completeCallbacks != null) {
-						CallbackContext callbackContext = completeCallbacks.get(key);
+						CallbackContext callbackContext = completeCallbacks.get(_id);
 						if (callbackContext != null) {
 						JSONObject done = new JSONObject();
-						done.put("id", key);
+						done.put("id", _id);
 						// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
 						}
 					}
