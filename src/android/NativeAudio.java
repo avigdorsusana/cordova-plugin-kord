@@ -71,7 +71,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 
 
-	private static Calendar playTime = Calendar.getInstance();
+	private static Calendar playTime;
 	private static Timer playTimer;
 
 
@@ -377,8 +377,8 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		// }
 
 		String debug = "";
-		playTime.getTime();
-		playTime.add(Calendar.MILLISECOND, 500);
+		// playTime.getInstance();
+		playTime.getInstance().add(Calendar.MILLISECOND, 500);
 
 		for (String key : assetMap.keySet()) {
 			try {
@@ -410,7 +410,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 						playTimer.schedule(
 							new ScheduledPlay(asset, key),
-							playTime
+							playTime.getTime()
 						);
 						
 						// asset.play(new Callable<Void>() {
