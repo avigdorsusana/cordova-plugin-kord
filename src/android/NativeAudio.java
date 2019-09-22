@@ -394,22 +394,22 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 						debug += key + "|" + synctime + ",";
 						
 						//timer task goes here
-						asset.storeCallback(new Callable<Void>() {
-								public Void call() throws Exception {
-									if (completeCallbacks != null) {
-										CallbackContext callbackContext = completeCallbacks.get(key);
-										if (callbackContext != null) {
-										JSONObject done = new JSONObject();
-										done.put("id", key);
-										// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
-										}
-									}
-									return null;
-								}
-							});
+						// asset.storeCallback(new Callable<Void>() {
+						// 		public Void call() throws Exception {
+						// 			if (completeCallbacks != null) {
+						// 				CallbackContext callbackContext = completeCallbacks.get(key);
+						// 				if (callbackContext != null) {
+						// 				JSONObject done = new JSONObject();
+						// 				done.put("id", key);
+						// 				// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
+						// 				}
+						// 			}
+						// 			return null;
+						// 		}
+						// 	});
 
 						playTimer.schedule(
-							(TimerTask) asset,
+							new ScheduledPlay(asset),
 							playTime
 						);
 						
@@ -727,4 +727,28 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
     //     protected void doInBackground(String... fileToDownload){
     //     }
 	// }
+
+	private class ScheduledPlay extends TimerTask{
+		NativeAudioAsset _asset;
+		ScheduledPlay(NativeAudioAsset asset){
+			_asset = asset;
+		}
+
+		@Override
+		public void run(){
+			_asset.play(new Callable<Void>() {
+				public Void call() throws Exception {
+					if (completeCallbacks != null) {
+						CallbackContext callbackContext = completeCallbacks.get(key);
+						if (callbackContext != null) {
+						JSONObject done = new JSONObject();
+						done.put("id", key);
+						// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
+						}
+					}
+					return null;
+				}
+			});
+		}
+	}
 }

@@ -2,7 +2,7 @@ package com.rjfun.cordova.plugin.nativeaudio;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.TimerTask;
+// import java.util.TimerTask;
 import java.util.concurrent.Callable;
 
 import android.content.Context;
@@ -14,7 +14,7 @@ public class NativeAudioAsset extends TimerTask
 	private ArrayList<NativeAudioAssetComplex> voices;
 	private int playIndex = 0;
 
-	private Callable<Void> completeCb;
+	// private Callable<Void> completeCb;
 	
 	public NativeAudioAsset(AssetFileDescriptor afd, int numVoices, float volume) throws IOException
 	{
@@ -179,12 +179,12 @@ public class NativeAudioAsset extends TimerTask
 		}
 	}
 
-	public void storeCallback(Callable<Void> completeCb){
-		this.completeCb = completeCb;
-	}
+	// public void storeCallback(Callable<Void> completeCb){
+	// 	this.completeCb = completeCb;
+	// }
 
-	@Override
-	public void run(){
-		this.play(completeCb);
-	}
+	// @Override
+	// public void run(){
+	// 	this.play(completeCb);
+	// }
 }
