@@ -737,19 +737,24 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 		@Override
 		public void run(){
-			_asset.play(new Callable<Void>() {
-				public Void call() throws Exception {
-					if (completeCallbacks != null) {
-						CallbackContext callbackContext = completeCallbacks.get(_id);
-						if (callbackContext != null) {
-						JSONObject done = new JSONObject();
-						done.put("id", _id);
-						// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
+			try{
+				_asset.play(new Callable<Void>() {
+					public Void call() throws Exception {
+						if (completeCallbacks != null) {
+							CallbackContext callbackContext = completeCallbacks.get(_id);
+							if (callbackContext != null) {
+							JSONObject done = new JSONObject();
+							done.put("id", _id);
+							// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
+							}
 						}
+						return null;
 					}
-					return null;
-				}
-			});
+				});
+			}
+			catch (Exception e){
+				
+			}
 		}
 	}
 }
