@@ -183,7 +183,6 @@ public class NativeAudioAsset extends TimerTask
 		this.completeCb = completeCb;
 	}
 
-	@Override
 	public void run(){
 		this.play(completeCb);
 	}
