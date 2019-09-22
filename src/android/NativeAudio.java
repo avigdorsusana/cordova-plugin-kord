@@ -409,7 +409,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 							});
 
 						playTimer.schedule(
-							asset,
+							(TimerTask) asset,
 							playTime
 						);
 						
