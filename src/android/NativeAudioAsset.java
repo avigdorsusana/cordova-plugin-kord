@@ -8,11 +8,27 @@ import java.util.concurrent.Callable;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 
+import org.json.JSONObject;
+
 public class NativeAudioAsset extends TimerTask
 {
 
 	private ArrayList<NativeAudioAssetComplex> voices;
 	private int playIndex = 0;
+	
+	private Callable<Void> completeCb = new Callable<Void>(){
+		public Void call() throws Exception {
+			if (completeCallbacks != null) {
+				CallbackContext callbackContext = completeCallbacks.get(key);
+				if (callbackContext != null) {
+				JSONObject done = new JSONObject();
+				done.put("id", key);
+				// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
+				}
+			}
+			return null;
+		}
+	};
 	
 	public NativeAudioAsset(AssetFileDescriptor afd, int numVoices, float volume) throws IOException
 	{
@@ -177,7 +193,7 @@ public class NativeAudioAsset extends TimerTask
 		}
 	}
 
-	public void run(Callable<Void> completeCb){
+	public void run(){
 		this.play(completeCb);
 	}
 }

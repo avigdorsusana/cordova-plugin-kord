@@ -394,20 +394,8 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 						debug += key + "|" + synctime + ",";
 						
 						//timer task goes here
-						timer.schedule(
-							asset.run(new Callable<Void>() {
-								public Void call() throws Exception {
-									if (completeCallbacks != null) {
-										CallbackContext callbackContext = completeCallbacks.get(key);
-										if (callbackContext != null) {
-										JSONObject done = new JSONObject();
-										done.put("id", key);
-										// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
-										}
-									}
-									return null;
-								}
-							}),
+						playTimer.schedule(
+							asset.run(),
 							playTime
 						);
 						
