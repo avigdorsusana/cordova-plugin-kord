@@ -413,6 +413,8 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 							new ScheduledPlay(asset, key),
 							playTime.getTime()
 						);
+
+						debug += "|scheduled exec: " + playTime.getTime() + "|";
 						
 						// asset.play(new Callable<Void>() {
 						// 	public Void call() throws Exception {
