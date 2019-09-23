@@ -72,7 +72,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 
 	private static Calendar playTime;
-	private static Timer playTimer;
+	private static Timer timer;
 
 
 
@@ -378,7 +378,8 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 		String debug = "";
 		// playTime.getInstance();
-		playTime.getInstance().add(Calendar.MILLISECOND, 500);
+		playTime = Calendar.getInstance();
+		playTime.add(Calendar.MILLISECOND, 500);
 
 		for (String key : assetMap.keySet()) {
 			try {
@@ -408,7 +409,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 						// 		}
 						// 	});
 
-						playTimer.schedule(
+						timer.schedule(
 							new ScheduledPlay(asset, key),
 							playTime.getTime()
 						);
@@ -753,7 +754,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 				});
 			}
 			catch (Exception e){
-				
+
 			}
 		}
 	}
