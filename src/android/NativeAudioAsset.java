@@ -228,7 +228,7 @@ public class NativeAudioAsset
 		}
 	}
 
-	public int getCurrentPosition(){
+	public int getCurrentPosition() throws InterruptedException{
 		NativeAudioAssetComplex voice = voices.get(0);
 		voice.start();
 		Thread.sleep(556);
