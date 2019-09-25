@@ -2,6 +2,9 @@ package com.rjfun.cordova.plugin.nativeaudio;
 
 import java.io.IOException;
 import java.util.concurrent.Callable;
+import java.util.Timer;
+import java.util.TimerTask;
+// import java.util.Calendar;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
@@ -31,6 +34,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	private Context appContext;
 	private Uri fileUri;
 	private int state;
+	private static Timer timer;
 	Callable<Void> completeCallback;
 	// Callable<Void> preparedCallback;
 
@@ -59,18 +63,6 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		mp.setVolume(volume, volume);
 		mp.prepare();
 	}
-
-	// public NativeAudioAssetComplex( MediaDataSource data, float volume)  throws IOException
-	// {
-	// 	state = INVALID;
-	// 	mp = new MediaPlayer();
-    //     mp.setOnCompletionListener(this);
-    //     mp.setOnPreparedListener(this);
-	// 	mp.setDataSource(data);
-	// 	mp.setAudioStreamType(AudioManager.STREAM_MUSIC); 
-	// 	mp.setVolume(volume, volume);
-	// 	mp.prepare();
-	// }
 	
 	public void play(Callable<Void> completeCb) throws IOException
 	{
@@ -99,6 +91,11 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 			mp.setLooping(loop);
 			mp.start();
 		}
+	}
+
+	public void playAt(Date time){
+		timer = Calendar.getInstance();
+		timer.schedule( new ScheduledPlay(mp), date);
 	}
 
 	public int getState(){
@@ -287,15 +284,20 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	// 	}
 	// }
 
-	public void start(){
-		mp.start();
-	}
+	private class ScheduledPlay extends TimerTask{
+		MediaPlayer _mp;
+		ScheduledPlay(MediaPlayer mp){
+			_mp = mp;
+		}
 
-	public void pause2(){
-		mp.pause();
-	}
+		@Override
+		public void run(){
+			try{
+				_mp.play();
+			}
+			catch (Exception e){
 
-	public int getCurrentPosition(){
-		return mp.getCurrentPosition();
+			}
+		}
 	}
 }
