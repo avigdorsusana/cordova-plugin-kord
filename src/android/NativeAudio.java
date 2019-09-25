@@ -750,6 +750,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		String _id;
 		ScheduledPlay(NativeAudioAsset asset, String assetId){
 			_asset = asset;
+			_id = assetId;
 		}
 
 		@Override
