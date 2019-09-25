@@ -3,9 +3,9 @@ package com.rjfun.cordova.plugin.nativeaudio;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
-// import java.util.Timer;
-// import java.util.TimerTask;
-// import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.Calendar;
 import java.io.OutputStream;
 import java.io.InputStream;
 import java.io.File;
@@ -71,10 +71,10 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 
 
-	// private static Calendar playTime;
-	// private static Timer timer = new Timer();
+	private static Calendar playTime;
+	private static Timer timer = new Timer();
 
-	private static HashMap<String, Byte[]> assetDataCollection;
+	// private static HashMap<String, Byte[]> assetDataCollection;
 
 
 
@@ -391,7 +391,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		// }
 
 		String debug = "";
-		// playTime.getInstance();
+		// // playTime.getInstance();
 		playTime = Calendar.getInstance();
 		playTime.add(Calendar.MILLISECOND, 500);
 
@@ -745,45 +745,45 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
     //     }
 	// }
 
-	// private class ScheduledPlay extends TimerTask{
-	// 	NativeAudioAsset _asset;
-	// 	String _id;
-	// 	ScheduledPlay(NativeAudioAsset asset, String assetId){
-	// 		_asset = asset;
-	// 	}
-
-	// 	@Override
-	// 	public void run(){
-	// 		try{
-	// 			_asset.play(new Callable<Void>() {
-	// 				public Void call() throws Exception {
-	// 					if (completeCallbacks != null) {
-	// 						CallbackContext callbackContext = completeCallbacks.get(_id);
-	// 						if (callbackContext != null) {
-	// 						JSONObject done = new JSONObject();
-	// 						done.put("id", _id);
-	// 						// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
-	// 						}
-	// 					}
-	// 					return null;
-	// 				}
-	// 			});
-	// 		}
-	// 		catch (Exception e){
-
-	// 		}
-	// 	}
-	// }
-
-	private class AudioDataSource extends MediaDataSource{
-		public AudioDataSource(){}
-
-
-		@Override
-		public synchronized int readAt(long position, byte[] buffer, int offset, int size) throws IOException {
+	private class ScheduledPlay extends TimerTask{
+		NativeAudioAsset _asset;
+		String _id;
+		ScheduledPlay(NativeAudioAsset asset, String assetId){
+			_asset = asset;
 		}
+
 		@Override
-		public synchronized long getSize() throws IOException {
+		public void run(){
+			try{
+				_asset.play(new Callable<Void>() {
+					public Void call() throws Exception {
+						if (completeCallbacks != null) {
+							CallbackContext callbackContext = completeCallbacks.get(_id);
+							if (callbackContext != null) {
+							JSONObject done = new JSONObject();
+							done.put("id", _id);
+							// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
+							}
+						}
+						return null;
+					}
+				});
+			}
+			catch (Exception e){
+
+			}
 		}
 	}
+
+	// private class AudioDataSource extends MediaDataSource{
+	// 	public AudioDataSource(){}
+
+
+	// 	@Override
+	// 	public synchronized int readAt(long position, byte[] buffer, int offset, int size) throws IOException {
+	// 	}
+	// 	@Override
+	// 	public synchronized long getSize() throws IOException {
+	// 	}
+	// }
 }
