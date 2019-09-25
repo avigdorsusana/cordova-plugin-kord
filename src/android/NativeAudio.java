@@ -76,9 +76,9 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 
 
-	private static Calendar playTime;
-	private static Timer timer = new Timer();
-	private static DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+	// private static Calendar playTime;
+	// private static Timer timer = new Timer();
+	// private static DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
 	// private static HashMap<String, Byte[]> assetDataCollection;
 
@@ -492,12 +492,15 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	}
 	
 	private PluginResult executeSeekAll(JSONArray data){
+		String debug = "";
 		for (String key : assetMap.keySet()) {
+			int currentSec = -1;
 			try {
 				if (assetMap.containsKey(key)) {
 					NativeAudioAsset asset = assetMap.get(key);
 						// asset.seek(data.getInt(0));
-						asset.seek(data.getInt(0));
+						currentSec = asset.seek(data.getInt(0));
+						debug += ", " + key + ": " + currentSec;
 				} else {
 					return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
 				}
@@ -505,7 +508,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 				return new PluginResult(Status.ERROR, "eeee " + e.toString());
 			}
 		}
-		return new PluginResult(Status.OK); 
+		return new PluginResult(Status.OK, debug); 
 	}
 
 	private PluginResult getDuration(JSONArray data){

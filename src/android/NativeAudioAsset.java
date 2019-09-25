@@ -105,15 +105,30 @@ public class NativeAudioAsset
 		}
 	}
 
-	public void seek(int time)
+	// public void seek(int time)
+	// {
+	// 	// Time is not actually in milliseconds when it gets here
+	// 	// sorry future me
+	// 	for ( int x=0; x<voices.size(); x++) 
+	// 	{
+	// 		NativeAudioAssetComplex voice = voices.get(x);
+	// 		voice.seek(time * 1000);
+	// 	}
+	// }
+
+	public int seek(int time)
 	{
 		// Time is not actually in milliseconds when it gets here
 		// sorry future me
+		int currentSec = -1;
 		for ( int x=0; x<voices.size(); x++) 
 		{
 			NativeAudioAssetComplex voice = voices.get(x);
 			voice.seek(time * 1000);
+			currentSec = voice.getCurrentTime();
 		}
+
+		return currentSec;
 	}
 
 	// public void seek(int time, Callable<Void> completeCb) throws IOException
