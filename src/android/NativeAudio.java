@@ -76,9 +76,9 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 
 
-	// private static Calendar playTime;
-	// private static Timer timer = new Timer();
-	// private static DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+	private static Calendar playTime;
+	private static Timer timer = new Timer();
+	private static DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
 	// private static HashMap<String, Byte[]> assetDataCollection;
 
