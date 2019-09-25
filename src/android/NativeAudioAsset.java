@@ -146,6 +146,26 @@ public class NativeAudioAsset
 
 	}
 
+	public int currentTime(Boolean convert)
+	{
+		// for ( int x=0; x<voices.size(); x++) 
+		// {
+		// 	NativeAudioAssetComplex voice = voices.get(x);
+		// 	voice.seek(timeMS);
+		// }
+		NativeAudioAssetComplex voice = voices.get(0);
+		int timeToReturn = -1;
+		if (!convert){
+			timeToReturn = (voice.getCurrentTime() / 1000); //time in sec
+		}
+		else{
+			timeToReturn = voice.getCurrentTime();
+		}
+		
+		return  timeToReturn;
+
+	}
+
 	public int getState(){
 		NativeAudioAssetComplex voice = voices.get(0);
 		return voice.getState();
