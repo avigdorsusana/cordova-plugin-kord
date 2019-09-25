@@ -3,9 +3,9 @@ package com.rjfun.cordova.plugin.nativeaudio;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.Calendar;
+// import java.util.Timer;
+// import java.util.TimerTask;
+// import java.util.Calendar;
 import java.io.OutputStream;
 import java.io.InputStream;
 import java.io.File;
@@ -71,8 +71,10 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 
 
-	private static Calendar playTime;
-	private static Timer timer = new Timer();
+	// private static Calendar playTime;
+	// private static Timer timer = new Timer();
+
+	private static HashMap<String, Byte[]> assetDataCollection;
 
 
 
@@ -115,22 +117,34 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 				// AssetFileDescriptor afd = am.openFd(fullPath);
 				// AssetFileDescriptor afd = am.openFd(assetDirectory + "/" + audioID + ".mp3");
 
-				NativeAudioAsset asset = new NativeAudioAsset(
-					assetDirectory + "/" + audioID + ".mp3", voices, (float)volume, ctx);
+				//===== 0.5.10 9/24
+				// NativeAudioAsset asset = new NativeAudioAsset(
+				// 	assetDirectory + "/" + audioID + ".mp3", voices, (float)volume, ctx);
 
-					// asset.prepare(new Callable<Void>() {
-					// 	public Void call() throws Exception {
-					// 		if (completeCallbacks != null) {
-					// 			CallbackContext callbackContext = completeCallbacks.get(key);
-					// 			if (callbackContext != null) {
-					// 			JSONObject done = new JSONObject();
-					// 			done.put("id", key);
-					// 			// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
-					// 			}
-					// 		}
-					// 		return null;
-					// 	}
-					// });
+
+
+				//Find our downloaded file & read all bytes into array
+				Byte[] assetData = Files.readAllBytes(new File(assetDirectory + "/" + audioID + ".mp3").toPath());
+
+				//store array in large container of arrays
+				assetDataCollection.put(audioID, assetData);
+
+
+
+
+				// asset.prepare(new Callable<Void>() {
+				// 	public Void call() throws Exception {
+				// 		if (completeCallbacks != null) {
+				// 			CallbackContext callbackContext = completeCallbacks.get(key);
+				// 			if (callbackContext != null) {
+				// 			JSONObject done = new JSONObject();
+				// 			done.put("id", key);
+				// 			// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
+				// 			}
+				// 		}
+				// 		return null;
+				// 	}
+				// });
 				// NativeAudioAsset asset = new NativeAudioAsset(
 				// 	afd, voices, (float)volume);
 
@@ -150,7 +164,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			return new PluginResult(Status.ERROR, "IOException");
 		}
 		
-		return new PluginResult(Status.OK);
+		return new PluginResult(Status.OK, "Debug: " + audioID + " | " + assetData.length );
 	}
 	
 	private PluginResult executePlayOrLoop(String action, JSONArray data) {
@@ -409,26 +423,26 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 						// 		}
 						// 	});
 
-						timer.schedule(
-							new ScheduledPlay(asset, key),
-							playTime.getTime()
-						);
+						// timer.schedule(
+						// 	new ScheduledPlay(asset, key),
+						// 	playTime.getTime()
+						// );
 
 						debug += "|scheduled exec: " + playTime.getTime() + "|";
 						
-						// asset.play(new Callable<Void>() {
-						// 	public Void call() throws Exception {
-						// 		if (completeCallbacks != null) {
-						// 			CallbackContext callbackContext = completeCallbacks.get(key);
-						// 			if (callbackContext != null) {
-						// 			JSONObject done = new JSONObject();
-						// 			done.put("id", key);
-						// 			// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
-						// 			}
-						// 		}
-						// 		return null;
-						// 	}
-						// });
+						asset.play(new Callable<Void>() {
+							public Void call() throws Exception {
+								if (completeCallbacks != null) {
+									CallbackContext callbackContext = completeCallbacks.get(key);
+									if (callbackContext != null) {
+									JSONObject done = new JSONObject();
+									done.put("id", key);
+									// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
+									}
+								}
+								return null;
+							}
+						});
 				} else {
 					return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
 				}
@@ -731,33 +745,45 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
     //     }
 	// }
 
-	private class ScheduledPlay extends TimerTask{
-		NativeAudioAsset _asset;
-		String _id;
-		ScheduledPlay(NativeAudioAsset asset, String assetId){
-			_asset = asset;
-		}
+	// private class ScheduledPlay extends TimerTask{
+	// 	NativeAudioAsset _asset;
+	// 	String _id;
+	// 	ScheduledPlay(NativeAudioAsset asset, String assetId){
+	// 		_asset = asset;
+	// 	}
+
+	// 	@Override
+	// 	public void run(){
+	// 		try{
+	// 			_asset.play(new Callable<Void>() {
+	// 				public Void call() throws Exception {
+	// 					if (completeCallbacks != null) {
+	// 						CallbackContext callbackContext = completeCallbacks.get(_id);
+	// 						if (callbackContext != null) {
+	// 						JSONObject done = new JSONObject();
+	// 						done.put("id", _id);
+	// 						// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
+	// 						}
+	// 					}
+	// 					return null;
+	// 				}
+	// 			});
+	// 		}
+	// 		catch (Exception e){
+
+	// 		}
+	// 	}
+	// }
+
+	private class AudioDataSource extends MediaDataSource{
+		public AudioDataSource(){}
+
 
 		@Override
-		public void run(){
-			try{
-				_asset.play(new Callable<Void>() {
-					public Void call() throws Exception {
-						if (completeCallbacks != null) {
-							CallbackContext callbackContext = completeCallbacks.get(_id);
-							if (callbackContext != null) {
-							JSONObject done = new JSONObject();
-							done.put("id", _id);
-							// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
-							}
-						}
-						return null;
-					}
-				});
-			}
-			catch (Exception e){
-
-			}
+		public synchronized int readAt(long position, byte[] buffer, int offset, int size) throws IOException {
+		}
+		@Override
+		public synchronized long getSize() throws IOException {
 		}
 	}
 }
