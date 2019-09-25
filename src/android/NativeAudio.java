@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.io.OutputStream;
 import java.io.InputStream;
 import java.io.File;
+import java.nio.file.Files;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URLConnection;
@@ -797,7 +798,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 
 		@Override
-		public synchronized int readAt(long position, byte[] buffer, int offset, int size) throws IOException {
+		public int readAt(long position, byte[] buffer, int offset, int size) throws IOException {
 			int length = array.length;
 			if (position >= length) {
 			return -1; // -1 indicates EOF
@@ -809,8 +810,14 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			return size;
 		}
 		@Override
-		public synchronized long getSize() throws IOException {
+		public long getSize() throws IOException {
 			return array.length;
 		}
+
+		@Override 
+		public void close(){
+
+		}
+
 	}
 }

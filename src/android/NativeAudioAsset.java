@@ -2,7 +2,7 @@ package com.rjfun.cordova.plugin.nativeaudio;
 
 import java.io.IOException;
 import java.util.ArrayList;
-// import java.util.TimerTask;
+import android.media.MediaDataSource;
 import java.util.concurrent.Callable;
 
 import android.content.Context;
@@ -44,7 +44,7 @@ public class NativeAudioAsset
 		}
 	}
 
-	public NativeAudioAsset(MediaDataSource data, int numVoices, float volume, Context context) throws IOException
+	public NativeAudioAsset(MediaDataSource data, int numVoices, float volume) throws IOException
 	{
 		voices = new ArrayList<NativeAudioAssetComplex>();
 		
@@ -53,7 +53,7 @@ public class NativeAudioAsset
 		
 		for ( int x=0; x<numVoices; x++) 
 		{
-			NativeAudioAssetComplex voice = new NativeAudioAssetComplex(data, volume, context);
+			NativeAudioAssetComplex voice = new NativeAudioAssetComplex(data, volume);
 			voices.add( voice );
 		}
 	}
