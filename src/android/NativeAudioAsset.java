@@ -231,8 +231,8 @@ public class NativeAudioAsset
 	public int getCurrentPosition(){
 		NativeAudioAssetComplex voice = voices.get(0);
 		voice.start();
-		voice.pause();
-		return voice.getCurrentPosition;
+		voice.pause2();
+		return voice.getCurrentPosition();
 	}
 
 	// public void storeCallback(Callable<Void> completeCb){

@@ -286,4 +286,12 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	// 		}
 	// 	}
 	// }
+
+	public void start(){
+		mp.start();
+	}
+
+	public void pause2(){
+		mp.pause();
+	}
 }
