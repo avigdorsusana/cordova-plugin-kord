@@ -393,7 +393,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		String debug = "";
 		// // playTime.getInstance();
 		playTime = Calendar.getInstance();
-		playTime.add(Calendar.MILLISECOND, 500);
+		playTime.add(Calendar.MILLISECOND, 1000);
 
 		for (String key : assetMap.keySet()) {
 			try {
@@ -423,26 +423,26 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 						// 		}
 						// 	});
 
-						// timer.schedule(
-						// 	new ScheduledPlay(asset, key),
-						// 	playTime.getTime()
-						// );
+						timer.schedule(
+							new ScheduledPlay(asset, key),
+							playTime.getTime()
+						);
 
 						debug += "|scheduled exec: " + playTime.getTime() + "|";
 						
-						asset.play(new Callable<Void>() {
-							public Void call() throws Exception {
-								if (completeCallbacks != null) {
-									CallbackContext callbackContext = completeCallbacks.get(key);
-									if (callbackContext != null) {
-									JSONObject done = new JSONObject();
-									done.put("id", key);
-									// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
-									}
-								}
-								return null;
-							}
-						});
+						// asset.play(new Callable<Void>() {
+						// 	public Void call() throws Exception {
+						// 		if (completeCallbacks != null) {
+						// 			CallbackContext callbackContext = completeCallbacks.get(key);
+						// 			if (callbackContext != null) {
+						// 			JSONObject done = new JSONObject();
+						// 			done.put("id", key);
+						// 			// callbackContext.sendPluginResult(new PluginResult(Status.OK, done));
+						// 			}
+						// 		}
+						// 		return null;
+						// 	}
+						// });
 				} else {
 					return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
 				}
