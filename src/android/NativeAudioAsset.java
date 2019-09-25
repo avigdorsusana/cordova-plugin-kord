@@ -228,6 +228,11 @@ public class NativeAudioAsset
 		}
 	}
 
+	public int getCurrentPosition(){
+		NativeAudioAssetComplex voice = voices.get(0);
+		return voice.getCurrentPosition;
+	}
+
 	// public void storeCallback(Callable<Void> completeCb){
 	// 	this.completeCb = completeCb;
 	// }
