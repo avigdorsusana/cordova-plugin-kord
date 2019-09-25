@@ -34,7 +34,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	private Context appContext;
 	private Uri fileUri;
 	private int state;
-	private static Timer timer;
+	private static Timer timer = new Timer();
 	Callable<Void> completeCallback;
 	// Callable<Void> preparedCallback;
 
@@ -94,8 +94,8 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	}
 
 	public void playAt(Date time){
-		timer = Calendar.getInstance();
-		timer.schedule( new ScheduledPlay(mp), date);
+		// timer = Calendar.getInstance();
+		timer.schedule( new ScheduledPlay(mp), time);
 	}
 
 	public int getState(){
@@ -293,7 +293,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		@Override
 		public void run(){
 			try{
-				_mp.play();
+				_mp.start();
 			}
 			catch (Exception e){
 

@@ -230,9 +230,9 @@ public class NativeAudioAsset
 
 	public int getCurrentPosition(int seekVal) throws InterruptedException{
 		NativeAudioAssetComplex voice = voices.get(0);
-		voice.start();
-		voice.pause2();
-		Thread.sleep(50);
+		// voice.start();
+		// voice.pause2();
+		// Thread.sleep(50);
 		voice.seek(seekVal * 1000);
 		return voice.getCurrentPosition();
 	}
