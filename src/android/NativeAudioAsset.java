@@ -232,7 +232,7 @@ public class NativeAudioAsset
 		NativeAudioAssetComplex voice = voices.get(0);
 		voice.start();
 		voice.pause2();
-		Thread.sleep(556);
+		Thread.sleep(50);
 		voice.seek(seekVal);
 		return voice.getCurrentPosition();
 	}
