@@ -233,7 +233,7 @@ public class NativeAudioAsset
 		voice.start();
 		voice.pause2();
 		Thread.sleep(50);
-		//voice.seek(seekVal);
+		voice.seek(seekVal * 1000);
 		return voice.getCurrentPosition();
 	}
 
