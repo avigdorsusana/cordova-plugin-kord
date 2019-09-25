@@ -129,9 +129,9 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 
 				//Find our downloaded file & read all bytes into array
-				Byte[] assetData = Files.readAllBytes(new File(assetDirectory + "/" + audioID + ".mp3").toPath());
-				MediaDataSource mediaData = new MediaDataSource();
-				mediaData.readAt(0, assetData, 0, assetData.length);
+				byte[] assetData = Files.readAllBytes(new File(assetDirectory + "/" + audioID + ".mp3").toPath());
+				MediaDataSource mediaData = new AudioDataSource(assetData);
+				// mediaData.readAt(0, assetData, 0, assetData.length);
 
 				NativeAudioAsset asset = new NativeAudioAsset(
 					mediaData, voices, (float)volume
@@ -789,15 +789,28 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 		}
 	}
 
-	// private class AudioDataSource extends MediaDataSource{
-	// 	public AudioDataSource(){}
+	private class AudioDataSource extends MediaDataSource{
+		byte[] array;
+		public AudioDataSource(byte[] array){
+			this.array = array;
+		}
 
 
-	// 	@Override
-	// 	public synchronized int readAt(long position, byte[] buffer, int offset, int size) throws IOException {
-	// 	}
-	// 	@Override
-	// 	public synchronized long getSize() throws IOException {
-	// 	}
-	// }
+		@Override
+		public synchronized int readAt(long position, byte[] buffer, int offset, int size) throws IOException {
+			int length = array.length;
+			if (position >= length) {
+			return -1; // -1 indicates EOF
+			}
+			if (position + size > length) {
+				size -= ((position + size) - length);
+			}
+			System.arraycopy(array, (int)position, buffer, offset, size);
+			return size;
+		}
+		@Override
+		public synchronized long getSize() throws IOException {
+			return array.length;
+		}
+	}
 }
