@@ -500,7 +500,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 					NativeAudioAsset asset = assetMap.get(key);
 						// asset.seek(data.getInt(0));
 						asset.seek(data.getInt(0));
-						currentSec = asset.getCurrentPosition();
+						currentSec = asset.getCurrentPosition(data.getInt(0));
 						debug += ", " + key + ": " + currentSec;
 				} else {
 					return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
