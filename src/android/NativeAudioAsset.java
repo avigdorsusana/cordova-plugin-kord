@@ -156,12 +156,12 @@ public class NativeAudioAsset
 		NativeAudioAssetComplex voice = voices.get(0);
 		int timeToReturn = -1;
 		if (!convert){
-			timeToReturn = (voice.getCurrentTime() / 1000); //time in sec
-		}
-		else{
 			timeToReturn = voice.getCurrentTime();
 		}
-		
+		else{
+			timeToReturn = (voice.getCurrentTime() / 1000); //time in sec
+		}
+
 		return  timeToReturn;
 
 	}
