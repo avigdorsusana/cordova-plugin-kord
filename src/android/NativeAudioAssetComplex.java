@@ -292,7 +292,7 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	}
 
 	public void pause2(){
-		mp.pause();
+		//mp.pause();
 	}
 
 	public int getCurrentPosition(){
