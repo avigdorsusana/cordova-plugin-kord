@@ -43,6 +43,20 @@ public class NativeAudioAsset
 			voices.add( voice );
 		}
 	}
+
+	public NativeAudioAsset(MediaDataSource data, int numVoices, float volume, Context context) throws IOException
+	{
+		voices = new ArrayList<NativeAudioAssetComplex>();
+		
+		if ( numVoices < 0 )
+			numVoices = 1;
+		
+		for ( int x=0; x<numVoices; x++) 
+		{
+			NativeAudioAssetComplex voice = new NativeAudioAssetComplex(data, volume, context);
+			voices.add( voice );
+		}
+	}
 	
 	public void play(Callable<Void> completeCb) throws IOException
 	{

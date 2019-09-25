@@ -59,6 +59,20 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		mp.setVolume(volume, volume);
 		mp.prepare();
 	}
+
+	public NativeAudioAssetComplex( MediaDataSource data, float volume)  throws IOException
+	{
+		state = INVALID;
+		mp = new MediaPlayer();
+		appContext = context; //cordova.getActivity().getApplicationContext();
+		fileUri = Uri.parse(file);
+        mp.setOnCompletionListener(this);
+        mp.setOnPreparedListener(this);
+		mp.setDataSource(data);
+		mp.setAudioStreamType(AudioManager.STREAM_MUSIC); 
+		mp.setVolume(volume, volume);
+		mp.prepare();
+	}
 	
 	public void play(Callable<Void> completeCb) throws IOException
 	{
