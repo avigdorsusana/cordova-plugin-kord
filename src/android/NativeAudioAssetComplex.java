@@ -294,4 +294,8 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	public void pause2(){
 		mp.pause();
 	}
+
+	public int getCurrentPosition(){
+		return mp.getCurrentPosition();
+	}
 }
