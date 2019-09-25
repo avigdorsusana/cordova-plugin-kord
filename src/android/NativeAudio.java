@@ -32,6 +32,9 @@ import org.apache.cordova.PluginResult;
 import org.apache.cordova.PluginResult.Status;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 
 public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFocusChangeListener {
 
@@ -73,6 +76,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 
 	private static Calendar playTime;
 	private static Timer timer = new Timer();
+	private static DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
 	// private static HashMap<String, Byte[]> assetDataCollection;
 
@@ -429,7 +433,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 							playTime.getTime()
 						);
 
-						debug += "|scheduled exec: " + playTime.getTime() + "|";
+						debug += "|scheduled exec: " + sdf.format(playTime.getTime()) + "|";
 						
 						// asset.play(new Callable<Void>() {
 						// 	public Void call() throws Exception {
