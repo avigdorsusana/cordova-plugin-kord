@@ -95,6 +95,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 	private PluginResult executePreload(JSONArray data) {
 		String audioID;
 		String assetDirectory = this.cordova.getActivity().getApplicationContext().getFilesDir().getAbsolutePath();
+		String debug = "";
 		try {
 			audioID = data.getString(0);
 			if (!assetMap.containsKey(audioID)) {
@@ -133,6 +134,8 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 				byte[] assetData = Files.readAllBytes(new File(assetDirectory + "/" + audioID + ".mp3").toPath());
 				MediaDataSource mediaData = new AudioDataSource(assetData);
 				// mediaData.readAt(0, assetData, 0, assetData.length);
+
+				debug +=  "Debug: " + audioID + " | " + assetData.length;
 
 				NativeAudioAsset asset = new NativeAudioAsset(
 					mediaData, voices, (float)volume
@@ -177,7 +180,7 @@ public class NativeAudio extends CordovaPlugin implements AudioManager.OnAudioFo
 			return new PluginResult(Status.ERROR, "IOException");
 		}
 		
-		return new PluginResult(Status.OK, "Debug: " + audioID + " | " + assetData.length );
+		return new PluginResult(Status.OK, debug );
 		// return new PluginResult(Status.OK);
 	}
 	
