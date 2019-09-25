@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.concurrent.Callable;
 import java.util.Timer;
 import java.util.TimerTask;
-// import java.util.Calendar;
+import java.util.Date;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
@@ -283,6 +283,10 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 	// 		}
 	// 	}
 	// }
+
+	public int getCurrentPosition(){
+		return -1;
+	}
 
 	private class ScheduledPlay extends TimerTask{
 		MediaPlayer _mp;
