@@ -3,7 +3,12 @@ package com.rjfun.cordova.plugin.nativeaudio;
 import java.io.IOException;
 import java.util.ArrayList;
 import android.media.MediaDataSource;
+
+import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
@@ -44,23 +49,32 @@ public class NativeAudioAsset
 		}
 	}
 
-	// public NativeAudioAsset(MediaDataSource data, int numVoices, float volume) throws IOException
-	// {
-	// 	voices = new ArrayList<NativeAudioAssetComplex>();
+	public NativeAudioAsset(String filePath, int numVoices, float volume) throws IOException
+	{
+		voices = new ArrayList<NativeAudioAssetComplex>();
 		
-	// 	if ( numVoices < 0 )
-	// 		numVoices = 1;
+		if ( numVoices < 0 )
+			numVoices = 1;
 		
-	// 	for ( int x=0; x<numVoices; x++) 
-	// 	{
-	// 		NativeAudioAssetComplex voice = new NativeAudioAssetComplex(data, volume);
-	// 		voices.add( voice );
-	// 	}
-	// }
+		for ( int x=0; x<numVoices; x++) 
+		{
+			NativeAudioAssetComplex voice = new NativeAudioAssetComplex(filePath, volume);
+			voices.add( voice );
+		}
+	}
 	
 	public void play(Callable<Void> completeCb) throws IOException
 	{
 		NativeAudioAssetComplex voice = voices.get(playIndex);
+		voice.play(completeCb);
+		playIndex++;
+		playIndex = playIndex % voices.size();
+	}
+
+	public void play(CyclicBarrier syncBarrier, Callable<Void> completeCb) throws IOException, BrokenBarrierException, InterruptedException, TimeoutException
+	{
+		NativeAudioAssetComplex voice = voices.get(playIndex);
+		syncBarrier.await(3, TimeUnit.SECONDS);
 		voice.play(completeCb);
 		playIndex++;
 		playIndex = playIndex % voices.size();
@@ -225,6 +239,14 @@ public class NativeAudioAsset
 		{
 			NativeAudioAssetComplex voice = voices.get(x);
 			voice.setVolume(volume);
+		}
+	}
+
+	public void setSpeed(float speed){
+		for (int x = 0; x < voices.size(); x++)
+		{
+			NativeAudioAssetComplex voice = voices.get(x);
+			voice.setSpeed(speed);
 		}
 	}
 

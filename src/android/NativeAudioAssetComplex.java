@@ -63,6 +63,40 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 		mp.setVolume(volume, volume);
 		mp.prepare();
 	}
+
+	public NativeAudioAssetComplex( String path, float volume)  throws IOException
+	{
+		state = INVALID;
+		mp = new MediaPlayer();
+        mp.setOnCompletionListener(this);
+        mp.setOnPreparedListener(this);
+		mp.setDataSource(path);
+		mp.setAudioStreamType(AudioManager.STREAM_MUSIC); 
+		mp.setVolume(volume, volume);
+		mp.prepare();
+	}
+
+	// public NativeAudioAssetComplex(String httpUri, float volume){
+	// 	state = INVALID;
+	// 	mp = new MediaPlayer();
+	// 	appContext = context;
+	// 	try{
+	// 		mp.setOnCompletionListener(this);
+	// 		mp.setOnPreparedListener(this);
+	// 		mp.setDataSource(httpUri);
+	// 		mp.setAudioStreamType(AudioManager.STREAM_MUSIC); 
+	// 		mp.setVolume(volume, volume);
+	// 		mp.prepare();
+	// 	}
+	// 	catch (Exception e){
+	// 		BufferedReader r = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+	// 		StringBuilder total = new StringBuilder();
+	// 		for (String line; (line = r.readLine()) != null; ) {
+	// 			total.append(line);
+	// 		}
+	// 		throw new Exception("Caught Exception: " + e.getMessage() + " /// " + total);
+	// 	}
+	// }
 	
 	public void play(Callable<Void> completeCb) throws IOException
 	{
@@ -200,13 +234,29 @@ public class NativeAudioAssetComplex implements OnPreparedListener, OnCompletion
 
 	public void setVolume(float volume) 
 	{
-	        try
-	        {
+		try
+		{
 			mp.setVolume(volume,volume);
-            	}
-            	catch (IllegalStateException e) 
+		}
+		catch (IllegalStateException e) 
 		{
                 // I don't know why this gets thrown; catch here to save app
+		}
+	}
+
+	public void setSpeed(float speed) 
+	{
+		try
+		{
+			mp.setPlaybackParams(mp.getPlaybackParams().setSpeed(speed));
+		}
+		catch (IllegalStateException e) 
+		{
+				// I don't know why this gets thrown; catch here to save app
+		}
+		catch (IllegalArgumentException e) 
+		{
+				// I don't know why this gets thrown; catch here to save app
 		}
 	}
 	
